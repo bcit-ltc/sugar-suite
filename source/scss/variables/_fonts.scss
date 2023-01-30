@@ -1,0 +1,22 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,300,600,600italic,300italic,700,700italic|Lora:400,400italic);
+@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css);
+
+$font-stack-open-sans: 'Open Sans', 'HelveticaNeue', 'Helvetica', 'Arial', sans-serif;
+$font-stack-lora: 'Lora', 'Georgia', serif;
+
+
+$primary-text-color: #515151;
+$secondary-text-color: #727272;
+$primary-font: $font-stack-open-sans;
+$secondary-font: $font-stack-lora;
+
+//Sizes
+$font-size-x-small: .75em;
+$font-size-small: 1em;
+$font-size-small-2: 1.25em;
+//$font-size-med: 1.5em;
+$font-size-med-2: 1.75em;
+$font-size-large: 2em;
+$font-size-large-2: 2.25em;
+//$font-size-x-large: 2.5em;
+//$font-size-x-large-2: 2.75em;

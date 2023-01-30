@@ -1,0 +1,29 @@
+@import "https://fonts.googleapis.com/css?family=Indie+Flower";
+.lined-paper {
+	position: relative;
+	font-family: 'Indie Flower', cursive;
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAhCAYAAAAYucG/AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEE0AABBNAWeMAeAAAAAfSURBVBhXY/gPBEwMQDCwxIQNVxmYuDlYGTAdxMAAAB6vCmRGV7ZPAAAAAElFTkSuQmCC);
+	padding-top: 37px;
+	padding-left: 60px;
+	padding-bottom: 1px;
+	padding-right: 20px;
+	font-size: 24px;
+	box-shadow: 1px 1px 10px gray;
+	transform: rotate(1deg);
+}
+
+/* Content spacing */
+.lined-paper > p {
+	line-height: 33px;
+	margin-bottom: 32px;
+}
+
+/* Margin lines */
+.lined-paper:before {
+	content: "";
+	height: 100%;
+	border-left: 3px double #e87ae1;
+	position: absolute;
+	left: 40px;
+	top: 0px;
+}

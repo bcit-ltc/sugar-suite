@@ -1,0 +1,87 @@
+$btn-background: $secondary-color-dark !default;
+$btn-color: $white !default;
+$btn-hover-focus-background: $secondary-color !default;
+$btn-hover-focus-color: $white !default;
+$btn-disabled-background: $gray-light !default;
+$btn-disabled-color: $gray !default;
+$alt-box-shadow: $primary-color-dark !default;
+$alt-hover-background-color: $primary-color !default;
+$alt-hover-box-shadow: $primary-color-dark !default;
+$alt-hover-color: $white !default;
+$alt-active-box-shadow: $primary-color-dark !default;
+$btn-large-background: $gray !default;
+
+//General Button Styles//
+.btn {
+    background: $btn-background;
+    border: none;
+    color: $btn-color;
+    display: block;
+    font-weight: 500;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: $container-width-small;
+    line-height: 1;
+    letter-spacing: 1px;
+    padding: $pad;
+    border-radius: 5px;
+    text-align: center;
+    transition: all 0.2s ease-in-out 0s;
+	// transition values from default mixin
+    position: relative;
+    &:after {
+        content: '';
+        position: absolute;
+        z-index: -1;
+        transition: all 0.3s;
+    }
+    &:hover,
+    &:focus {
+        background: $btn-hover-focus-background;
+        color: $btn-hover-focus-color;
+    }
+    &.disabled {
+        background: $btn-disabled-background;
+        color: $btn-disabled-color;
+        cursor: default;
+    }
+}
+
+//Alternate Button Styles//
+.alt {
+    box-shadow: 0 6px $alt-box-shadow;
+    transition: none;
+    &:after {
+        content: '';
+        position: absolute;
+        z-index: -1;
+        transition: all 0.3s;
+    }
+    &:hover {
+        background-color: $alt-hover-background-color;
+        color: $alt-hover-color;
+        box-shadow: 0 4px $alt-hover-box-shadow;
+        top: 2px;
+    }
+    &:active {
+        box-shadow: 0 0 $alt-active-box-shadow;
+        top: 6px;
+    }
+}
+
+.btn-small {
+    padding: $pad-half;
+}
+
+.btn-large {
+    padding: $pad-half;
+    text-transform: uppercase;
+    background: $btn-large-background;
+    font-size: 1.4rem;
+    font-weight: normal;
+}
+
+.text-btn {
+    font-style: italic;
+    position: relative;
+}

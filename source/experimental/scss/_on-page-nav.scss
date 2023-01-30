@@ -1,0 +1,29 @@
+nav#__on-page-nav {
+	background: #e0e0e0;
+	border: 1px dashed black;
+	max-width: 500px;
+	padding: 10px;
+	
+	ul {
+		margin: 0;
+		padding: 0;
+		list-style-type: none;
+	}
+	
+	h2 {
+		margin: 0;
+		padding: 0;
+		font-size: 25px;
+		font-weight: bold;
+	}
+	
+	// Add a fake cascade to the flat list of items
+	// TODO: An actual nested list structure is preferable
+	//		 but costly to code.  Needs to be done before 
+	//		 leaving experimental status.
+	@for $i from 1 through 6 {
+		[data-step='#{$i}'] {
+			margin-left: ($i - 2) * 5%;
+		}
+	}	
+}

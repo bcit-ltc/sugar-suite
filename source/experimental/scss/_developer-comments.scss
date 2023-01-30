@@ -1,0 +1,25 @@
+._developer-comments {
+	display: none;
+}
+
+@mixin showDeveloperComments() {
+	._developer-comments {
+		display: block;
+		background: #c4f7c4;
+		border: 5px dashed #09c509;
+		padding: 10px;
+		position: relative;
+		margin: 20px auto;
+		@include remove-top-bottom-margin();
+		&:before {
+			content: "Developer Comments";
+			background: gray;
+			color: white;
+			padding: 5px;
+			position: absolute;
+			top: -20px;
+			left: -20px;
+			font-size: 12px;
+		}
+	}
+}

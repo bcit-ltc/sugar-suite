@@ -1,0 +1,7 @@
+**/node_modules/*
+.DS_Store
+Thumbs.db
+/css/*
+/js/experimental.js
+/js/sugar-suite-v1.js
+/js/maps/*

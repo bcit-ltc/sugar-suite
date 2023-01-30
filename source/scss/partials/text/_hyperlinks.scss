@@ -1,0 +1,30 @@
+$global-link-default-color: $secondary-color-dark !default;
+$global-link-visited-color: $primary-color !default;
+$global-link-hover-color: $secondary-color !default;
+$global-link-active-color: $secondary-color !default;
+
+/* Links */
+a {
+	position: relative;
+	text-decoration: none;
+	transition: all .3s ease;
+	&:link {
+		color: $global-link-default-color;
+		border-bottom: 1px dotted $global-link-default-color;
+		outline: 0;
+	}
+	&:visited {
+		color: $global-link-visited-color;
+		border-bottom: 1px dotted $global-link-visited-color;
+		outline: 0;
+	}
+	&:hover,
+	&:focus {
+		color: $global-link-hover-color;
+		border-bottom: 1px solid $global-link-hover-color;
+	}
+	&:active {
+		color: $global-link-active-color;
+		top: 1px;
+	}
+}

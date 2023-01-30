@@ -1,0 +1,366 @@
+$table-header-cell-background-color: $secondary-color-dark !default;
+$table-header-cell-text-color: white !default;
+$table-header-cell-secondary-background-color: lighten($gray-base, 85%) !default;
+$table-header-cell-secondary-text-color: black !default;
+$table-default-cell-background-color: $white !default;
+$table-stripe-background-color: $gray-lighter !default;
+$table-outside-border-color: 1px solid $table-header-cell-secondary-background-color !default;
+$table-header-inside-border-bottom-color: 1px solid $white !default;
+$table-header-inside-border-color: 1px solid $white !default;
+$table-body-inside-border: 1px solid $table-header-cell-secondary-background-color !default;
+$table-minimal-color: black !default;
+$table-cell-padding: .5em 1em !default;
+
+// Initial
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+	//margin-top: $space-and-half;
+	margin-bottom: $space-and-half;
+	width: 100%;
+	td {
+		color: $primary-text-color;
+	}
+	// All cells
+	td,
+	th {
+		text-align: center;
+		padding: $table-cell-padding;
+	}
+	// All Header cells
+	th {
+		vertical-align: middle;
+		font-weight: bold;
+	}
+	// All Regular Cells
+	td {
+		vertical-align: top;
+		background: $table-default-cell-background-color;
+	}
+	caption {
+		//font-size: $font-size-x-small;
+		//caption-side: bottom;
+		//text-align: center;
+		//margin-top: $space-quarter;
+		text-align: left;
+		font-weight: bold;
+		padding-bottom: 5px;
+	}
+}
+
+.container > table {
+	margin-left: 1%;
+	margin-right: 1%;
+	width: 98%;
+}
+
+figure table {
+	margin-bottom: 0;
+}
+
+// Cell Contents
+table {
+	// The left, right, top, and bottom of each cell should be spaced by cell padding alone
+	td,
+	th {
+		> * {
+			margin-left: 0;
+			margin-right: 0;
+		}
+		// TODO: Consider @include remove-top-bottom-margin();
+		// NOTE: This also removes padding.  
+			// Should this?  Should the mixin?
+		> *:first-child {
+			margin-top: 0;
+			padding-top: 0;
+		}
+		> *:last-child {
+			margin-bottom: 0;
+			padding-bottom: 0;
+		}
+	}
+	// The following elements should be left aligned
+	p,
+	ul,
+	ol,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		text-align: left;
+	}
+}
+
+table:not(.unstyled):not(.minimal) {
+	@extend %defaultTable;
+}
+
+// OutsideBorders
+%defaultTable {
+	tr > *:first-child {
+		border-left: $table-outside-border-color;
+	}
+	tr > *:last-child {
+		border-right: $table-outside-border-color;
+	}
+	thead th {
+		border-top: $table-outside-border-color;
+		border-bottom: $table-header-inside-border-bottom-color;
+	}
+	thead td {
+		border-right: $table-outside-border-color;
+		border-bottom: $table-outside-border-color;
+		border-top: none !important;
+		border-left: none !important;
+	}
+	thead th ~ td {
+		border-left: $table-outside-border-color;
+		border-right: $table-outside-border-color;
+		border-bottom: $table-outside-border-color;
+		border-top: none !important;
+	}
+	tbody tr:last-child > * {
+		border-bottom: $table-outside-border-color;
+	}
+	tbody tr:first-child > * {
+		border-top: $table-outside-border-color;
+	}
+	thead + tbody tr:first-child > * {
+		border-top: none;
+	}
+}
+
+// Inside borders
+%defaultTable {
+	tbody {
+		td:not(:last-child), th {
+			border-right: $table-body-inside-border;
+		}
+		tr:not(:last-child) > td {
+			border-bottom: $table-body-inside-border;
+		}
+	}
+}
+
+// Headers
+%defaultTable {
+	// Column Headers
+	thead {
+		th {
+			background-color: $table-header-cell-background-color;
+			color: $table-header-cell-text-color;
+			text-align: center;
+			padding: $table-cell-padding;
+			&:not(:last-child) {
+				border-right: $table-header-inside-border-color;
+			}
+		}
+	}
+	tbody {
+		th:nth-of-type(1) {
+			background: $table-header-cell-background-color;
+			color: $table-header-cell-text-color;
+		}
+		tr:not(:last-child) {
+			th {
+				border-bottom: $table-header-inside-border-color;
+			}
+		}
+	}
+	// Row Headers
+	thead ~ tbody {
+		th:nth-of-type(1) {
+			background: $table-header-cell-secondary-background-color;
+			color: $table-header-cell-secondary-text-color;
+			vertical-align: top;
+		}
+		tr:not(:last-child) {
+			th {
+				border-bottom: $table-header-inside-border-color;
+			}
+		}
+	}
+	// ERROR, th used outside of the first column of the tbody
+	tbody th:not(:first-child) {
+		background: cyan;
+		color: magenta;
+	}
+}
+
+table.minimal {
+	tbody tr:not(:first-child) {
+		border-top: 1px solid $table-minimal-color;
+	}
+	thead {
+		border-bottom: 3px solid $table-minimal-color;
+	}
+	tbody th:nth-of-type(1) {
+		border-right: 3px solid $table-minimal-color;
+	}
+	&.striped {
+		tr:nth-of-type(even) th {
+			background: $table-stripe-background-color;
+		}
+	}
+}
+
+table.striped {
+	tbody {
+		tr:nth-of-type(even) td {
+			background: $table-stripe-background-color;
+		}
+		// Use this to set the inside borders of striped cells
+		tr:nth-of-type(even) td:not(:last-child) {
+			//border-right: 1px solid white;
+		}
+	}
+}
+
+table.borderless {
+	tbody {
+		td:not(:last-child) {
+			border-right: none !important;
+		}
+		tr:not(:last-child) td {
+			border-bottom: none !important;
+		}
+		tr {
+			border-top: none !important;
+		}
+	}
+}
+
+@mixin tableAlignmentRules() {
+	&.top,
+	&.top * {
+		vertical-align: top !important;
+	}
+	&.bottom,
+	&.bottom * {
+		vertical-align: bottom !important;
+	}
+	&.middle,
+	&.middle * {
+		vertical-align: middle !important;
+	}
+	&.left,
+	&.left * {
+		text-align: left !important;
+	}
+	&.right,
+	&.right * {
+		text-align: right !important;
+	}
+	&.center,
+	&.centre,
+	&.center *,
+	&.centre * {
+		text-align: center !important;
+	}
+}
+
+table {
+	@include tableAlignmentRules();
+}
+thead,
+tbody {
+	@include tableAlignmentRules();
+}
+tr {
+	@include tableAlignmentRules();
+}
+th,
+td {
+	@include tableAlignmentRules();
+}
+
+table.compact {
+	font-size: 14px;
+	line-height: 1.3;
+	td,th {
+		padding: 4px 2px !important;
+	}
+}
+
+// Overflow Scroll
+// Tables should/will be wrapped with <div class="overflow-x"> using javascript
+.overflow-x {
+	overflow-x: auto;
+}
+//
+///////////////////
+//// @see https://lnikki.la/articles/sass-better-colour-based-on-brightness/
+//
+///*
+// * Calculates the sRGB luma of a colour.
+// *
+// * Math nicked from a great Thoughtbot article by Reda Lemeden:
+// * http://robots.thoughtbot.com/closer-look-color-lightness
+// */
+//
+//@function luma($c) {
+//	$-local-red: red(rgba($c, 1.0));
+//	$-local-green: green(rgba($c, 1.0));
+//	$-local-blue: blue(rgba($c, 1.0));
+//	@return (0.2126 * $-local-red + 0.7152 * $-local-green + 0.0722 * $-local-blue) / 255;
+//}
+//
+//
+///*
+// * Picks a colour from two options based on which one is more visible
+// * on the given background colour.
+// *
+// * Usage: pick-visible-color($bg-color, $color-1, $color-2)
+// */
+//
+//@function pick-visible-color($color, $c1, $c2) {
+//	$thisColor: rgba($color, 1);
+//	$thisColor-luma: luma($thisColor);
+//	$c1-luma: luma($c1);
+//	$c2-luma: luma($c2);
+//	//	Mike: Experimenting with producing actual color contrast ratios
+//	//		  The output appears to be slightly inaccurate when compared with Lea Veroux's tool.
+//	//	$white-luma: luma(white);
+//	//
+//	//	@if $thisColor-luma > $white-luma {
+//	//		$ratio: (($thisColor-luma + 0.05)/($white-luma + 0.05));
+//	//		@if $ratio < 1.5 {
+//	//			@debug $color $ratio;
+//	//			@debug "";
+//	//		}
+//	//	} @else {
+//	//		$ratio: ((($white-luma + 0.05)/($thisColor-luma + 0.05)));
+//	//		@if $ratio < 1.5 {
+//	//			@debug $color $ratio;
+//	//			@debug "";
+//	//		}
+//	//	}
+//	$c1-diff: abs($thisColor-luma - $c1-luma);
+//	$c2-diff: abs($thisColor-luma - $c2-luma);
+//	@if $c1-diff > $c2-diff {
+//		@return $c1;
+//	}
+//	@else {
+//		@return $c2;
+//	}
+//}
+//
+//$namedColors: (AliceBlue, AntiqueWhite, Aqua, Aquamarine, Azure, Beige, Bisque, Black, BlanchedAlmond, Blue, BlueViolet, Brown, BurlyWood, CadetBlue, Chartreuse, Chocolate, Coral, CornflowerBlue, Cornsilk, Crimson, Cyan, DarkBlue, DarkCyan, DarkGoldenRod, DarkGray, DarkGrey, DarkGreen, DarkKhaki, DarkMagenta, DarkOliveGreen, DarkOrange, DarkOrchid, DarkRed, DarkSalmon, DarkSeaGreen, DarkSlateBlue, DarkSlateGray, DarkSlateGrey, DarkTurquoise, DarkViolet, DeepPink, DeepSkyBlue, DimGray, DimGrey, DodgerBlue, FireBrick, FloralWhite, ForestGreen, Fuchsia, Gainsboro, GhostWhite, Gold, GoldenRod, Gray, Grey, Green, GreenYellow, HoneyDew, HotPink, IndianRed, Indigo, Ivory, Khaki, Lavender, LavenderBlush, LawnGreen, LemonChiffon, LightBlue, LightCoral, LightCyan, LightGoldenRodYellow, LightGray, LightGrey, LightGreen, LightPink, LightSalmon, LightSeaGreen, LightSkyBlue, LightSlateGray, LightSlateGrey, LightSteelBlue, LightYellow, Lime, LimeGreen, Linen, Magenta, Maroon, MediumAquaMarine, MediumBlue, MediumOrchid, MediumPurple, MediumSeaGreen, MediumSlateBlue, MediumSpringGreen, MediumTurquoise, MediumVioletRed, MidnightBlue, MintCream, MistyRose, Moccasin, NavajoWhite, Navy, OldLace, Olive, OliveDrab, Orange, OrangeRed, Orchid, PaleGoldenRod, PaleGreen, PaleTurquoise, PaleVioletRed, PapayaWhip, PeachPuff, Peru, Pink, Plum, PowderBlue, Purple, RebeccaPurple, Red, RosyBrown, RoyalBlue, SaddleBrown, Salmon, SandyBrown, SeaGreen, SeaShell, Sienna, Silver, SkyBlue, SlateBlue, SlateGray, SlateGrey, Snow, SpringGreen, SteelBlue, Tan, Teal, Thistle, Tomato, Turquoise, Violet, Wheat, White, WhiteSmoke, Yellow, YellowGreen);
+//$namedColorStrings: ("AliceBlue", "AntiqueWhite", "Aqua", "Aquamarine", "Azure", "Beige", "Bisque", "Black", "BlanchedAlmond", "Blue", "BlueViolet", "Brown", "BurlyWood", "CadetBlue", "Chartreuse", "Chocolate", "Coral", "CornflowerBlue", "Cornsilk", "Crimson", "Cyan", "DarkBlue", "DarkCyan", "DarkGoldenRod", "DarkGray", "DarkGrey", "DarkGreen", "DarkKhaki", "DarkMagenta", "DarkOliveGreen", "DarkOrange", "DarkOrchid", "DarkRed", "DarkSalmon", "DarkSeaGreen", "DarkSlateBlue", "DarkSlateGray", "DarkSlateGrey", "DarkTurquoise", "DarkViolet", "DeepPink", "DeepSkyBlue", "DimGray", "DimGrey", "DodgerBlue", "FireBrick", "FloralWhite", "ForestGreen", "Fuchsia", "Gainsboro", "GhostWhite", "Gold", "GoldenRod", "Gray", "Grey", "Green", "GreenYellow", "HoneyDew", "HotPink", "IndianRed", "Indigo", "Ivory", "Khaki", "Lavender", "LavenderBlush", "LawnGreen", "LemonChiffon", "LightBlue", "LightCoral", "LightCyan", "LightGoldenRodYellow", "LightGray", "LightGrey", "LightGreen", "LightPink", "LightSalmon", "LightSeaGreen", "LightSkyBlue", "LightSlateGray", "LightSlateGrey", "LightSteelBlue", "LightYellow", "Lime", "LimeGreen", "Linen", "Magenta", "Maroon", "MediumAquaMarine", "MediumBlue", "MediumOrchid", "MediumPurple", "MediumSeaGreen", "MediumSlateBlue", "MediumSpringGreen", "MediumTurquoise", "MediumVioletRed", "MidnightBlue", "MintCream", "MistyRose", "Moccasin", "NavajoWhite", "Navy", "OldLace", "Olive", "OliveDrab", "Orange", "OrangeRed", "Orchid", "PaleGoldenRod", "PaleGreen", "PaleTurquoise", "PaleVioletRed", "PapayaWhip", "PeachPuff", "Peru", "Pink", "Plum", "PowderBlue", "Purple", "RebeccaPurple", "Red", "RosyBrown", "RoyalBlue", "SaddleBrown", "Salmon", "SandyBrown", "SeaGreen", "SeaShell", "Sienna", "Silver", "SkyBlue", "SlateBlue", "SlateGray", "SlateGrey", "Snow", "SpringGreen", "SteelBlue", "Tan", "Teal", "Thistle", "Tomato", "Turquoise", "Violet", "Wheat", "White", "WhiteSmoke", "Yellow", "YellowGreen");
+//@each $color in $namedColorStrings {
+//	$index: index($namedColorStrings, $color);
+//	$namedColor: nth($namedColors, $index);
+//	$string: to-lower-case($color);
+//	$alt: pick-visible-color($namedColor, #333333, #ccc);
+//	.fg-#{$string},
+//	.fg-#{$color} {
+//		color: $namedColor;
+//		background: $alt;
+//	}
+//	.bg-#{$string},
+//	.bg-#{$color} {
+//		color: $alt;
+//		background: $namedColor;
+//	}
+//}

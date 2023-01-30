@@ -1,0 +1,39 @@
+.swapper {
+	position: relative;
+	overflow: visible;
+	z-index: 999999;
+	max-width: $container-width-small;
+	margin: 0 auto;
+	
+	>*:not(.button-box) {
+		margin-top: 0px !important;
+		top: 0;
+	}
+	.button-box {
+		background: rgba(255, 255, 255, 0.8);
+		margin: 0 auto;
+		position: relative;
+		left: 50%;
+		transform: translateX(-50%);
+		display: inline-block;
+		border-radius: 5px;
+		padding: 10px;
+		.display {
+			margin: 0 10px;
+			font-weight: bold;
+			color: $primary-color;
+		}
+		button {
+			@extend .btn;
+			margin: 0;
+			display: inline;
+			padding: 10px;
+		}
+	}
+}
+
+.swapper {
+	> .accordion > h2:first-of-type {
+		margin-top: 0px !important;
+	}
+}

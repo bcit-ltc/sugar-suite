@@ -1,0 +1,134 @@
+dl {
+	padding: 1em;
+	dt {
+		font-weight: bold;
+		display: inline;
+		margin-right: 2%;
+		float: left;
+		color: $complement-color;
+		&:after {
+			content: ":";
+		}
+	}
+	dd {
+		margin-left: 4%;
+		padding: 0 0 0.5em 0;
+	}
+}
+
+ol,
+ul {
+	clear: left;
+	&>*:first-child {
+		margin-top: $space-half;
+	}
+}
+
+li {
+    @include remove-top-bottom-margin();
+	margin-bottom: $space-two-third;
+	p {
+		margin-bottom: $space-half;
+	}
+}
+
+//Ordererd list style stack
+ol>li>ol>li {
+	list-style-type: lower-alpha;
+	>ol>li {
+		list-style-type: lower-roman;
+	}
+}
+
+// Change the style of a list using a class rather than type attribute
+ol,
+ul {
+	&.unstyled>li {
+		list-style-type: none !important;
+	}
+	&.disc>li {
+		list-style-type: disc !important;
+	}
+	&.armenian>li {
+		list-style-type: armenian !important;
+	}
+	&.circle>li {
+		list-style-type: circle !important;
+	}
+	&.decimal>li {
+		list-style-type: decimal !important;
+	}
+	&.georgian>li {
+		list-style-type: georgian !important;
+	}
+	&.hebrew>li {
+		list-style-type: hebrew !important;
+	}
+	&.hiragana>li {
+		list-style-type: hiragana !important;
+	}
+	&.katakana>li {
+		list-style-type: katakana !important;
+	}
+	&.none>li {
+		list-style-type: none !important;
+	}
+	&.square>li {
+		list-style-type: square !important;
+	}
+	&.initial>li {
+		list-style-type: initial !important;
+	}
+	&.inherit>li {
+		list-style-type: inherit !important;
+	}
+	&.cjk-ideographic>li {
+		list-style-type: cjk-ideographic !important;
+	}
+	&.decimal-leading>li {
+		list-style-type: decimal-leading !important;
+	}
+	&.hiragana-iroha>li {
+		list-style-type: hiragana-iroha !important;
+	}
+	&.katakana-iroha>li {
+		list-style-type: katakana-iroha !important;
+	}
+	&.lower-alpha>li {
+		list-style-type: lower-alpha !important;
+	}
+	&.lower-greek>li {
+		list-style-type: lower-greek !important;
+	}
+	&.lower-latin>li {
+		list-style-type: lower-latin !important;
+	}
+	&.lower-roman>li {
+		list-style-type: lower-roman !important;
+	}
+	&.upper-alpha>li {
+		list-style-type: upper-alpha !important;
+	}
+	&.upper-latin>li {
+		list-style-type: upper-latin !important;
+	}
+	&.upper-roman>li {
+		list-style-type: upper-roman !important;
+	}
+}
+
+ol.legal {
+	counter-reset: section;
+	ol {
+		counter-reset: section;
+	}
+	li {
+		list-style-type: none;
+		&:before {
+			content: counters(section, ".")".";
+			counter-increment: section;
+			margin-left: -15px;
+			margin-right: 15px;
+		}
+	}
+}

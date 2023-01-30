@@ -1,0 +1,59 @@
+.shape-outside {
+	shape-image-threshold: 0.7;
+	float: left;
+	shape-margin: 15px;
+	clear: both;
+}
+
+.shape-outside.right {
+	float: right;
+}
+
+.container2 {
+	max-width: 700px;
+	margin: auto;
+	padding: 30px;
+}
+
+img {
+	transition: all .5s ease;
+}
+
+.left {
+	float: left;
+}
+
+.left50 {
+	float: left;
+	margin-left: -50%;
+}
+
+.right25 {
+	float: right;
+	margin-right: -25%;
+}
+
+.right {
+	float: right;
+}
+
+.widest {
+	width: 100%;
+}
+
+.widest.active {
+	position: absolute;
+	left: 0;
+}
+
+.saturate {
+	filter: saturate(200%);
+}
+
+.drop-shadow {
+	filter: drop-shadow(5px 5px 8px rgba(120, 120, 120, 0.7));
+}
+
+.old-photo {
+	filter: grayscale(20%) sepia(30%) saturate(50%) brightness(120%) contrast(200%) blur(1px);
+}

@@ -1,0 +1,21 @@
+.under-construction {
+	&:before {
+		content: "Under Construction!\A Changes to this page will be lost";
+		white-space: pre; // required to line-break \A in content
+		color: black;
+		border-radius: 25px;
+		z-index: 999999999;
+		display: block;
+		width: 520px;
+		height: 100px;
+		background: #ffff08;
+		margin: 25px auto;
+		text-align: center;
+		font-size: 30px;
+		border: 5px dashed black;
+		font-style: italic;
+		font-weight: bold;
+	}
+	
+	@include showDeveloperComments();
+}

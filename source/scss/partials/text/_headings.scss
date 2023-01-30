@@ -1,0 +1,67 @@
+$h1-color: $primary-color-light !default;
+$h2-color: inherit !default;
+$h3-color: $primary-color !default;
+$h4-color: $primary-color-dark !default;
+$h5-color: $secondary-color-darker !default;
+$h6-color: $secondary-color-dark !default;
+
+$h1-size: $font-size-large-2;
+$h2-size: $font-size-med-2;
+$h3-size: $font-size-small-2;
+$h4-size: $font-size-small;
+$h5-size: $font-size-small;
+$h6-size: $font-size-small;
+
+h1, .heading1 {
+	font-size: $h1-size;
+	font-weight: 400;
+	line-height: 1.2em;
+	padding-bottom: $pad-half;
+	margin: $space 0;
+	border-bottom: 3px solid $h1-color;
+}
+
+h2, .heading2 {
+	color: $h2-color;
+	font-size: $h2-size;
+	font-weight: 400;
+	margin: $space-and-half 0 $space 0;
+}
+
+h3, .heading3 {
+	color: $h3-color;
+	font-size: $h3-size;
+	font-weight: 600;
+	margin: $space 0 $space-half 0;
+}
+
+h4, .heading4 {
+	color: $h4-color;
+	font-size: $h4-size;
+	font-weight: 600;
+	margin: $space-and-half 0 $space 0;
+}
+
+h5, .heading5 {
+	color: $h5-color;
+	font-size: $h5-size;
+	font-style: italic;
+	font-weight: 600;
+	
+}
+
+h6, .heading6 {
+	color: $h6-color;
+	font-size: $h6-size;
+	font-style: italic;
+	font-weight: 500;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	clear: both;
+}

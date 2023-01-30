@@ -1,0 +1,25 @@
+button#night-mode {
+	position: fixed;
+	top: 20px;
+	right: 10px;
+	background: transparent;
+	border: none;
+	outline: none;
+		z-index: 99999;
+	&:before {
+		font-size: 20px;
+		font-family: FontAwesome;
+		content: "\f186";
+		color: rgba(0, 0, 0, 0.075);
+	}
+	&.active:before {
+		content: "\f185";
+	}
+}
+
+// TODO: Add to new class
+.night-mask {
+	@include media("print") {
+		display: none !important;
+	}
+}
