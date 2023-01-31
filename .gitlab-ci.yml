@@ -99,9 +99,9 @@ variables: # other global variables are set in GitLab Admin
   #
   #   - see https://infrastructure-documentation.dev.ltc.bcit.ca/ for additional info.
   #
-  # DEPLOY_PKG_INIT: "true"       # to create an initial project deployment package
+  DEPLOY_PKG_INIT: "true"       # to create an initial project deployment package
   # DEPLOY_PKG_PROJECT_ID: '481'
-  PIPELINE_DEBUG: "false"
+  PIPELINE_DEBUG: "true"
 #
 ## ---------- It's generally bad to change anything below here ----------
 #
