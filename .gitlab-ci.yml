@@ -1,17 +1,18 @@
-# Default LTC GitLab CI/CD Source Project Pipeline
+# LTC GitLab CI/CD Source Project Pipeline
 #
 ## Requirements
-#   - this file, with "CLUSTER_NAME" set (bottom of script)
-#   - a working `Dockerfile` in this project's root
-#   - GitLab project "Shared Runners" need to be enabled (see Settings > CICD > Runners)
-#   - GitLab project Merge Requests, CICD, and Container Registry all need to be enabled
-#   - a deployment package for cluster deployment (see docs)
+#   - this file
+#   - a working `Dockerfile`
+#   - a deployment package (see https://infrastructure-documentation.ltc.bcit.ca/)
 #
 ## General Pipeline Steps
 #   1. Gather info
-#   2. Build Image
+#   2. Build image
 #   3. Deploy to a cluster
-#     - main branch deploys to latest/production; other branches deploy to a dev cluster for review
+#     - development branches        => https://review.ltc.bcit.ca/{projectName}/{branchName}
+#     - main branch                 => https://latest.ltc.bcit.ca/{projectName}
+#     - tagged commits on main      => https://stable.ltc.bcit.ca/{projectName}
+#     - (optional public endpoint)  => https://{projectName}.ltc.bcit.ca/
 
 stages:
   - get info
@@ -20,14 +21,13 @@ stages:
   - cleanup
 
 ## Project initialization
-#   - a project access token is required and created on the first run. If the pipeline fails,
-#     please wait 5 minutes and re-try after a token has been created.
+#   - a project access token is required; if it doesn't exist it is created on the first run
 project init:
   stage: get info
   extends:
     - ".project_init"
 
-## Determine if there are existing git tags or a new tag is required
+## Are there existing git tags? Is a new tag required?
 get info:
   stage: get info
   extends:
@@ -40,18 +40,19 @@ build image:
     - ".build_image"
     - ".build_image_rules"
 
-## Deploy feat/fix branch package to dev cluster for review
-#   - uses a deployment package with a `dev` overlay (generic-dev is used if one hasn't been initialized)
+## Deploy to a development branch for review
+#   - uses a deployment package with a `review` overlay
+#   - `generic-dev` deployment package is used if one hasn't been initialized
 deploy review:
   stage: publish
   variables:
-    TARGET_ENV: dev
+    TARGET_ENV: review
   extends:
     - ".deploy_review"
     - ".deploy_review_rules"
 
-## Deploy latest/production packages
-#   - must have a deployment package with `latest` and `production` overlays
+## Deploy latest/stable packages
+#   - must have a deployment package with `latest` and `stable` overlays
 #   - triggers pipelines in GitLab "Deployments/{projectName}" project
 deploy to latest:
   stage: publish
@@ -62,24 +63,20 @@ deploy to latest:
     - ".deploy_latest_rules"
   environment:
     name: latest
-    url: https://${LATEST_HOST}/$CI_PROJECT_NAME
-  tags:
-    - latest
+    url: https://${HOST_LATEST}/$CI_PROJECT_NAME
 
-deploy to production:
+deploy to stable:
   stage: publish
   variables:
-    TARGET_ENV: production
+    TARGET_ENV: stable
   extends:
     - ".deploy"
-    - ".deploy_prod_rules"
+    - ".deploy_stable_rules"
   environment:
-    name: production
-    url: https://${PROD_HOST}/${CI_PROJECT_NAME}
-  tags:
-    - production
+    name: stable
+    url: https://${HOST_STABLE}/${CI_PROJECT_NAME}
 
-## Removes dev cluster review (and all assets in the review branch namespace)
+## Removes review branch (and all assets in the review branch namespace)
 stop review:
   stage: cleanup
   extends:
@@ -89,21 +86,39 @@ stop review:
 #
 ## ---------- Pipeline configuration ----------
 #
-variables: # other global variables are set in GitLab Admin
-  CLUSTER_NAME: dev-cp              # options: dev-cp, dev-vsm
-  # GENERIC_DEPLOYMENT: 'true'
+variables:
+  #
+  # other global variables are set in GitLab Admin
+  #
+  # GENERIC_DEPLOYMENT: "true"
   #
   #   - if GENERIC_DEPLOYMENT is set to anything but "true", the pipeline expects a deployment package
-  #     to exist in the "Deployments" GitLab group. Create a deployment package following the
-  #     guide in "Deployments/CI Config".
+  #     to exist in the GitLab "Deployments" group. Create a deployment package following the
+  #     guide at https://infrastructure-documentation.ltc.bcit.ca/.
   #
-  #   - see https://infrastructure-documentation.dev.ltc.bcit.ca/ for additional info.
   #
-  # DEPLOY_PKG_INIT: "true"       # to create an initial project deployment package
-  DEPLOY_PKG_PROJECT_ID: '482'
-  # PIPELINE_DEBUG: "true"
+  # Set DEPLOY_PKG_INIT=true to create an initial project deployment package. Then unset GENERIC_DEPLOYMENT and
+  # add the deployment package project ID below
+  #
+  # DEPLOY_PKG_INIT: "true"
+  DEPLOY_PKG_PROJECT_ID: "482"
+  #
+  # Set COMMON_NAMESPACE to combine apps into one namespace.
+  # COMMON_NAMESPACE: ""
+  #
+  # Deploy DEV package to common namespace (default=branch name)
+  # COMMON_NAMESPACE_OVERRIDE: "true"
+  #
+  # Set SKIP_BUILD to skip the build stage and deploy the latest image
+  # SKIP_BUILD: "true"
+  #
+  PIPELINE_DEBUG: "true"
+#
+#
 #
 ## ---------- It's generally bad to change anything below here ----------
+#
+#
 #
 ## Include common scripts
 include:
@@ -113,29 +128,27 @@ include:
       - get-info.yml
       - build.yml
       - deploy.yml
-      - ".deploy-hydrate.yml"
+      - ".common-utilities.yml"
       - ".vault.yml"
-      - ".rules.yml"
+      - ".source-utilities.yml"
+      - rules.yml
       - SAST.gitlab-ci.yml
       - Secret-Detection.gitlab-ci.yml
 
 ## Specify which runner should pick up pipeline jobs
 default:
   tags:
-    - "${CLUSTER_NAME}"
+    - utility
 
+## Cache jobs based on branch
 cache:
-  key:
-    files:
-      - package-lock.json
-  paths:
-    - .npm/
+  key: $CI_COMMIT_REF_SLUG
 
 ## Configure security scanning
 sast:
   stage: test
   extends:
-    - ".deploy_prod_rules"
+    - ".deploy_stable_rules"
 
 ## Configure merge request pipelines
 workflow:
