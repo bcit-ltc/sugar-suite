@@ -77,6 +77,15 @@
                 margin: 0.2em 0;
             }
 
+            .matching-item-contents {
+                overflow: hidden;
+                cursor: pointer;
+
+                img {
+                    cursor: pointer !important;
+                }
+            }
+
             @media only screen and (max-width: 780px) {
                 margin-left: 2.5px;
                 margin-right: 2.5px;
@@ -108,25 +117,25 @@
         }
 
         $colors: #e0ac00,
-        $bcit-fraser,
-        $bcit-moss,
-        $bcit-temlh,
-        $bcit-dusk,
-        $bcit-sky,
-        #97e2c0,
-        #eb9c90,
-        #be5892,
-        #565c3c,
-        #738589,
-        #aa7b25,
-        #699751,
-        #b06c92,
-        #778eb7,
-        #8ec62f,
-        #e5bd4d,
-        #d54b14,
-        #765eb8,
-        #e2739f;
+            $bcit-fraser,
+            $bcit-moss,
+            $bcit-temlh,
+            $bcit-dusk,
+            $bcit-sky,
+            #97e2c0,
+            #eb9c90,
+            #be5892,
+            #565c3c,
+            #738589,
+            #aa7b25,
+            #699751,
+            #b06c92,
+            #778eb7,
+            #8ec62f,
+            #e5bd4d,
+            #d54b14,
+            #765eb8,
+            #e2739f;
 
         @mixin colourClick {
 

@@ -85,14 +85,18 @@
         myWindow = parent.window;
     }
     let isMobile = $(myWindow).width() < 780; // to determine if we need to hide the line in line-matching
-
-    $(".line-matching").each(initLineMatching).promise().done(function () {
-        /* if (window.self !== window.top) {
-            resizeDiv(); // d2l iframe
-        } */
-
+    $(window).on("load", function () {
+        $(".line-matching").each(initLineMatching);
     });
 
+    /*
+    $(".line-matching").each(initLineMatching).promise().done(function () {
+         if (window.self !== window.top) {
+            resizeDiv(); // d2l iframe
+        } 
+    });
+    */
+   
     // process all .line-matching setups
     function initLineMatching() {
         var $matching = $(this); // this paticular line matching interaction in the dom
@@ -235,10 +239,6 @@
         });
     }
 
-    // TODO: style this new class with SASS
-    $(".matching-item-contents").css({
-        "overflow": "hidden"
-    });
 
     var prevWidth = $(myWindow).width();
 
@@ -250,81 +250,81 @@
 
     });
 
-/*     function resizeDiv() {
-        $(".line-matching").find(".matching-item").each(function () {
-            let $matchingItem = $(this);
-            if (prevWidth < $(myWindow).width()) {
-                normalizeSize($matchingItem);
-            } else {
-                decreaseFontSize($matchingItem);
-            }
-
-        });
-        prevWidth = $(myWindow).width();
-    }
-
-    function normalizeSize($matchingItem) {
-        $matchingItem.children().each(function () {
-            $(this).css("font-size", "initial");
-            if ($(this).is("figure, img, video")) {
-                if ($(this).is("figure")) {
-                    $(this).children("img, video").css("height", "initial");
-                    if ($(this).find(".video-wrapper").length) {
-                        $(this).css("width", "initial");
-                    }
+    /*     function resizeDiv() {
+            $(".line-matching").find(".matching-item").each(function () {
+                let $matchingItem = $(this);
+                if (prevWidth < $(myWindow).width()) {
+                    normalizeSize($matchingItem);
                 } else {
-                    $(this).css("height", "initial");
+                    decreaseFontSize($matchingItem);
                 }
-            }
-        }).promise().done(function () {
-            decreaseFontSize($matchingItem);
-        });
-    }
-
-    // TODO: fix with the new container element within each matching item
-    function decreaseFontSize($matchingItem) {
-        let isOverflow;
-        let childsHeight = 0;
-        $matchingItem.children().not(".connector-line").each(function () {
-            childsHeight += $(this).height();
-        });
-        $matchingItem.children().not(".connector-line").each(function () {
-            isOverflow = childsHeight > 132;
-            if (isOverflow) {
-                if ($(this).is("figure, img, video, audio")) {
+    
+            });
+            prevWidth = $(myWindow).width();
+        }
+    
+        function normalizeSize($matchingItem) {
+            $matchingItem.children().each(function () {
+                $(this).css("font-size", "initial");
+                if ($(this).is("figure, img, video")) {
                     if ($(this).is("figure")) {
-                        let newSize = parseInt($(this).children("img, video").height()) - 20;
-                        $(this).children("img, video").css("height", newSize + "px");
+                        $(this).children("img, video").css("height", "initial");
                         if ($(this).find(".video-wrapper").length) {
-                            $(this).css("width", parseInt($(this).width()) - 20);
+                            $(this).css("width", "initial");
                         }
                     } else {
-                        let newSize = parseInt($(this).height()) - 20;
-                        $(this).css("height", newSize + "px");
+                        $(this).css("height", "initial");
                     }
                 }
-                let newFontSize = parseInt($(this).css("font-size")) - 0.5;
-                if (newFontSize >= 3) {
-                    $(this).css("font-size", newFontSize + "px");
-                }
-
-                childsHeight = 0;
-                $matchingItem.children().not(".connector-line").each(function () {
-                    childsHeight += $(this).height();
-                });
-
-                if (childsHeight > 132) {
-                    isOverflow = true;
-                } else {
-                    isOverflow = false;
-                }
-            }
-        });
-        if (isOverflow) {
-            //decreaseFontSize($matchingItem);
-            // TODO: find out why we're repeatedly "overflowing"
+            }).promise().done(function () {
+                decreaseFontSize($matchingItem);
+            });
         }
-    } */
+    
+        // TODO: fix with the new container element within each matching item
+        function decreaseFontSize($matchingItem) {
+            let isOverflow;
+            let childsHeight = 0;
+            $matchingItem.children().not(".connector-line").each(function () {
+                childsHeight += $(this).height();
+            });
+            $matchingItem.children().not(".connector-line").each(function () {
+                isOverflow = childsHeight > 132;
+                if (isOverflow) {
+                    if ($(this).is("figure, img, video, audio")) {
+                        if ($(this).is("figure")) {
+                            let newSize = parseInt($(this).children("img, video").height()) - 20;
+                            $(this).children("img, video").css("height", newSize + "px");
+                            if ($(this).find(".video-wrapper").length) {
+                                $(this).css("width", parseInt($(this).width()) - 20);
+                            }
+                        } else {
+                            let newSize = parseInt($(this).height()) - 20;
+                            $(this).css("height", newSize + "px");
+                        }
+                    }
+                    let newFontSize = parseInt($(this).css("font-size")) - 0.5;
+                    if (newFontSize >= 3) {
+                        $(this).css("font-size", newFontSize + "px");
+                    }
+    
+                    childsHeight = 0;
+                    $matchingItem.children().not(".connector-line").each(function () {
+                        childsHeight += $(this).height();
+                    });
+    
+                    if (childsHeight > 132) {
+                        isOverflow = true;
+                    } else {
+                        isOverflow = false;
+                    }
+                }
+            });
+            if (isOverflow) {
+                //decreaseFontSize($matchingItem);
+                // TODO: find out why we're repeatedly "overflowing"
+            }
+        } */
 
     function recalculateLine() {
         isMobile = $(myWindow).outerWidth() < 780;
@@ -352,9 +352,9 @@
         }
 
         $lines.each(function () {
-            let $line = $(this); 
+            let $line = $(this);
             var offset = $line.closest(".line-matching-container").offset();
-            let classNum = $line.attr("class").match(/line-[0-9]{1,}/g)[0].split('-')[1];      
+            let classNum = $line.attr("class").match(/line-[0-9]{1,}/g)[0].split('-')[1];
             let $from = $line.parent();
             let $to = $from.parent().next().find(".clicked-item-" + classNum);
             let $prevLines = $line.prevAll('.line-' + classNum);
@@ -366,7 +366,7 @@
                 // If line is one to one or only one of the answers is clicked
                 $to = $to.eq(0);
             }
-     
+
             let answerPosition = $to.offset();
             let offsetX = answerPosition.left - $line.offset().left + $line.parent().position().left;
             let offsetY = answerPosition.top - offset.top - ($line.parent()[0].offsetTop + ($line.parent().outerHeight() / 2)) + ($to.outerHeight() / 2);
@@ -429,7 +429,7 @@
     // the click event function to determine what happens to each matching item, each time we click on them.
     function matchingClickEvent(clickEvent, clickObject, matchingObject) {
         // if object already have a match, return
-        if (clickObject.is('[class*=clicked-item-]')){
+        if (clickObject.is('[class*=clicked-item-]')) {
             return;
         }
 
