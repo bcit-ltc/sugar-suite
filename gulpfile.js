@@ -69,7 +69,7 @@ function scripts() {
 		}))
 		.pipe(jshint.reporter(jshintReporter))
 		.pipe(gulpif(jshintSuccess, uglify()))
-		.pipe(concat('sugar-suite-v1.js'))
+		.pipe(concat('lat.js'))
 		.pipe(sourcemaps.write('maps'))
 		.pipe(gulp.dest('./js/'))
 		.pipe(browserSync.stream());
