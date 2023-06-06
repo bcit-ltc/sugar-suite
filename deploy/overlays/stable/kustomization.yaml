@@ -11,7 +11,7 @@ commonLabels:
 
 commonAnnotations:
   version: stable # {"$imagepolicy": "flux-system:sugar-suite:tag"}
-  tab: ${GIT_TAG:=stable}
+  tag: ${GIT_TAG:=stable}
 
 configMapGenerator:
   - name: elasticapm-config
