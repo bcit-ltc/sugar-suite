@@ -6,11 +6,11 @@ resources:
 commonLabels:
   environment: latest
 commonAnnotations:
-  version: 1.0.10-31544a35--2023-06-06.1686011305 # {"$imagepolicy": "sugar-suite:sugar-suite:tag"}
+  version: 1.0.10-622d0c7b--2023-06-06.1686011725 # {"$imagepolicy": "sugar-suite:sugar-suite:tag"}
 images:
   - name: "sugar-suite"
     newName: "registry.ltc.bcit.ca/web-apps/sugar-suite"
-    newTag: "1.0.10-31544a35--2023-06-06.1686011305" # {"$imagepolicy": "sugar-suite:sugar-suite:tag"}
+    newTag: "1.0.10-622d0c7b--2023-06-06.1686011725" # {"$imagepolicy": "sugar-suite:sugar-suite:tag"}
 # Generates elasticapm config
 #
 configMapGenerator:
