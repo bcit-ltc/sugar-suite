@@ -1,0 +1,27 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namePrefix: sugar-suite-
+
+resources:
+  - serviceaccount.yaml
+  - ./nginx-unprivileged
+  - ingress.yaml
+
+commonLabels:
+  app: sugar-suite
+  app.kubernetes.io/name: sugar-suite
+
+patches:
+  - target:
+      kind: Deployment
+    patch: |-
+      - op: replace
+        path: /spec/template/spec/containers/0/image
+        value: sugar-suite
+      - op: replace
+        path: /spec/template/spec/containers/0/name
+        value: sugar-suite
+      - op: add
+        path: /spec/template/spec/serviceAccountName
+        value: sugar-suite-serviceaccount
