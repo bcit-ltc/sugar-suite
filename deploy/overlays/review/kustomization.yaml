@@ -16,7 +16,7 @@ commonAnnotations:
 
 images:
 - name: sugar-suite
-  newName: ${IMAGE_NAME:=registry.ltc.bcit.ca/ltc-infrastructure/sugar-suite}
+  newName: ${IMAGE_NAME:=registry.ltc.bcit.ca/web-apps/sugar-suite}
   newTag: ${IMAGE_TAG:=stable}
 
 patches:

@@ -18,5 +18,5 @@ commonAnnotations:
   version: 2.4.1-8b09e849--2023-04-22--944 # {"$imagepolicy": "flux-system:sugar-suite-web:tag"}
 images:
   - name: "sugar-suite"
-    newName: "registry.ltc.bcit.ca/ltc-infrastructure/sugar-suite"
+    newName: "registry.ltc.bcit.ca/web-apps/sugar-suite"
     newTag: "2.4.1-8b09e849--2023-04-22--944" # {"$imagepolicy": "flux-system:sugar-suite-web:tag"}
