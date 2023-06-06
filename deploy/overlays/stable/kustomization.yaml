@@ -10,15 +10,15 @@ commonLabels:
   environment: stable
 
 commonAnnotations:
-  version: stable # {"$imagepolicy": "flux-system:sugar-suite:tag"}
-  tag: ${GIT_TAG:=stable}
+  version: stable # {"$imagepolicy": "sugar-suite:sugar-suite:tag"}
 
-configMapGenerator:
-  - name: elasticapm-config
-    literals:
-      - ELASTIC_APM_SERVICE_NAME=sugar-suite-stable
-      - ELASTIC_APM_SERVER_URL=https://bcit-ltc.apm.westus2.azure.elastic-cloud.com
+images:
+  - name: "sugar-suite"
+    newName: "registry.ltc.bcit.ca/web-apps/sugar-suite"
+    newTag: "stable" # {"$imagepolicy": "sugar-suite:sugar-suite:tag"}
 
+# Adds elasticapm config to deployment
+#
 patches:
   - target:
       kind: Deployment
@@ -27,7 +27,11 @@ patches:
         path: /spec/template/spec/containers/0/envFrom
         value: [{"configMapRef": {"name":"elasticapm-config"}}]
 
-images:
-  - name: "sugar-suite"
-    newName: "registry.ltc.bcit.ca/web-apps/sugar-suite"
-    newTag: "stable" # {"$imagepolicy": "flux-system:sugar-suite:tag"}
+
+# Generates elasticapm config
+#
+configMapGenerator:
+  - name: elasticapm-config
+    literals:
+      - ELASTIC_APM_SERVICE_NAME=sugar-suite-stable
+      - ELASTIC_APM_SERVER_URL=https://bcit-ltc.apm.westus2.azure.elastic-cloud.com

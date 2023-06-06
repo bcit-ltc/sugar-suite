@@ -24,8 +24,8 @@ patches:
   - target:
       kind: Ingress
     path: ingress-patch.yaml
-    # Adds elasticapm config to deployment
-    #
+  # Adds elasticapm config to deployment
+  #
   - target:
       kind: Deployment
     patch: |-
