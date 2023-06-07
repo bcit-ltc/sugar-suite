@@ -1,0 +1,23 @@
+$size-largest: 2000px;
+$size-larger: 1100px;
+$size-large: 900px;
+
+
+%custom-max-width {
+
+	&.full-width {
+		max-width: 100% !important;
+	}
+
+	&.largest {
+		max-width: 95% !important;
+	}
+
+	&.larger {
+		max-width: 90% !important;
+	}
+
+	&.large {
+		max-width: 85% !important;
+	}
+}

@@ -26,34 +26,49 @@ $a: $note-link-active-color;
 	border-radius: 4px;
 	color: $note-foreground-color;
 	@include love-hate($l, $v, $h, $a);
+
 	&:before {
 		border: 5px solid $note-icon-border-color;
 	}
+
+	&.large, &.larger, &.largest, &.full-width {
+		&:before {
+			border: 5px solid $note-icon-border-color;
+		}
+	}
+}
+
+.example,
+.definition,
+.key-point,
+.link,
+.note,
+.warning {
+	@extend %note;
+	@extend %custom-max-width;
+
 }
 
 .example {
-	@extend %note;
 	@include icon-path($note-example-icon);
 }
+
 .definition {
-	@extend %note;
 	@include icon-path($note-definition-icon);
 }
+
 .key-point {
-	@extend %note;
 	@include icon-path($note-key-point-icon);
 }
+
 .link {
-	@extend %note;
 	@include icon-path($note-link-icon);
 }
 
 .note {
-	@extend %note;
 	@include icon-path($note-note-icon);
 }
 
 .warning {
-	@extend %note;
 	@include icon-path($note-warning-icon);
 }

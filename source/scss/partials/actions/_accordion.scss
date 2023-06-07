@@ -9,6 +9,7 @@ $accordion-panel-border-color: $secondary-color !default;
 //Accordion Main Styles
 .accordion,
 .accordion-alt {
+	@extend %custom-max-width;
 	position: relative;
 	color: $accordion-text-color;
 	margin-bottom: $space;
