@@ -6,7 +6,7 @@ $icon-large: 3em;
 	&:before {
 		background-image: $icon;
 	}
-	
+
 	// Create a class that can be accessed with JS
 	&__icon {
 		background-image: $icon;
@@ -36,10 +36,10 @@ $icon-large: 3em;
 
 // Contents
 %base-container {
-	> * {
+	>* {
 		margin-bottom: $space-and-half;
 	}
-	
+
 	@include heading(1) {
 		@extend .heading3;
 		border-bottom: none;
@@ -76,22 +76,25 @@ $icon-large: 3em;
 		background-position: center;
 		transition: left 1.5s ease, top 1.2s ease, transform 0.3s ease, border 1.2s ease, background-size 1.2s ease, border 1.2s ease, padding 1.2s ease;
 	}
+
 	&:hover:before {
 		transform: translate(-50%, -50%) scale(1.1);
 	}
 }
 
 // Icon Behaviour when direct child of .container
-.container > %base-container {
+.container>%base-container {
+
 	// Medium: Increase size of icon
 	@include media("screen", ">650px") {
 		padding-top: 50px;
+
 		&:before {
 			background-size: $icon-large;
 			padding: $icon-large / 2 * 1.5;
 		}
 	}
-	
+
 	// Large: Move icon to left of the container
 	@include media("screen", ">939px") {
 		padding-top: $pad-double;
@@ -101,6 +104,16 @@ $icon-large: 3em;
 			left: -50px;
 			top: 70px;
 			border: 0px solid transparent;
+		}
+
+		&.large, &.larger, &.largest, &.full-width {
+			padding-top: $space-quad;
+			margin-top: $space-quad;
+			&:before {
+				box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+				left: 50%;
+				top: 0;
+			}
 		}
 	}
 }

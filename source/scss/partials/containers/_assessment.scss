@@ -27,11 +27,17 @@ $a: $assessment-link-active-color;
 		border: 5px solid $secondary-color;
 		//border: 5px solid $assessment-icon-border-color;
 	}
+	&.large, &.larger, &.largest, &.full-width {
+		&:before {
+			border: 5px solid $secondary-color;
+		}
+	}
 }
 
 .assignment,
 .quiz {
 	@extend %assessment;
+	@extend %custom-max-width;
 }
 
 .assignment {
