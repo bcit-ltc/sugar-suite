@@ -19,11 +19,12 @@ var jshintrc = JSON.parse(fs.readFileSync("./.jshintrc").toString());
 
 var sassSources = config.sassSources;
 var jsSources = config.jsSources;
+var jsVendorSources = config.jsVendorSources;
 var experimentalSources = config.experimentalSources;
 var htmlSources = config.htmlSources;
 
 // Build files once
-gulp.task('build', gulp.series(css, scripts, experimental));
+gulp.task('build', gulp.series(css, scripts, jsVendor, experimental));
 
 // Watch and build files on change
 gulp.task('watch', gulp.series('build', function () {
@@ -34,6 +35,7 @@ gulp.task('watch', gulp.series('build', function () {
 	gulp.watch(htmlSources).on('change', browserSync.reload);
 	gulp.watch(sassSources, gulp.series(css));
 	gulp.watch(jsSources, gulp.series(scripts));
+	gulp.watch(jsVendorSources, gulp.series(jsVendor));
 	gulp.watch(experimentalSources, gulp.series(experimental));
 }));
 
@@ -75,6 +77,15 @@ function scripts() {
 		.pipe(browserSync.stream());
 }
 exports.scripts = scripts;
+
+
+function jsVendor() {
+	return gulp.src(jsVendorSources)
+		.pipe(gulp.dest('./js/vendor/'))
+		.pipe(browserSync.stream());
+}
+exports.scripts = jsVendor;
+
 
 function experimental() {
 	return gulp.src(experimentalSources)

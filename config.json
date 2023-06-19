@@ -9,6 +9,9 @@
 		"source/js/features/*.js",
 		"!source/js/features/-WIP-*.js"
 	],
+	"jsVendorSources": [
+		"source/js/vendor/*.js"
+	],
 	"experimentalSources": [
 		"source/experimental/js/*.js",
 		"!source/experimental/js/-WIP-*.js"
