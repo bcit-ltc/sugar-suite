@@ -107,11 +107,11 @@ figure {
 	margin-left: auto;
 }
 
-$image-margin: $wall-margin/100%;
+$image-margin: calc($wall-margin/100%);
 @function getScreenWidth($figure-size, $margin: $image-margin) {
-	$x: (2 * ($figure-size + $min-text-width) - $paragraph-size)/(1 - 2 * $margin);
+	$x: calc((2 * ($figure-size + $min-text-width) - $paragraph-size)/(1 - 2 * $margin));
 	@if($x < $paragraph-size) {
-		$x: ($figure-size + $min-text-width)/(1 - $margin);
+		$x: calc(($figure-size + $min-text-width)/(1 - $margin));
 	}
 	//@debug $x;
 	@return $x;

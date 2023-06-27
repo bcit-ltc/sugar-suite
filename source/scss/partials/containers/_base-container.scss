@@ -67,7 +67,7 @@ $icon-large: 3em;
 		top: 0;
 		left: 50%;
 		transform: translate(-50%, -50%);
-		padding: $icon-small / 2 * 1.5;
+		padding: calc($icon-small / 2 * 1.5);
 		border-radius: 50%;
 		box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
 		background-size: $icon-small;
@@ -91,7 +91,7 @@ $icon-large: 3em;
 
 		&:before {
 			background-size: $icon-large;
-			padding: $icon-large / 2 * 1.5;
+			padding: calc($icon-large / 2 * 1.5);
 		}
 	}
 

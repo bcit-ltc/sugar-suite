@@ -3,7 +3,7 @@
 // Width in %
 @for $i from 1 through 100 {
     .width#{$i} {
-        width: 1% * $i;
+        width: calc(1% * $i);
     }
 }
 
@@ -11,14 +11,14 @@
 @for $i from 1 through 20 {
     $var: $i * 25;
     .height#{$var} {
-        height: 1px * $var;
+        height: calc(1px * $var);
     }
 }
 
 // Height Gaps
 @for $i from 1 through 500 {
     @if $i % 25 !=0 {
-        $int: (ceil($i/25) * 25);
+        $int: (ceil(calc($i/25)) * 25);
         .height#{$i} {
             @extend .height#{$int};
         }

@@ -1,7 +1,7 @@
 // jshint node: true
 
 var gulp = require('gulp');
-var sass = require('gulp-sass')(require('node-sass'));
+var sass = require('gulp-sass')(require('sass'));
 var magicImporter = require('node-sass-magic-importer');
 var autoprefixer = require('gulp-autoprefixer');
 var sourcemaps = require('gulp-sourcemaps');
@@ -67,7 +67,7 @@ function scripts() {
 		.pipe(sourcemaps.init())
 		.pipe(jshint(jshintrc))
 		.pipe(babel({
-			presets: ['env']
+			presets: ['@babel/env']
 		}))
 		.pipe(jshint.reporter(jshintReporter))
 		.pipe(gulpif(jshintSuccess, uglify()))
@@ -92,7 +92,7 @@ function experimental() {
 		.pipe(sourcemaps.init())
 		.pipe(jshint(jshintrc))
 		.pipe(babel({
-			presets: ['env']
+			presets: ['@babel/env']
 		}))
 		.pipe(jshint.reporter(jshintReporter))
 		.pipe(gulpif(jshintSuccess, uglify()))

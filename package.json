@@ -2,7 +2,7 @@
   "name": "sugar-suite-v1",
   "version": "1.0.0",
   "description": "BCIT Online Course Framework",
-  "author": "Mike: MCTaylor17@gmail.com",
+  "author": "BCIT Course Production: courseproduction@bcit.ca",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -13,9 +13,9 @@
     "build": "npm prune && npm install && gulp build"
   },
   "dependencies": {
-    "@babel/core": "^7.21.3",
-    "@babel/preset-env": "^7.20.2",
-    "browser-sync": "^2.29.0",
+    "@babel/core": "^7.22.5",
+    "@babel/preset-env": "^7.22.5",
+    "browser-sync": "^2.29.3",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^8.0.0",
     "gulp-clean-css": "^4.3.0",
@@ -25,13 +25,13 @@
     "gulp-sourcemaps": "^3.0.0",
     "gulp-uglify": "^3.0.2",
     "jshint": "^2.13.6",
-    "node-sass": "^8.0.0",
+    "sass": "^1.63.6",
     "node-sass-magic-importer": "^5.3.2"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
-    "gulp-babel": "^7.0.1",
+    "gulp-babel": "^8.0.0",
     "gulp-jshint": "^2.1.0"
   }
 }
