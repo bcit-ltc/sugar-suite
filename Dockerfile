@@ -21,6 +21,7 @@ COPY --from=builder /app/js ./js/
 COPY --from=builder /app/assets ./assets/
 COPY --from=builder /app/html ./html/
 COPY --from=builder /app/index.html ./
+COPY --from=builder /app/favicon.ico ./
 
 
 ## Release/production

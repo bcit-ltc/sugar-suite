@@ -74,7 +74,8 @@ $knowledge-check-button-background-color: $secondary-color-dark !default;
 	}
 	ol.options {
 		>li {
-			list-style: none;
+			list-style-type: lower-alpha;
+            list-style-position: inside;
 			>label {
 				display: inline-block;
 				padding: 3px 7px;
@@ -102,6 +103,11 @@ $knowledge-check-button-background-color: $secondary-color-dark !default;
 			height: 15px;
 			margin-left: -14px;
 			outline: none;
+		}
+		&.no-list-style {
+			>li {
+				list-style: none;
+			}
 		}
 	}
 }

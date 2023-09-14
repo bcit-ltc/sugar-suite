@@ -57,7 +57,6 @@
             $question.remove();
         });
 
-
         createKnowledgeCheckForm($questionList, questions, random, isInit);
 
     }
@@ -562,12 +561,18 @@
         var $optionsList = $("<ol>");
         var name = question.id;
         var options = question.options;
+
         if (question.random) {
             options = options.sort(randomize);
         }
+        
         var formated = options.map(buildOptionListItem);
+        if (question.isNoListStyle) {
+            $optionsList.addClass("options no-list-style");
+        } else {
+            $optionsList.addClass("options");
+        }
 
-        $optionsList.addClass("options");
         $optionsList.append(formated);
 
         return $optionsList;
@@ -711,6 +716,7 @@
             text: "",
             order: [],
             random: false,
+            isNoListStyle: false,
             options: [],
             feedback: "",
             blanks: [],
@@ -908,6 +914,7 @@
 
         function parseOptionList() {
             var $optionsList = $question.children("ol,ul").last();
+            data.isNoListStyle = $optionsList.hasClass("no-list-style");
             var $options = $optionsList.children("li");
             var options = [];
 
