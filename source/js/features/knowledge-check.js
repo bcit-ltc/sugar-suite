@@ -914,15 +914,19 @@
 
         function parseOptionList() {
             var $optionsList = $question.children("ol,ul").last();
-            data.isNoListStyle = $optionsList.hasClass("no-list-style");
+            var isNoListStyle = $optionsList.hasClass("no-list-style");
+            data.isNoListStyle = isNoListStyle;
             var $options = $optionsList.children("li");
             var options = [];
 
-            $options.each(function () {
+            $options.each(function (index) {
                 var option = {};
                 var $feedback = $("<div>");
                 var $start = $(this).children(":startsWith(@)");
                 var hasFeedback = $start.length;
+                var optionEnum = String.fromCharCode(97 + index);
+                var pHtml = $(this).html();
+
                 if (hasFeedback) {
                     $feedback.append($start, $start.nextAll());
                     $start.html(removeCharacter($start.html(), "@"));
@@ -931,12 +935,24 @@
                 }
 
                 if (itStartsWith($(this).text(), "*")) {
-                    option.html = removeCharacter($(this).html(), "*");
+                    pHtml = removeCharacter(pHtml, "*");
                     option.correct = true;
                 } else {
-                    option.html = $(this).html();
                     option.correct = false;
                 }
+        
+                if (!isNoListStyle) {
+                    var $pHtmlElement = $('<div>').html(pHtml);
+                    var $pElement = $pHtmlElement.find('p').first();
+                    if ($pElement.length > 0) {
+                        $pElement.prepend(optionEnum + '. ');
+                        pHtml = $pHtmlElement.html();
+                    } else {
+                        pHtml = optionEnum + '. ' + pHtml;
+                    }
+                }
+
+                option.html = pHtml; 
                 options.push(option);
             });
 

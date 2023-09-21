@@ -74,18 +74,28 @@ $knowledge-check-button-background-color: $secondary-color-dark !default;
 	}
 	ol.options {
 		>li {
-			list-style-type: lower-alpha;
-            list-style-position: inside;
+			list-style: none;
 			>label {
 				display: inline-block;
-				padding: 3px 7px;
+				padding: 3px 12px;
+				margin-left: -6px;
 				border-radius: 4px;
 				transition: background .5s ease;
+	
 				>*:first-child {
-					display: inline-block;
+					text-indent: -1.1em;
+					padding-left: 0.7em;
 					margin-top: 0 !important;
+					margin-bottom: 0 !important;
 				}
 				>*:last-child {
+					padding-left: 0.7em;
+					margin-top: 0 !important;
+					margin-bottom: 0 !important;
+				}
+				>div>*:not(:first-child) {
+					padding-left: 1.1em;
+					margin-top: 0 !important;
 					margin-bottom: 0 !important;
 				}
 				&.selected {
@@ -94,6 +104,7 @@ $knowledge-check-button-background-color: $secondary-color-dark !default;
 				}
 			}
 		}
+	
 		input[type=radio],
 		input[type='checkbox'] {
 			position: absolute;
@@ -107,6 +118,13 @@ $knowledge-check-button-background-color: $secondary-color-dark !default;
 		&.no-list-style {
 			>li {
 				list-style: none;
+				
+				>label {
+					>* {
+						text-indent: 0 !important;
+						padding-left: 0 !important;
+					}
+				}
 			}
 		}
 	}
