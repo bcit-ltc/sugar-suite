@@ -19,9 +19,7 @@ figure {
 
 // SIZING
 .container > figure {
-	&:not(.image, .img) {
-		width: $figure-default;
-	}
+	width: $figure-default;
 }
 figure {
 	&.full-width {
