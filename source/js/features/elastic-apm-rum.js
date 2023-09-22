@@ -62,8 +62,10 @@ if (isIgnore) {
                 }
             }
 
-        } else if (hostname === "sugar-suite.ltc.bcit.ca") {
+        } else if (urlHostname === "sugar-suite.ltc.bcit.ca") {
             transaction.name = "stable-sugar-suite";
+        } else if (urlHostname === "conversion-guide.ltc.bcit.ca") {
+            transaction.name = "stable-conversion-guide";
         } else {
             transaction.name = urlHref;
         }
