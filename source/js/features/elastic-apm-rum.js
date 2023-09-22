@@ -1,18 +1,23 @@
-
-
 const urlObj = new URL(window.location.href);
 const urlHostname = urlObj.hostname; // 'learn.bcit.ca'
+const urlProtocol = urlObj.protocol; // 'https:', 'http:', 'file:', etc.
+
 const ignoreRegexList = [
     /^localhost$/,
     /^review--.*\.ltc\.bcit\.ca$/,
     /^latest--.*\.ltc\.bcit\.ca$/
 ];
+
 var isIgnore = false;
 
-for (const regex of ignoreRegexList) {
-    if (regex.test(urlHostname)) {
-        isIgnore = true;
-        break;
+if (urlProtocol === 'file:') {
+    isIgnore = true;
+} else {
+    for (const regex of ignoreRegexList) {
+        if (regex.test(urlHostname)) {
+            isIgnore = true;
+            break;
+        }
     }
 }
 
@@ -20,7 +25,6 @@ if (isIgnore) {
     console.log(`Ignoring ${urlHostname}`);
 } else {
     const urlHref = urlObj.href; // 'https://learn.bcit.ca/content/enforced/123456-course/about.html?d2lSessionVal=abcd1234&ou=123456&d2l_body_type=3'
-    // const urlProtocol = urlObj.protocol; // 'https:'
     const urlPort = urlObj.port; // '8080'. (443, 80, and non-explicit ports will return empty string)
     const urlParams = urlObj.search; // '?d2lSessionVal=abcd1234&ou=123456&d2l_body_type=3'
     const urlPathname = urlObj.pathname; // '/content/enforced/123456-course/about.html' (excludes query params)
