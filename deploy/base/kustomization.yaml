@@ -4,14 +4,17 @@ kind: Kustomization
 namePrefix: sugar-suite-
 
 resources:
-  - serviceaccount.yaml
   - ./nginx-unprivileged
   - ingress.yaml
+  - serviceaccount.yaml
 
 commonLabels:
   app: sugar-suite
   app.kubernetes.io/name: sugar-suite
 
+
+# Patch nginx base; simplify deployment name
+#
 patches:
   - target:
       kind: Deployment
@@ -25,3 +28,15 @@ patches:
       - op: add
         path: /spec/template/spec/serviceAccountName
         value: sugar-suite-serviceaccount
+      - op: replace
+        path: /metadata/name
+        value: deployment
+
+
+# Generates ConfigMap resources to adjust/create base values
+#
+configMapGenerator:
+  - name: config
+    files:
+      - ./nginx.conf
+    behavior: replace
