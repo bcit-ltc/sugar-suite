@@ -69,8 +69,8 @@
         var isSingleQuestion = questions.length === 1;
         var isMultiColumn2 = $replaceable.parent().hasClass("multicolumn-2");
         var isMultiColumn3 = $replaceable.parent().hasClass("multicolumn-3");
-        
-        if(isMultiColumn2) {
+
+        if (isMultiColumn2) {
             $form.addClass("multicolumn-2");
         } else if (isMultiColumn3) {
             $form.addClass("multicolumn-3");
@@ -103,7 +103,7 @@
             isInit = false;
             createKnowledgeCheckForm($form, questions, random, isInit);
         });
-        
+
         var isDevelopment = $form.closest(".knowledge-check, .self-test").is(".development");
         // Answer is required only if it's NOT on development mode or it's first created
         if (!isDevelopment && isInit) {
@@ -561,18 +561,44 @@
         var $optionsList = $("<ol>");
         var name = question.id;
         var options = question.options;
-
         if (question.random) {
             options = options.sort(randomize);
         }
-        
-        var formated = options.map(buildOptionListItem);
+
+
+
         if (question.isNoListStyle) {
             $optionsList.addClass("options no-list-style");
         } else {
             $optionsList.addClass("options");
-        }
+            options.forEach(function (option, index) {
+                let optionEnum = String.fromCharCode(97 + index);
+                var $pHtmlElement = $('<div>').html(option.html);
+                var $pElement = $pHtmlElement.find('p').first();
 
+                if (!question.isNoListStyle) {
+                    if (!option.isEnum) {
+                        if ($pElement.length > 0) {
+                            $pElement.prepend(optionEnum + '. ');
+                            option.html = $pHtmlElement.html();
+                        } else {
+                            option.html = optionEnum + '. ' + pHtml;
+                        }
+                        option.isEnum = true;
+                    } else {
+                        // replace the previously added enum with the new one
+                        if ($pElement.length > 0) {
+                            $pElement.html(optionEnum + '. ' + $pElement.html().slice(3));
+                            option.html = $pHtmlElement.html();
+                        } else {
+                            // replace the previously added enum with the new one
+                            option.html = optionEnum + '. ' + option.html.slice(3);
+                        }
+                    }
+                }
+            });
+        }
+        var formated = options.map(buildOptionListItem);
         $optionsList.append(formated);
 
         return $optionsList;
@@ -919,12 +945,11 @@
             var $options = $optionsList.children("li");
             var options = [];
 
-            $options.each(function (index) {
+            $options.each(function () {
                 var option = {};
                 var $feedback = $("<div>");
                 var $start = $(this).children(":startsWith(@)");
                 var hasFeedback = $start.length;
-                var optionEnum = String.fromCharCode(97 + index);
                 var pHtml = $(this).html();
 
                 if (hasFeedback) {
@@ -940,19 +965,8 @@
                 } else {
                     option.correct = false;
                 }
-        
-                if (!isNoListStyle) {
-                    var $pHtmlElement = $('<div>').html(pHtml);
-                    var $pElement = $pHtmlElement.find('p').first();
-                    if ($pElement.length > 0) {
-                        $pElement.prepend(optionEnum + '. ');
-                        pHtml = $pHtmlElement.html();
-                    } else {
-                        pHtml = optionEnum + '. ' + pHtml;
-                    }
-                }
 
-                option.html = pHtml; 
+                option.html = pHtml;
                 options.push(option);
             });
 
