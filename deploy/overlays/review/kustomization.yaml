@@ -1,15 +1,25 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
+resources:
+- ../../base
+
 # Flux envsubst replaces variables found in `deploy-vars.env` or falls back to defaults
 #
 namespace: ${DEPLOY_NAMESPACE:=sugar-suite}
 
-resources:
-- ../../base
-
 commonLabels:
   environment: review
+
+# Prefix/Suffix required for VaultAuth configuration
+#
+namePrefix: sugar-suite-
+nameSuffix: -review
+
+# Facilitate kustomization name updating
+#
+configurations:
+  - kustomizeconfig.yaml
 
 commonAnnotations:
   version: ${GIT_TAG:=stable}
@@ -20,6 +30,25 @@ images:
   newTag: ${IMAGE_TAG:=stable}
 
 patches:
-- path: ingress-patch.yaml
-  target:
-    kind: Ingress
+  - path: ingress-patch.yaml
+    target:
+      kind: Ingress
+
+  # Adjusts secrets for review branches
+  - target:
+      kind: Deployment
+    path: deployment-patch.yaml
+
+  # Incorporate vault-secrets
+  #
+  # adds `-review` suffix to VaultAuth `spec.mount`
+  - target:
+      kind: VaultAuth
+    path: vault-secrets-review/vault-auth-patch.yaml
+
+components:
+  # Include environment-specific secrets
+  # - ./vault-secrets-review # - No review branch secrets
+
+  # Required for VaultAuth role and serviceaccounts
+  - ../../base/components/vault-auth
