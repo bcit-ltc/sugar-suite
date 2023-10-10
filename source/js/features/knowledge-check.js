@@ -43,6 +43,7 @@
 
     function initQuestions() {
         var $questionList = $(this);
+        var kcNolistStyle = $questionList.parent().hasClass("no-list-style");
         var $questions = $questionList.children("li");
         var $allListItems = $questionList.find("li");
         var random = $questionList.is("ul");
@@ -53,7 +54,7 @@
         $questions.each(function () {
             var $question = $(this);
             var id = identifier.getID();
-            questions.push(parseQuestion($question, id));
+            questions.push(parseQuestion($question, id, kcNolistStyle));
             $question.remove();
         });
 
@@ -734,7 +735,7 @@
         }
     }
 
-    function parseQuestion($question, id) {
+    function parseQuestion($question, id, isNoListStyle) {
         var self = this;
         var data = {
             id: id,
@@ -742,7 +743,7 @@
             text: "",
             order: [],
             random: false,
-            isNoListStyle: false,
+            isNoListStyle: isNoListStyle,
             options: [],
             feedback: "",
             blanks: [],
@@ -941,7 +942,7 @@
         function parseOptionList() {
             var $optionsList = $question.children("ol,ul").last();
             var isNoListStyle = $optionsList.hasClass("no-list-style");
-            data.isNoListStyle = isNoListStyle;
+            data.isNoListStyle = data.isNoListStyle || isNoListStyle;
             var $options = $optionsList.children("li");
             var options = [];
 
@@ -950,15 +951,15 @@
                 var $feedback = $("<div>");
                 var $start = $(this).children(":startsWith(@)");
                 var hasFeedback = $start.length;
-                var pHtml = $(this).html();
 
                 if (hasFeedback) {
                     $feedback.append($start, $start.nextAll());
                     $start.html(removeCharacter($start.html(), "@"));
                     option.feedback = $feedback.html();
                     $feedback.remove();
-                }
+                };
 
+                var pHtml = $(this).html();
                 if (itStartsWith($(this).text(), "*")) {
                     pHtml = removeCharacter(pHtml, "*");
                     option.correct = true;
