@@ -13,11 +13,11 @@ nameSuffix: -stable
 configurations:
   - kustomizeconfig.yaml
 commonAnnotations:
-  version: 1.1.9 # {"$imagepolicy": "sugar-suite:sugar-suite-image-policy-stable:tag"}
+  version: 1.1.10 # {"$imagepolicy": "sugar-suite:sugar-suite-image-policy-stable:tag"}
 images:
   - name: "sugar-suite"
     newName: "registry.ltc.bcit.ca/web-apps/sugar-suite"
-    newTag: "1.1.9" # {"$imagepolicy": "sugar-suite:sugar-suite-image-policy-stable:tag"}
+    newTag: "1.1.10" # {"$imagepolicy": "sugar-suite:sugar-suite-image-policy-stable:tag"}
 patches:
   # Adds secrets to deployment
   - target:
@@ -32,7 +32,6 @@ patches:
 components:
   # Include environment-specific secrets
   - ./vault-secrets-stable
-
   # Required for VaultAuth role and serviceaccounts
   - ../../base/components/vault-auth
 # Appends service name to base elasticapm config
@@ -44,5 +43,5 @@ configMapGenerator:
     behavior: merge
 # Stable overlay increases replicas
 replicas:
-- name: deployment
-  count: 2
+  - name: deployment
+    count: 2
