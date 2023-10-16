@@ -957,7 +957,7 @@
                     $start.html(removeCharacter($start.html(), "@"));
                     option.feedback = $feedback.html();
                     $feedback.remove();
-                };
+                }
 
                 var pHtml = $(this).html();
                 if (itStartsWith($(this).text(), "*")) {
