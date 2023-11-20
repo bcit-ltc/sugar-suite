@@ -6,13 +6,18 @@ services:
     build:
       context: .
       target: builder
+
     command: npm run watch
+
     environment:
       - DEBUG=True
+
     working_dir: /app
+
     volumes:
       - .:/app
       - /app/node_modules
+
     ports:
       - 3000:3000
       - 3001:3001
