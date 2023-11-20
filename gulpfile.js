@@ -13,6 +13,7 @@ var uglify = require('gulp-uglify');
 var jshint = require('gulp-jshint');
 var jshintReporter = 'default'; // Consider stylish
 var gulpif = require('gulp-if');
+const replace = require('gulp-replace');
 var config = require("./config.json");
 var fs = require("fs");
 var jshintrc = JSON.parse(fs.readFileSync("./.jshintrc").toString());
@@ -47,6 +48,9 @@ function css() {
 			importer: magicImporter()
 		}).on('error', sass.logError))
 		.pipe(autoprefixer())
+		.pipe(gulpif(function (file) {
+			return /themes[\/\\]custom/.test(file.path);
+		}, replace(/(?:\.\.\/)?assets\/icons\//g, '../../../assets/icons/')))
 		.pipe(cleanCSS({
 			level: 1
 		}))
