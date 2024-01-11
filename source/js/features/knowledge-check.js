@@ -26,14 +26,14 @@
     // D2L friendly scrolling function
     function scrollTo($el) {
         var _$ = window.parent.jQuery || $;
-        var offset = $el.offset().top;
-        if (_$(".d2l-iframe").length) {
-            offset += _$(".d2l-iframe").offset().top;
-            offset -= _$(".d2l-minibar").height();
-        }
+        // var offset = $el.offset().top;
+        // if (_$(".d2l-iframe").length) {
+        //     offset += _$(".d2l-iframe").offset().top;
+        //     offset -= _$(".d2l-minibar").height();
+        // }
 
         _$('html, body').animate({
-            scrollTop: offset - 30
+            scrollTop: $el.offset().top
         }, 500);
 
         $el.attr("tabindex", -1);
