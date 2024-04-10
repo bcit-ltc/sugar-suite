@@ -71,7 +71,7 @@
 			// change slides
 			$showing.fadeOut('fast', function() {
 				$toBeShown.fadeIn().promise().done(function(){
-					if($(this).find(".line-matching")){
+					if($(this).find(".line-matching") || $(this).find(".tabs")){
 						$(window).trigger('resize');
 					}
 				});
