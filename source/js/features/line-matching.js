@@ -96,7 +96,7 @@
         } 
     });
     */
-   
+
     // process all .line-matching setups
     function initLineMatching() {
         var $matching = $(this); // this paticular line matching interaction in the dom
@@ -106,7 +106,7 @@
         let questionsArray = [];
         let answersArray = [];
 
-        const matchingItemWrapper = `<div class="matching-item">`;
+        const matchingItemWrapper = `<div class="matching-item" tabindex=0>`;
 
         matchingObj.questionObj.forEach((qArray, i) => {
             const questionElement = $(matchingItemWrapper).append(qArray.question);
@@ -172,23 +172,10 @@
         });
 
         // If clicked happened inside line-matching but not .matching-item then remove active connector-line
-        $matching.find(".line-matching-container").click(function (e) {
-            if (e.target === this && $(this).find(".selected").length) {
-                let $line = $(this).find(".selected");
-
-                $line.parent().removeClass(function (index, className) {
-                    return (className.match(/clicked-item-[0-9]{1,}/g) || []).join(' ');
-                });
-                $line.removeClass("selected " + function (index, className) {
-                    return (className.match(/line-[0-9]{1,}/g) || []).join(' ');
-                }).height("0");
-                answerSequence.splice(-1, 1);
-                return;
-            }
-        });
+        $matching.find(".line-matching-container").on("click keyup", selectMatchingItem);
 
         // bind click event on all matching items (questions and answers, when to draw the lines, etc)
-        $matching.find(".matching-item").on("click", function (e) {
+        $matching.find(".matching-item").on("click keyup", function (e) {
             matchingClickEvent(e, $(this), matchingObj);
         });
 
@@ -237,6 +224,25 @@
                 }
             });
         });
+    }
+
+    function selectMatchingItem(event) {
+        console.log(event);
+        if (event.type === "click" || event.keyCode === 13) {
+            if (event.target === this && $(this).find(".selected").length) {
+                let $line = $(this).find(".selected");
+
+                $line.parent().removeClass(function (index, className) {
+                    return (className.match(/clicked-item-[0-9]{1,}/g) || []).join(' ');
+                });
+                $line.removeClass("selected " + function (index, className) {
+                    return (className.match(/line-[0-9]{1,}/g) || []).join(' ');
+                }).height("0");
+                answerSequence.splice(-1, 1);
+                return;
+            }
+
+        }
     }
 
 
@@ -428,154 +434,156 @@
 
     // the click event function to determine what happens to each matching item, each time we click on them.
     function matchingClickEvent(clickEvent, clickObject, matchingObject) {
-        // if object already have a match, return
-        if (clickObject.is('[class*=clicked-item-]')) {
-            return;
-        }
-
-        var offset = clickObject.closest(".line-matching-container").offset(); // starting line offset
-        let $matchingDiv = clickObject.closest(".line-matching-container");
-
-        const classNum = $matchingDiv.children("div").eq(1).find("[class*='clicked-item-']").length + 1; // used for the "clicked" css classes
-        const myColumn = clickObject.parent().index(); // future proofing index used to determine line matching "column"
-
-        // in case the line-connector got clicked instead on matching-item
-        if (clickEvent.target !== this && $(this).find(".selected").length) {
-            $matchingDiv.click();
-            return;
-        }
-
-        // if we click the "clicked" item again, remove the active line for matching
-        if (clickObject.attr("class").indexOf('clicked-item-') != -1 && clickObject.parent().is($matchingDiv.children("div").eq(0)) && answerSequence[0][0] === clickObject[0]) {
-
-            // determine the correct number to use for "class number"
-            const currentClassNumber = findAnswerClass($matchingDiv, clickObject);
-
-            let isLastCheckedItem = answerSequence[answerSequence.length - 1][0] === clickObject[0];
-            isClicked = false;
-
-            let $clickedItems = $matchingDiv.find(".clicked-item-" + classNum);
-            let clickedItemsLength = $clickedItems.length;
-            if (clickedItemsLength > 1) {
+        if (clickEvent.type === "click" || clickEvent.keyCode === 13) {
+            // if object already have a match, return
+            if (clickObject.is('[class*=clicked-item-]')) {
                 return;
             }
 
-            answerSequence.splice(-1, 1);
+            var offset = clickObject.closest(".line-matching-container").offset(); // starting line offset
+            let $matchingDiv = clickObject.closest(".line-matching-container");
 
-            let $line = clickObject.closest(".line-matching-container").find(".line-" + classNum);
-            $line.removeClass("selected done line-" + classNum).height("0");
-            clickObject.removeClass(function (i, className) {
-                return (className.match(/clicked-item-[0-9]+/g) || []).join(' ');
-            });
-            return;
+            const classNum = $matchingDiv.children("div").eq(1).find("[class*='clicked-item-']").length + 1; // used for the "clicked" css classes
+            const myColumn = clickObject.parent().index(); // future proofing index used to determine line matching "column"
 
-            // else, we are not clicking ourselves
-        } else {
-            // if we errantly click another question, reset the click sequence
-            if (clickObject.parent().is($matchingDiv.children("div").eq(0)) && answerSequence.length > 0) {
+            // in case the line-connector got clicked instead on matching-item
+            if (clickEvent.target !== this && $(this).find(".selected").length) {
+                $matchingDiv.click();
+                return;
+            }
+
+            // if we click the "clicked" item again, remove the active line for matching
+            if (clickObject.attr("class").indexOf('clicked-item-') != -1 && clickObject.parent().is($matchingDiv.children("div").eq(0)) && answerSequence[0][0] === clickObject[0]) {
+
+                // determine the correct number to use for "class number"
+                const currentClassNumber = findAnswerClass($matchingDiv, clickObject);
+
+                let isLastCheckedItem = answerSequence[answerSequence.length - 1][0] === clickObject[0];
                 isClicked = false;
-                resetSelection(clickObject, classNum);
-                // ensure we are cleared on reset
-                //clickObject.removeClass("[class*='clicked-item-']");
-                answerSequence = [];
-                return;
-            }
 
-            // if we are a question with multiple answers, make sure we use the correct class number
-            const currentClassNumber = findAnswerClass($matchingDiv, clickObject);
-
-            // here we determine if we're going to be "clicked" and make the line
-            if (clickObject.parent().is($matchingDiv.children("div").eq(0)) && !clickObject.hasClass("[class*='clicked-item-']")) {
-                isClicked = true;
-
-                // determine which colour to use for the drawn lineClass
-                const lineClass = currentClassNumber > 0 ? `selected line-${currentClassNumber}` : `selected line-${classNum}`;
-                clickObject.find(".connector-line").not(".done").first().addClass(lineClass);
-
-                // since we have been "clicked", add the status and create the answer sequence
-
-                if (clickObject.find(".matching-item-contents").data("remainingAnswers") && currentClassNumber > 0) {
-                    clickObject.addClass(`clicked-item-${currentClassNumber}`);
-                } else {
-                    clickObject.addClass("clicked-item-" + classNum);
+                let $clickedItems = $matchingDiv.find(".clicked-item-" + classNum);
+                let clickedItemsLength = $clickedItems.length;
+                if (clickedItemsLength > 1) {
+                    return;
                 }
 
-                answerSequence.push(clickObject);
-            }
+                answerSequence.splice(-1, 1);
 
-        }
+                let $line = clickObject.closest(".line-matching-container").find(".line-" + classNum);
+                $line.removeClass("selected done line-" + classNum).height("0");
+                clickObject.removeClass(function (i, className) {
+                    return (className.match(/clicked-item-[0-9]+/g) || []).join(' ');
+                });
+                return;
 
-        // here we check if we're now going to click on an answer while "clicked" and see if we're correct with our matching
-        if (answerSequence.length > 0 && clickObject.parent().is($matchingDiv.children("div").eq(1))) {
-
-            // determine the correct number to use for "class number"
-            const currentClassNumber = findAnswerClass($matchingDiv, answerSequence[0]);
-
-            // if our answer is already answered (has the clicked item class), reset the selection / line matching
-            if (clickObject.attr("class").indexOf('clicked-item-') != -1) {
-                isClicked = false;
-                if (currentClassNumber > 0) {
-                    resetSelection(clickObject, currentClassNumber);
-                } else {
+                // else, we are not clicking ourselves
+            } else {
+                // if we errantly click another question, reset the click sequence
+                if (clickObject.parent().is($matchingDiv.children("div").eq(0)) && answerSequence.length > 0) {
+                    isClicked = false;
                     resetSelection(clickObject, classNum);
+                    // ensure we are cleared on reset
+                    //clickObject.removeClass("[class*='clicked-item-']");
+                    answerSequence = [];
+                    return;
                 }
-                answerSequence = [];
-                return;
+
+                // if we are a question with multiple answers, make sure we use the correct class number
+                const currentClassNumber = findAnswerClass($matchingDiv, clickObject);
+
+                // here we determine if we're going to be "clicked" and make the line
+                if (clickObject.parent().is($matchingDiv.children("div").eq(0)) && !clickObject.hasClass("[class*='clicked-item-']")) {
+                    isClicked = true;
+
+                    // determine which colour to use for the drawn lineClass
+                    const lineClass = currentClassNumber > 0 ? `selected line-${currentClassNumber}` : `selected line-${classNum}`;
+                    clickObject.find(".connector-line").not(".done").first().addClass(lineClass);
+
+                    // since we have been "clicked", add the status and create the answer sequence
+
+                    if (clickObject.find(".matching-item-contents").data("remainingAnswers") && currentClassNumber > 0) {
+                        clickObject.addClass(`clicked-item-${currentClassNumber}`);
+                    } else {
+                        clickObject.addClass("clicked-item-" + classNum);
+                    }
+
+                    answerSequence.push(clickObject);
+                }
+
             }
 
-            // we are now clicking on an answer so add that to the sequence now for evaluation
-            answerSequence.push(clickObject);
+            // here we check if we're now going to click on an answer while "clicked" and see if we're correct with our matching
+            if (answerSequence.length > 0 && clickObject.parent().is($matchingDiv.children("div").eq(1))) {
 
-            let answerEvaluations = checkAnswers(answerSequence);
+                // determine the correct number to use for "class number"
+                const currentClassNumber = findAnswerClass($matchingDiv, answerSequence[0]);
 
-            answerEvaluations.forEach(function (answer, index) {
-                if (!answer) { // not the answer, reset the sequence
-                    answerSequence.splice(-myColumn, myColumn);
+                // if our answer is already answered (has the clicked item class), reset the selection / line matching
+                if (clickObject.attr("class").indexOf('clicked-item-') != -1) {
                     isClicked = false;
                     if (currentClassNumber > 0) {
                         resetSelection(clickObject, currentClassNumber);
                     } else {
                         resetSelection(clickObject, classNum);
                     }
-                } else { // this is the answer, "connect" the line
+                    answerSequence = [];
+                    return;
+                }
 
-                    let $line = $matchingDiv.find(".selected");
-                    let answerPosition = clickObject.offset();
-                    let offsetX = answerPosition.left - $line.offset().left + $line.parent().position().left;
-                    let offsetY = answerPosition.top - offset.top - ($line.parent()[0].offsetTop + ($line.parent().outerHeight() / 2)) + (clickObject.outerHeight() / 2);
-                    if (isMobile) {
-                        $line.addClass("hide");
-                    } else {
-                        $line.removeClass("hide");
-                    }
-                    setLine($line, offsetX, offsetY);
+                // we are now clicking on an answer so add that to the sequence now for evaluation
+                answerSequence.push(clickObject);
 
-                    // finalize the line
-                    isClicked = false;
-                    $matchingDiv.find(".connector-line.selected").removeClass("selected").addClass("done");
+                let answerEvaluations = checkAnswers(answerSequence);
 
-                    // use the question tally to determine if this question is done, or still has more answers.
-                    if (answerSequence[0].find(".matching-item-contents").data("remainingAnswers")) {
-
-                        // determine the class to use for the answers
-                        const currentClass = currentClassNumber > 0 ? `clicked-item-${currentClassNumber}` : `clicked-item-${classNum}`;
-                        clickObject.addClass(currentClass);
-
-                        answerSequence[0].find(".matching-item-contents").data("remainingAnswers", parseInt(answerSequence[0].find(".matching-item-contents").data("remainingAnswers")) - 1);
-                        if (answerSequence[0].find(".matching-item-contents").data("remainingAnswers") < 1) {
-                            answerSequence[0].addClass(currentClass);
+                answerEvaluations.forEach(function (answer, index) {
+                    if (!answer) { // not the answer, reset the sequence
+                        answerSequence.splice(-myColumn, myColumn);
+                        isClicked = false;
+                        if (currentClassNumber > 0) {
+                            resetSelection(clickObject, currentClassNumber);
                         } else {
-                            answerSequence[0].removeClass(currentClass);
+                            resetSelection(clickObject, classNum);
+                        }
+                    } else { // this is the answer, "connect" the line
+
+                        let $line = $matchingDiv.find(".selected");
+                        let answerPosition = clickObject.offset();
+                        let offsetX = answerPosition.left - $line.offset().left + $line.parent().position().left;
+                        let offsetY = answerPosition.top - offset.top - ($line.parent()[0].offsetTop + ($line.parent().outerHeight() / 2)) + (clickObject.outerHeight() / 2);
+                        if (isMobile) {
+                            $line.addClass("hide");
+                        } else {
+                            $line.removeClass("hide");
+                        }
+                        setLine($line, offsetX, offsetY);
+
+                        // finalize the line
+                        isClicked = false;
+                        $matchingDiv.find(".connector-line.selected").removeClass("selected").addClass("done");
+
+                        // use the question tally to determine if this question is done, or still has more answers.
+                        if (answerSequence[0].find(".matching-item-contents").data("remainingAnswers")) {
+
+                            // determine the class to use for the answers
+                            const currentClass = currentClassNumber > 0 ? `clicked-item-${currentClassNumber}` : `clicked-item-${classNum}`;
+                            clickObject.addClass(currentClass);
+
+                            answerSequence[0].find(".matching-item-contents").data("remainingAnswers", parseInt(answerSequence[0].find(".matching-item-contents").data("remainingAnswers")) - 1);
+                            if (answerSequence[0].find(".matching-item-contents").data("remainingAnswers") < 1) {
+                                answerSequence[0].addClass(currentClass);
+                            } else {
+                                answerSequence[0].removeClass(currentClass);
+                            }
+
+                        } else { // simply use the current clicked item class
+                            clickObject.addClass("clicked-item-" + classNum);
                         }
 
-                    } else { // simply use the current clicked item class
-                        clickObject.addClass("clicked-item-" + classNum);
                     }
+                });
 
-                }
-            });
-
-            answerSequence = []; // clearing the sequence after getting answers
+                answerSequence = []; // clearing the sequence after getting answers
+            }
         }
     }
 
