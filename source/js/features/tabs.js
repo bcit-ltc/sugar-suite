@@ -4,14 +4,15 @@
         var tabHeading = $tab.children().first().prop("tagName");
         var tabTexts = [];
         var $tabNav = $("<ul class='tab-nav'>");
-        $tab.css({border: "none", padding: "initial"});
+        $tab.css({ border: "none", padding: "initial" });
         $tab.children("h2, h3").not(":first-child").css("border-top", "initial");
         if (!$tab.hasClass("nav-top") && !$tab.hasClass("nav-bottom")) {
             $tab.css("flex-direction", "row");
         }
-
+        let $tabColors = [];
         $tab.children(tabHeading).each(function () {
             let $tabTitle = $(this);
+            $tabColors.push($tabTitle.data('color'));
             $tabTitle.addClass("tab-title");
             let nextString = trimWhiteSpace($tabTitle.next().text());
             let regex = /^(tabs*\s*\-?\s*texts?\s*:\s*)(.{1,})$/i;
@@ -29,8 +30,15 @@
         $tab.wrapInner("<div class='tab-body'></div>");
 
         tabTexts.forEach(function (tabText, index) {
-            let $tabButton = $("<li>").append($("<button>").text(tabText));
-            $tabNav.append($tabButton);
+            let $tabLi = $("<li>");
+            let $tabButton = $("<button>").text(tabText);
+            let tabColor = $tabColors[index];
+            if (tabColor) {
+                $tabLi.css({ borderColor: tabColor });
+                $tabButton.css({ backgroundColor: tabColor });
+            }
+            $tabLi.append($tabButton);
+            $tabNav.append($tabLi);
         });
 
         $tab.prepend($tabNav);
@@ -56,6 +64,7 @@
             $tabNav.css("border-bottom-color", selectedTabColor);
             $tabBody.css("border-color", selectedTabColor);
         });
+        $tabBody.css("border-color", $tabNav.children("li.selected").css("border-color"));
     });
 
     $(window).on("load resize", function () {
@@ -64,11 +73,11 @@
             let $tabBody = $tab.children(".tab-body");
             let $tabContents = $tab.find(".tab-content");
             $tabBody.css('min-height', '0');
-    
+
             let heights = $tabContents.map(function () {
                 return $(this).outerHeight();
             }).get();
-    
+
             let maxHeight = Math.max(...heights);
             let borderTop = parseFloat($tabBody.css("border-top-width"));
             let borderBottom = parseFloat($tabBody.css("border-bottom-width"));
