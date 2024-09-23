@@ -2,7 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-- ../../base
+  - ../../base
 
 # Flux envsubst replaces variables found in `deploy-vars.env` or falls back to defaults
 #
@@ -25,19 +25,14 @@ commonAnnotations:
   version: ${GIT_TAG:=stable}
 
 images:
-- name: sugar-suite
-  newName: ${IMAGE_NAME:=registry.ltc.bcit.ca/web-apps/sugar-suite}
-  newTag: ${IMAGE_TAG:=stable}
+  - name: sugar-suite
+    newName: ${IMAGE_NAME:=registry.ltc.bcit.ca/web-apps/sugar-suite}
+    newTag: ${IMAGE_TAG:=stable}
 
 patches:
   - path: ingress-patch.yaml
     target:
       kind: Ingress
-
-  # Adjusts secrets for review branches
-  - target:
-      kind: Deployment
-    path: deployment-patch.yaml
 
   # Incorporate vault-secrets
   #
