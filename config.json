@@ -6,7 +6,6 @@
 	],
 	"jsSources": [
 		"source/js/vendor/jquery-3.1.1.min.js",
-		"source/js/vendor/elastic-apm-rum.umd.min.js",
 		"source/js/features/*.js",
 		"!source/js/features/-WIP-*.js"
 	],
