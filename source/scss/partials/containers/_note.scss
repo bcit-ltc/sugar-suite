@@ -4,6 +4,7 @@ $note-key-point-icon: url(../assets/icons/newest/key-point.svg) !default;
 $note-link-icon: url(../assets/icons/newest/link.svg) !default;
 $note-note-icon: url(../assets/icons/newest/note.svg) !default;
 $note-warning-icon: url(../assets/icons/newest/warning.svg) !default;
+$note-knowing-icon: url(../assets/icons/newest/knowing.svg) !default;
 
 $note-background-color: $secondary-color-lightest !default;
 $note-border-color: $secondary-color-lighter;
@@ -43,7 +44,8 @@ $a: $note-link-active-color;
 .key-point,
 .link,
 .note,
-.warning {
+.warning,
+ .knowing {
 	@extend %note;
 	@extend %custom-max-width;
 
@@ -71,4 +73,8 @@ $a: $note-link-active-color;
 
 .warning {
 	@include icon-path($note-warning-icon);
+}
+
+.knowing {
+	@include icon-path($note-knowing-icon);
 }
