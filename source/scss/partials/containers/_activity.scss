@@ -6,6 +6,7 @@ $activity-outcome-icon: url(../assets/icons/newest/outcome.svg) !default;
 $activity-reading-icon: url(../assets/icons/newest/reading.svg) !default;
 $activity-reflection-icon: url(../assets/icons/newest/reflection.svg) !default;
 $activity-review-icon: url(../assets/icons/newest/review.svg) !default;
+$activity-doing-icon: url(../assets/icons/newest/doing.svg) !default;
 
 $activity-background-color: $secondary-color-light !default;
 $activity-foreground-color: $white !default;
@@ -48,7 +49,8 @@ $a: $activity-link-active-color;
 .outcome,
 .reading,
 .reflection,
-.review {
+.review,
+.doing {
 	@extend %activity;
 	@extend %custom-max-width;
 }
@@ -83,4 +85,8 @@ $a: $activity-link-active-color;
 
 .review {
 	@include icon-path($activity-review-icon);
+}
+
+.doing {
+	@include icon-path($activity-doing-icon);
 }
