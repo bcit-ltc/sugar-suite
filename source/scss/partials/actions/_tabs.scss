@@ -119,8 +119,8 @@ $mono-color: #b3e0cc;
             }
 
             &:hover:not(.selected) {
-                box-shadow: inset 0 0 0 2px #000000;
-                border-color: #000000;
+                box-shadow: inset 0 0 0 2px #000000 !important;
+                border-color: #000000 !important;
                 font-weight: bold;
                 color: #000;
             }

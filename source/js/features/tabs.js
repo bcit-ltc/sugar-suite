@@ -10,9 +10,11 @@
             $tab.css("flex-direction", "row");
         }
         let $tabColors = [];
+        let $tabFontColors = [];
         $tab.children(tabHeading).each(function () {
             let $tabTitle = $(this);
             $tabColors.push($tabTitle.data('color'));
+            $tabFontColors.push($tabTitle.data('font-color'));
             $tabTitle.addClass("tab-title");
             let nextString = trimWhiteSpace($tabTitle.next().text());
             let regex = /^(tabs*\s*\-?\s*texts?\s*:\s*)(.{1,})$/i;
@@ -36,6 +38,10 @@
             if (tabColor) {
                 $tabLi.css({ borderColor: tabColor });
                 $tabButton.css({ backgroundColor: tabColor });
+            }
+            let tabFontColor = $tabFontColors[index];
+            if (tabFontColor) {
+                $tabButton.css({ color: tabFontColor });
             }
             $tabLi.append($tabButton);
             $tabNav.append($tabLi);
