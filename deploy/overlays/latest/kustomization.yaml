@@ -13,11 +13,11 @@ nameSuffix: -latest
 configurations:
   - kustomizeconfig.yaml
 commonAnnotations:
-  version: 1.3.0-6a010384--2024-10-22.1729609437 # {"$imagepolicy": "sugar-suite:sugar-suite-image-policy-latest:tag"}
+  version: 1.3.1-fb46809a--2024-11-28.1732832786 # {"$imagepolicy": "sugar-suite:sugar-suite-image-policy-latest:tag"}
 images:
   - name: "sugar-suite"
     newName: "registry.ltc.bcit.ca/web-apps/sugar-suite"
-    newTag: "1.3.0-6a010384--2024-10-22.1729609437" # {"$imagepolicy": "sugar-suite:sugar-suite-image-policy-latest:tag"}
+    newTag: "1.3.1-fb46809a--2024-11-28.1732832786" # {"$imagepolicy": "sugar-suite:sugar-suite-image-policy-latest:tag"}
 patches:
   # Patches ingress to add "latest--" prefix to ingress URL
   #
