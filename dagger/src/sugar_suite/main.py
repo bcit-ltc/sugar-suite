@@ -8,12 +8,12 @@ class SugarSuite:
 
 
     @function
-    async def publish(self, source: dagger.Directory, registry: str, image_tag: str) -> str:
+    async def publish(self, source: dagger.Directory, registry: str, tag: str) -> str:
         """Publish the application container after building and testing it on-the-fly"""
         # call Dagger Function to build the application image
         # publish to registry with tag
         return await self.production(source).publish(
-            f"{registry}:{image_tag}"
+            f"{registry}:{tag}"
         )
     
     @function
