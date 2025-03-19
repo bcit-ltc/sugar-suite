@@ -6,7 +6,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "http://issues.ltc.bcit.ca/web-apps/sugar-suite-k8s.git"
+    "url": "git@github.com:BCIT-LTC/sugar-suite.git"
   },
   "scripts": {
     "watch": "gulp watch",
