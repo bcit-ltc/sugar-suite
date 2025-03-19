@@ -9,8 +9,9 @@
     "url": "http://issues.ltc.bcit.ca/web-apps/sugar-suite-k8s.git"
   },
   "scripts": {
-    "watch": "npm prune && npm install && gulp watch",
-    "build": "npm prune && npm install && gulp build && node snappy.js"
+    "watch": "gulp watch",
+    "build": "gulp build && node snappy.js",
+    "test": "mocha --reporter spec"
   },
   "dependencies": {
     "@babel/core": "^7.23.7",
@@ -36,6 +37,10 @@
     "gulp-if": "^3.0.0",
     "gulp-jshint": "^2.1.0",
     "gulp-replace": "^1.1.4",
-    "snappyjs": "^0.7.0"
+    "snappyjs": "^0.7.0",
+    "mocha": "^11.1.0",
+    "chai": "^5.2.0",
+    "jsdom": "^26.0.0",
+    "jquery": "^3.7.1"
   }
 }
