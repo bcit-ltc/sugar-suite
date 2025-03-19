@@ -53,7 +53,7 @@ class SugarSuite:
     )
 
     @function
-    def run_tests(self, source: dagger.Directory) -> dagger.Container:
+    def test(self, source: dagger.Directory) -> dagger.Container:
         """Build a ready-to-use test environment"""
         builder_output = (
             self.build_env(source)
