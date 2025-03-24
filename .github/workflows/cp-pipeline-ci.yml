@@ -142,9 +142,13 @@ jobs:
       # create string with format {semverTag}-{date}--{gitShortSha}.{timeStamp}
       - name: Create Tag
         run: |
-          TAG=$(echo "${{ needs.previous-version.outputs.version }}-$(date +'%Y-%m-%d')--$(git rev-parse --short HEAD).$(date +'%s')")
-          echo "TAG=$TAG" >> $GITHUB_ENV
-          echo $TAG
+          if [ "${{ needs.determine-environment.outputs.environment }}" != "review" ]; then
+            TAGS=$(echo "${{ needs.previous-version.outputs.version }},${{ needs.determine-environment.outputs.environment }}")
+          elif [ "${{ needs.determine-environment.outputs.environment }}" == "review" ]; then
+            TAGS=$(echo "review--${{ github.ref_name }}--$(git rev-parse --short HEAD)")
+          fi
+          echo "TAGS=$TAGS" >> $GITHUB_ENV
+          echo $TAGS
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
@@ -156,7 +160,7 @@ jobs:
       - name: Build and push Docker image using Dagger
         uses: dagger/dagger-for-github@8.0.0
         with:
-          args: publish --registry=ghcr.io/bcit-ltc/${{ github.event.repository.name }} --tag=$TAG
+          args: publish --registry=ghcr.io/bcit-ltc/${{ github.event.repository.name }} --tag=$TAGS
           # TODO: add logic for latest, stable, review
 
       - name: Set 'stable' APP_VERSION
