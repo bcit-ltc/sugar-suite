@@ -31,7 +31,9 @@ gulp.task('build', gulp.series(css, scripts, jsVendor, experimental));
 gulp.task('watch', gulp.series('build', function () {
 	browserSync.init({
 		server: "./",
-		open: false
+		open: false,
+		port: 80,
+		ui: false
 	});
 	gulp.watch(htmlSources).on('change', browserSync.reload);
 	gulp.watch(sassSources, gulp.series(css));

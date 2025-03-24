@@ -1,6 +1,6 @@
+from typing import Annotated
 import dagger
-from datetime import datetime
-from dagger import dag, function, object_type
+from dagger import DefaultPath, dag, function, object_type
 
 
 @object_type
@@ -8,19 +8,25 @@ class SugarSuite:
 
 
     @function
-    async def publish(self, source: dagger.Directory, registry: str, image_tag: str) -> str:
-        """Publish the application container after building and testing it on-the-fly"""
-        # call Dagger Function to build the application image
-        # publish to registry with tag
-        return await self.production(source).publish(
-            f"{registry}:{image_tag}"
-        )
+    async def publish(self, source: Annotated[dagger.Directory, DefaultPath("./")], registry: str, tags: str) -> str:
+        """Publish the application container to a registry"""
+        # Split the tags by comma and strip any whitespace
+        tag_list = [t.strip() for t in tags.split(",")]
+        
+        # Call Dagger Function to build the application image
+        image = self.build(source)
+        
+        # Publish the image for each tag
+        for tag in tag_list:
+            await image.publish(f"{registry}:{tag}")
+        
+        return f"Published with tags: {', '.join(tag_list)}"
     
     @function
-    def production(self, source: dagger.Directory) -> dagger.Container:
+    def build(self, source: Annotated[dagger.Directory, DefaultPath("./")]) -> dagger.Container:
         """Build a ready-to-use production environment"""
         builder_output = (
-            self.build_env(source)
+            self.installdependencies(source)
             .with_exec(["npm", "run", "build"])
             .directory("./")
         )
@@ -36,40 +42,20 @@ class SugarSuite:
             # .with_exposed_port(8080)
         )
 
-    @function
-    def development(self, source: dagger.Directory) -> dagger.Container:
-        """Build a ready-to-use development environment"""
-        builder_output = (
-            self.build_env(source)
-            .with_exec(["npm", "run", "build"])
-            .directory("./")
-        )
-        
-        return (
-            dag.container()
-            .from_("nginx:alpine")
-            .with_directory("/usr/share/nginx/html", builder_output)
-            .with_exposed_port(80)
-    )
 
     @function
-    def test(self, source: dagger.Directory) -> dagger.Container:
-        """Build a ready-to-use test environment"""
-        builder_output = (
-            self.build_env(source)
-            .with_exec(["npm", "run", "test"])
-            .directory("./")
-        )
+    def unittesting(self, source: Annotated[dagger.Directory, DefaultPath("./")]) -> str:
+        """Return the result of running unit tests"""
         
         return (
-            dag.container()
-            .from_("node:18-alpine")
-            .with_directory("/usr/share/nginx/html", builder_output)
+            self.installdependencies(source)
+            .with_exec(["npm", "run", "test"])
+            .stdout()
         )
     
     @function
-    def build_env(self, source: dagger.Directory) -> dagger.Container:
-        """Build a ready-to-use development environment"""
+    def installdependencies(self, source: Annotated[dagger.Directory, DefaultPath("./")]) -> dagger.Container:
+        """Install all dependencies"""
         # create a Dagger cache volume for node_modules
         node_modules_cache = dag.cache_volume("node_modules_cache")
         
