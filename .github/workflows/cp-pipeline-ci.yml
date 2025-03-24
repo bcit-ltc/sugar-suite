@@ -161,12 +161,3 @@ jobs:
         uses: dagger/dagger-for-github@8.0.0
         with:
           args: publish --registry=ghcr.io/bcit-ltc/${{ github.event.repository.name }} --tags=$TAGS
-          # TODO: add logic for latest, stable, review
-
-      - name: Set 'stable' APP_VERSION
-        if: ${{ needs.determine-environment.outputs.environment == 'stable' }}
-        env:
-            GH_TOKEN: ${{ secrets.GA_TOKEN }}
-        run: |
-          gh secret set APP_VERSION -b "${{ needs.previous-version.outputs.version }}"
-          echo "APP_VERSION=${{ needs.previous-version.outputs.version }}"
