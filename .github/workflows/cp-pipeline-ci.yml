@@ -146,10 +146,15 @@ jobs:
           echo "TAG=$TAG" >> $GITHUB_ENV
           echo $TAG
 
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GA_TOKEN }}
+      
       - name: Build and push Docker image using Dagger
         uses: dagger/dagger-for-github@8.0.0
-        env:
-            GH_TOKEN: ${{ secrets.GA_TOKEN }}
         with:
           args: publish --registry=ghcr.io/bcit-ltc/${{ github.event.repository.name }} --tag=$TAG
           # TODO: add logic for latest, stable, review
