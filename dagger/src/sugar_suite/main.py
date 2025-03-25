@@ -42,6 +42,7 @@ class SugarSuite:
             # .with_exposed_port(8080)
         )
 
+    @function
     def semanticrelease(self, source: Annotated[dagger.Directory, DefaultPath("./")]) -> str:
         """Run the semantic-release tool"""
         dependencies_container = (
