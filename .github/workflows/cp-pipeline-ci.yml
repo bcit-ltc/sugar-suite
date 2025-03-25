@@ -16,12 +16,18 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GA_TOKEN }}
       - name: Run Dagger semantic release
         uses: dagger/dagger-for-github@8.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GA_TOKEN }}
         with:
+          cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
           args: semanticrelease
   # semantic-release:
   #   name: Semantic Release
@@ -172,4 +178,5 @@ jobs:
   #     - name: Build and push Docker image using Dagger
   #       uses: dagger/dagger-for-github@8.0.0
   #       with:
+  #         cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
   #         args: publish --registry=ghcr.io/bcit-ltc/${{ github.event.repository.name }} --tags=$TAGS

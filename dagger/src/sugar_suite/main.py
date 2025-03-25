@@ -45,23 +45,11 @@ class SugarSuite:
     @function
     def semanticrelease(self, source: Annotated[dagger.Directory, DefaultPath("./")]) -> str:
         """Run the semantic-release tool"""
-        dependencies_container = (
-            self.installdependencies(source)
-            # Install git and ssh for semantic-release
-            .with_exec(["apk", "add", "--no-cache", "git", "openssh"])
-            # Configure Git to use HTTPS with GITHUB_TOKEN
-            .with_exec(["git", "config", "--global", "url.https://github.com/.insteadOf", "git@github.com:"])
-            .with_exec(["git", "config", "--global", "user.name", "github-actions[bot]"])
-            .with_exec(["git", "config", "--global", "user.email", "github-actions[bot]@users.noreply.github.com"])
-            # Set the GITHUB_TOKEN environment variable
-            .with_env_variable("GITHUB_TOKEN", "$GITHUB_TOKEN")
-            # Install semantic-release dependencies
-            .with_exec(["npm", "install", "--save-dev", "@semantic-release/git", "@semantic-release/commit-analyzer", "@semantic-release/release-notes-generator", "@semantic-release/npm", "@semantic-release/github"])
-            # Run semantic-release with branches configuration
-            .with_exec(["npx", "semantic-release", "--branches", "main"])
-        )
+
         return (
-            dependencies_container
+           dag.container()
+            .from_("ghcr.io/bcit-ltc/semantic-release:latest")
+            .with_exec(["npx", "semantic-release", "--branches", "main"])
             .stdout()
         )
 
