@@ -42,6 +42,22 @@ class SugarSuite:
             # .with_exposed_port(8080)
         )
 
+    @function
+    def semanticrelease(self, source: Annotated[dagger.Directory, DefaultPath("./")]) -> str:
+        """Run the semantic-release tool"""
+        dependencies_container = (
+            self.installdependencies(source)
+            # Install git specifically for semantic-release
+            .with_exec(["apk", "add", "--no-cache", "git"])
+            # Install semantic-release dependencies
+            .with_exec(["npm", "install", "--save-dev", "@semantic-release/git", "@semantic-release/commit-analyzer", "@semantic-release/release-notes-generator", "@semantic-release/npm", "@semantic-release/github"])
+            # Run semantic-release
+            .with_exec(["npx", "semantic-release"])
+        )
+        return (
+            dependencies_container
+            .stdout()
+        )
 
     @function
     def unittesting(self, source: Annotated[dagger.Directory, DefaultPath("./")]) -> str:
