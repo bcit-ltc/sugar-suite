@@ -45,10 +45,19 @@ class SugarSuite:
     @function
     def semanticrelease(self, source: Annotated[dagger.Directory, DefaultPath("./")]) -> str:
         """Run the semantic-release tool"""
-
-        return (
+        dependencies_container = (
+            self.installdependencies(source)
+           
+        )
+        semantic_release_container = (
            dag.container()
             .from_("ghcr.io/bcit-ltc/semantic-release:latest")
+            # .with_exec(["npx", "semantic-release", "--branches", "main"])
+            # .stdout()
+        )
+        return (
+            semantic_release_container.
+            with_directory("/usr/share/nginx/html", dependencies_container.directory("/usr/share/nginx/html"))
             .with_exec(["npx", "semantic-release", "--branches", "main"])
             .stdout()
         )
