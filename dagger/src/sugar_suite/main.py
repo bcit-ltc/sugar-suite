@@ -47,8 +47,8 @@ class SugarSuite:
         """Run the semantic-release tool"""
         dependencies_container = (
             self.installdependencies(source)
-            # Install git specifically for semantic-release
-            .with_exec(["apk", "add", "--no-cache", "git"])
+            # Install git and ssh for semantic-release
+            .with_exec(["apk", "add", "--no-cache", "git", "openssh"])
             # Install semantic-release dependencies
             .with_exec(["npm", "install", "--save-dev", "@semantic-release/git", "@semantic-release/commit-analyzer", "@semantic-release/release-notes-generator", "@semantic-release/npm", "@semantic-release/github"])
             # Run semantic-release
