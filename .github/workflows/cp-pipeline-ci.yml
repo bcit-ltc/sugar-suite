@@ -19,7 +19,7 @@ jobs:
 
       - name: Configure Git for HTTPS
         run: |
-          git config --global url."https://github.com/"
+          git config --global url."https://github.com/".insteadOf "git@github.com:"
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
