@@ -54,14 +54,16 @@ class SugarSuite:
             .from_("ghcr.io/bcit-ltc/semantic-release:latest")
             .with_exec(["apk", "add", "--no-cache", "git", "openssh"])
             .with_workdir("/usr/share/nginx/html")
-
-            # .with_exec(["npx", "semantic-release", "--branches", "main"])
-            # .stdout()
+            .with_exec(["apk", "update"])
+            .with_exec(["apk", "add", "--no-cache", "git", "openssh"])
+            .with_workdir("/usr/share/nginx/html")
+            .with_directory("/usr/share/nginx/html", dependencies_container.directory("/usr/share/nginx/html"))
+            .with_exec(["npx", "semantic-release", "--branches", "main"])
         )
         return (
-            semantic_release_container.
-            with_directory("/usr/share/nginx/html", dependencies_container.directory("/usr/share/nginx/html"))
-            .with_exec(["npx", "semantic-release", "--branches", "main"])
+            semantic_release_container
+            # .with_directory("/usr/share/nginx/html", dependencies_container.directory("/usr/share/nginx/html"))
+            # .with_exec(["npx", "semantic-release", "--branches", "main"])
             .stdout()
         )
 
