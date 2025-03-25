@@ -17,16 +17,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Configure Git for HTTPS
-        run: |
-          git config --global url."https://github.com/".insteadOf "git@github.com:"
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-
       - name: Run Dagger semantic release
         uses: dagger/dagger-for-github@8.0.0
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GA_TOKEN }}
         with:
           args: semanticrelease
   # semantic-release:
