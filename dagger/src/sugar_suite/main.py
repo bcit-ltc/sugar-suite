@@ -52,7 +52,9 @@ class SugarSuite:
         semantic_release_container = (
            dag.container()
             .from_("ghcr.io/bcit-ltc/semantic-release:latest")
+            .with_exec(["apk", "add", "--no-cache", "git", "openssh"])
             .with_workdir("/usr/share/nginx/html")
+
             # .with_exec(["npx", "semantic-release", "--branches", "main"])
             # .stdout()
         )
