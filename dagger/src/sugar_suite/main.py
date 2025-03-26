@@ -64,6 +64,7 @@ class SugarSuite:
             .with_workdir("/usr/share/nginx/html")
             # Run semantic-release
             .with_exec(["npx", "semantic-release"])
+        )
             
         
         next_version = await semantic_release_container.with_exec(["echo", "$NEXT_VERSION"]).stdout()
