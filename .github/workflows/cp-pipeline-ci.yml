@@ -10,52 +10,26 @@ permissions:
   contents: read # for checkout
 
 jobs:
-        
   semantic-release:
-    name: Semantic Release
+    name: Semantic Release Test
     runs-on: ubuntu-latest
-    outputs:
-      version: ${{ steps.set-next-version.outputs.VERSION_NUM }}
-    permissions:
-      contents: write # to be able to publish a GitHub release
-      issues: write # to be able to comment on released issues
-      pull-requests: write # to be able to comment on released pull requests
-      id-token: write # to enable use of OIDC for npm provenance
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
         with:
-          node-version: "lts/*"
-      - run: npm init -y
-      - run: npm install --save-dev semantic-release @semantic-release/exec 
-      - name: Verify the integrity of provenance attestations and registry signatures for installed dependencies
-        run: npm audit signatures
-      - name: semantic release config
-        run: |
-          echo "Configuring local \".releaserc\" file..."
-          echo '{
-            "branches": [
-              "main" ],
-            "tagFormat": "${version}",
-            "plugins": [
-              "@semantic-release/commit-analyzer",
-              "@semantic-release/release-notes-generator",
-              [
-                "@semantic-release/exec",
-                {
-                  "verifyReleaseCmd": "echo ${nextRelease.version} > NEXT_VERSION"
-                }
-              ],
-              "@semantic-release/github"
-            ]
-          }' \
-            > .releaserc
-
-          echo "  Done."
-      - name: Release
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GA_TOKEN }}
+      - name: Run Dagger semantic release
+        uses: dagger/dagger-for-github@8.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GA_TOKEN }}
-        run: npx semantic-release 
+        with:
+          cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
+          args: semanticrelease
+
       - name: Set the version
         id: set-next-version
         run: |
@@ -160,4 +134,5 @@ jobs:
       - name: Build and push Docker image using Dagger
         uses: dagger/dagger-for-github@8.0.0
         with:
+          cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
           args: publish --registry=ghcr.io/bcit-ltc/${{ github.event.repository.name }} --tags=$TAGS
