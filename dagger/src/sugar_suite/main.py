@@ -43,30 +43,25 @@ class SugarSuite:
         )
 
     @function
-    def semanticrelease(self, source: Annotated[dagger.Directory, DefaultPath("./")]) -> str:
+    async def semanticrelease(self, source: Annotated[dagger.Directory, DefaultPath("./")]) -> str:
         """Run the semantic-release tool"""
-        dependencies_container = (
-            self.installdependencies(source)
-           
-        )
-        semantic_release_container = (
-           dag.container()
-            .from_("ghcr.io/bcit-ltc/semantic-release:latest")
-            .with_exec(["apk", "add", "--no-cache", "git", "openssh"])
+        # Install dependencies in the dependencies_container
+        dependencies_container = await (self.installdependencies(source))
+        
+        # Use the semantic-release container and copy files from dependencies_container
+        semantic_release_container = await (
+            dag.container()
+            .from_("ghcr.io/bcit-ltc/semantic-release:arv2")  # Use prebuilt semantic-release container
+            # Copy all files from dependencies_container except node_modules
+            .with_directory("/usr/share/nginx/html", dependencies_container.directory("/usr/share/nginx/html"), exclude=["**/node_modules"])
+            # Preserve the pre-installed node_modules in the semantic-release container
             .with_workdir("/usr/share/nginx/html")
-            .with_exec(["apk", "update"])
-            .with_exec(["apk", "add", "--no-cache", "git", "openssh"])
-            .with_workdir("/usr/share/nginx/html")
-            .with_directory("/usr/share/nginx/html", dependencies_container.directory("/usr/share/nginx/html"))
-            .with_exec(["npx", "semantic-release", "--branches", "main"])
+            # Run semantic-release
+            .with_exec(["npx", "semantic-release"])
         )
-        return (
-            semantic_release_container
-            # .with_directory("/usr/share/nginx/html", dependencies_container.directory("/usr/share/nginx/html"))
-            # .with_exec(["npx", "semantic-release", "--branches", "main"])
-            .stdout()
-        )
+        return await semantic_release_container.stdout()
 
+    
     @function
     def unittesting(self, source: Annotated[dagger.Directory, DefaultPath("./")]) -> str:
         """Return the result of running unit tests"""
