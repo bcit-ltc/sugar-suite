@@ -52,6 +52,12 @@ class SugarSuite:
         semantic_release_container = await (
             dag.container()
             .from_("ghcr.io/bcit-ltc/semantic-release:arv2")  # Use prebuilt semantic-release container
+            # Configure Git to use HTTPS with GITHUB_TOKEN
+            .with_exec(["git", "config", "--global", "url.https://github.com/.insteadOf", "git@github.com:"])
+            .with_exec(["git", "config", "--global", "user.name", "github-actions[bot]"])
+            .with_exec(["git", "config", "--global", "user.email", "github-actions[bot]@users.noreply.github.com"])
+            # Set the GITHUB_TOKEN environment variable
+            .with_env_variable("GITHUB_TOKEN", "$GITHUB_TOKEN")
             # Copy all files from dependencies_container except node_modules
             .with_directory("/usr/share/nginx/html", dependencies_container.directory("/usr/share/nginx/html"), exclude=["**/node_modules"])
             # Preserve the pre-installed node_modules in the semantic-release container
