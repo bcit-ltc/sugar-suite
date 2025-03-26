@@ -64,14 +64,11 @@ class SugarSuite:
             .with_workdir("/usr/share/nginx/html")
             # Run semantic-release
             .with_exec(["npx", "semantic-release"])
-        )
+            
         
-        # Read the NEXT_VERSION file to get the next version
-        next_version_file = semantic_release_container.file("NEXT_VERSION")
-        next_version = await next_version_file.contents()
-    
-        return next_version.strip()
-        
+        next_version = await semantic_release_container.with_exec(["echo", "$NEXT_VERSION"]).stdout()
+        return next_version
+
     
     @function
     def unittesting(self, source: Annotated[dagger.Directory, DefaultPath("./")]) -> str:
