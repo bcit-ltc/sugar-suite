@@ -9,7 +9,7 @@
         [
             "@semantic-release/exec",
             {
-                "verifyReleaseCmd": "echo NEXT_VERSION=${nextRelease.version} > NEXT_VERSION && echo NEXT_VERSION=${nextRelease.version}"
+                "verifyReleaseCmd": "echo ${nextRelease.version} > NEXT_VERSION"
             }
         ],
         "@semantic-release/github"

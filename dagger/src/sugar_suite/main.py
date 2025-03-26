@@ -65,10 +65,7 @@ class SugarSuite:
             # Run semantic-release
             .with_exec(["npx", "semantic-release"])
         )
-            
-        
-        next_version = await semantic_release_container.with_exec(["echo", "$NEXT_VERSION"]).stdout()
-        return next_version
+        return await semantic_release_container.stdout()
 
     
     @function
