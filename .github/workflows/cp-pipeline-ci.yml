@@ -5,12 +5,17 @@ on:
     branches:
       - main
       - '[0-9]+-*'
+permissions:
+  contents: read # for checkout
+  packages: write # Required for pulling images
 
 jobs:
   semantic-release:
     permissions:
-      contents: read # for checkout
-      packages: read # Required for pulling images
+      contents: write # to be able to publish a GitHub release
+      issues: write # to be able to comment on released issues
+      pull-requests: write # to be able to comment on released pull requests
+      packages: write # Required for pulling images
     name: Semantic Release
     runs-on: ubuntu-latest
     steps:
@@ -24,6 +29,8 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Run Dagger semantic release
         uses: dagger/dagger-for-github@8.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
           args: semanticrelease
@@ -99,9 +106,6 @@ jobs:
         run: echo "The environment is ${{ steps.set-environment.outputs.ENVIRONMENT }}"
 
   build-for-environment:
-    permissions:
-      contents: read # for checkout
-      packages: write # Required for pushing images
     name: Build for environment
     needs: [previous-version, determine-environment]
     if: ${{ needs.determine-environment.outputs.environment != '' }}
@@ -136,4 +140,4 @@ jobs:
         uses: dagger/dagger-for-github@8.0.0
         with:
           cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
-          args: publish --registry=ghcr.io/bcit-ltc/${{ github.event.repository.name }} --tags=$TAGS
+          args: publish --registry=ghcr.io/bcit-ltc/${{ github.event.repository.name }} --username=${{ github.actor }} --password=${{ secrets.GITHUB_TOKEN }} --tags=$TAGS

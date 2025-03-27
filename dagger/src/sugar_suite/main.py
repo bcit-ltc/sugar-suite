@@ -8,13 +8,13 @@ class SugarSuite:
 
 
     @function
-    async def publish(self, source: Annotated[dagger.Directory, DefaultPath("./")], registry: str, tags: str) -> str:
+    async def publish(self, source: Annotated[dagger.Directory, DefaultPath("./")], registry: str, username: str, password: str, tags: str) -> str:
         """Publish the application container to a registry"""
         # Split the tags by comma and strip any whitespace
         tag_list = [t.strip() for t in tags.split(",")]
         
         # Call Dagger Function to build the application image
-        image = self.build(source)
+        image = self.build(source).with_registry_auth(registry, username, password)
         
         # Publish the image for each tag
         for tag in tag_list:
