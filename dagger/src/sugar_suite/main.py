@@ -7,7 +7,7 @@ from dagger import DefaultPath, dag, function, object_type, Secret, Doc
 class SugarSuite:
 
     @function
-    async def publish(self, source: Annotated[dagger.Directory, DefaultPath("./")], registry: str, username: str, token: Annotated[dagger.Secret, Doc("GitHub API token")],, tags: str) -> str:
+    async def publish(self, source: Annotated[dagger.Directory, DefaultPath("./")], registry: str, username: str, token: Annotated[dagger.Secret, Doc("GitHub API token")], tags: str) -> str:
         """Publish the application container to a registry"""
         # Split the tags by comma and strip any whitespace
         tag_list = [t.strip() for t in tags.split(",")]
