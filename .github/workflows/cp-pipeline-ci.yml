@@ -6,12 +6,10 @@ on:
       - main
       - '[0-9]+-*'
 
-permissions:
-  contents: read # for checkout
-
 jobs:
   semantic-release:
     permissions:
+      contents: read # for checkout
       packages: read # Required for pulling images
     name: Semantic Release
     runs-on: ubuntu-latest
