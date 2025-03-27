@@ -7,19 +7,23 @@ from dagger import DefaultPath, dag, function, object_type, Secret
 class SugarSuite:
 
 
+    # filepath: c:\Users\arolos\Desktop\github\sugar-suite\dagger\src\sugar_suite\main.py
     @function
-    async def publish(self, source: Annotated[dagger.Directory, DefaultPath("./")], registry: str, username: str, password: dagger.Secret, tags: str) -> str:
+    async def publish(self, source: Annotated[dagger.Directory, DefaultPath("./")], registry: str, username: str, tags: str) -> str:
         """Publish the application container to a registry"""
         # Split the tags by comma and strip any whitespace
         tag_list = [t.strip() for t in tags.split(",")]
-        
+    
+        # Load the password secret from the environment
+        password_secret = dag.secret_from_env("GITHUB_TOKEN")
+    
         # Call Dagger Function to build the application image
-        image = self.build(source).with_registry_auth(registry, username, password)
-        
+        image = self.build(source).with_registry_auth(registry, username, password_secret)
+    
         # Publish the image for each tag
         for tag in tag_list:
             await image.publish(f"{registry}:{tag}")
-        
+    
         return f"Published with tags: {', '.join(tag_list)}"
     
     @function
