@@ -8,10 +8,11 @@ on:
 
 permissions:
   contents: read # for checkout
-  packages: write # Required for pushing images
-  packages: read # Required for pulling images
+
 jobs:
   semantic-release:
+    permissions:
+      packages: read # Required for pulling images
     name: Semantic Release
     runs-on: ubuntu-latest
     steps:
@@ -22,7 +23,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GA_TOKEN }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Run Dagger semantic release
         uses: dagger/dagger-for-github@8.0.0
         with:
@@ -100,6 +101,8 @@ jobs:
         run: echo "The environment is ${{ steps.set-environment.outputs.ENVIRONMENT }}"
 
   build-for-environment:
+    permissions:
+      packages: read # Required for pulling images
     name: Build for environment
     needs: [previous-version, determine-environment]
     if: ${{ needs.determine-environment.outputs.environment != '' }}
