@@ -5,9 +5,6 @@ on:
     branches:
       - main
       - '[0-9]+-*'
-permissions:
-  contents: read # for checkout
-  packages: write # Required for pulling images
 
 jobs:
   semantic-release:
@@ -106,6 +103,9 @@ jobs:
         run: echo "The environment is ${{ steps.set-environment.outputs.ENVIRONMENT }}"
 
   build-for-environment:
+    permissions:
+      contents: read # for checkout
+      packages: write # Required for pulling images
     name: Build for environment
     needs: [previous-version, determine-environment]
     if: ${{ needs.determine-environment.outputs.environment != '' }}
@@ -139,7 +139,7 @@ jobs:
       - name: Build and push Docker image using Dagger
         uses: dagger/dagger-for-github@8.0.0
         env:
-          GITHUB_TOKEN: ${{ secrets.GA_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
           args: publish --registry=ghcr.io/bcit-ltc/${{ github.event.repository.name }} --username=${{ github.actor }} --token=env://GITHUB_TOKEN --tags=$TAGS
