@@ -100,7 +100,7 @@ jobs:
 
   build-for-environment:
     permissions:
-      packages: read # Required for pulling images
+      packages: write # Required for pushing images
     name: Build for environment
     needs: [previous-version, determine-environment]
     if: ${{ needs.determine-environment.outputs.environment != '' }}
