@@ -1,13 +1,13 @@
 from typing import Annotated
 import dagger
-from dagger import DefaultPath, dag, function, object_type, Secret
+from dagger import DefaultPath, dag, function, object_type, Secret, Doc
 
 
 @object_type
 class SugarSuite:
 
     @function
-    async def publish(self, source: Annotated[dagger.Directory, DefaultPath("./")], registry: str, username: str, password: dagger.Secret, tags: str) -> str:
+    async def publish(self, source: Annotated[dagger.Directory, DefaultPath("./")], registry: str, username: str, token: Annotated[dagger.Secret, Doc("GitHub API token")],, tags: str) -> str:
         """Publish the application container to a registry"""
         # Split the tags by comma and strip any whitespace
         tag_list = [t.strip() for t in tags.split(",")]
@@ -18,8 +18,8 @@ class SugarSuite:
         # Call Dagger Function to build the application image
         image = (
             self.build(source)
-            # .with_secret_variable("GITHUB_TOKEN", password)
-            .with_registry_auth(registry, username, password)
+            .with_secret_variable("GITHUB_TOKEN", token)
+            .with_registry_auth(registry, username, "$GITHUB_TOKEN")
             )
     
         # Publish the image for each tag
