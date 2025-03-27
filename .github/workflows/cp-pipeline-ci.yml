@@ -139,7 +139,7 @@ jobs:
       - name: Build and push Docker image using Dagger
         uses: dagger/dagger-for-github@8.0.0
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GA_TOKEN }}
         with:
           cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
           args: publish --registry=ghcr.io/bcit-ltc/${{ github.event.repository.name }} --username=${{ github.actor }} --token=env://GITHUB_TOKEN --tags=$TAGS
