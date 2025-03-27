@@ -100,6 +100,7 @@ jobs:
 
   build-for-environment:
     permissions:
+      contents: read # for checkout
       packages: write # Required for pushing images
     name: Build for environment
     needs: [previous-version, determine-environment]
