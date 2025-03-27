@@ -15,7 +15,7 @@ class SugarSuite:
         tag_list = [t.strip() for t in tags.split(",")]
     
         # Load the password secret from the environment
-        password_secret = dag.secret_from_env("GITHUB_TOKEN")
+        password_secret = dagger.Secret.from_env("GITHUB_TOKEN")
     
         # Call Dagger Function to build the application image
         image = self.build(source).with_registry_auth(registry, username, password_secret)
