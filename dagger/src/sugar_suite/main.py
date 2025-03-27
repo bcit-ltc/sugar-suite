@@ -1,25 +1,28 @@
 from typing import Annotated
 import dagger
-from dagger import DefaultPath, dag, function, object_type
+from dagger import DefaultPath, dag, function, object_type, Secret, Doc
 
 
 @object_type
 class SugarSuite:
 
-
     @function
-    async def publish(self, source: Annotated[dagger.Directory, DefaultPath("./")], registry: str, tags: str) -> str:
+    async def publish(self, source: Annotated[dagger.Directory, DefaultPath("./")], registry: str, username: str, token: Annotated[dagger.Secret, Doc("GitHub API token")], tags: str) -> str:
         """Publish the application container to a registry"""
         # Split the tags by comma and strip any whitespace
-        tag_list = [t.strip() for t in tags.split(",")]
-        
+        tag_list = [t.strip() for t in tags.split(",")]   
+    
         # Call Dagger Function to build the application image
-        image = self.build(source)
-        
+        image = (
+            self.build(source)
+            .with_secret_variable("GITHUB_TOKEN", token)
+            .with_registry_auth(registry, username, token)
+            )
+    
         # Publish the image for each tag
         for tag in tag_list:
             await image.publish(f"{registry}:{tag}")
-        
+    
         return f"Published with tags: {', '.join(tag_list)}"
     
     @function
@@ -45,8 +48,6 @@ class SugarSuite:
     @function
     async def semanticrelease(self, source: Annotated[dagger.Directory, DefaultPath("./")]) -> str:
         """Run the semantic-release tool"""
-        # Install dependencies in the dependencies_container
-        dependencies_container = await (self.installdependencies(source))
         
         # Use the semantic-release container and copy files from dependencies_container
         semantic_release_container = await (
@@ -59,7 +60,7 @@ class SugarSuite:
             # Set the GITHUB_TOKEN environment variable
             .with_env_variable("GITHUB_TOKEN", "$GITHUB_TOKEN")
             # Copy all files from dependencies_container except node_modules
-            .with_directory("/usr/share/nginx/html", dependencies_container.directory("/usr/share/nginx/html"), exclude=["**/node_modules"])
+            .with_directory("/usr/share/nginx/html/.git", source.directory(".git"))
             # Preserve the pre-installed node_modules in the semantic-release container
             .with_workdir("/usr/share/nginx/html")
             # Run semantic-release
