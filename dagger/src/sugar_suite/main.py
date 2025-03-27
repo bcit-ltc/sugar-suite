@@ -10,16 +10,13 @@ class SugarSuite:
     async def publish(self, source: Annotated[dagger.Directory, DefaultPath("./")], registry: str, username: str, token: Annotated[dagger.Secret, Doc("GitHub API token")], tags: str) -> str:
         """Publish the application container to a registry"""
         # Split the tags by comma and strip any whitespace
-        tag_list = [t.strip() for t in tags.split(",")]
-    
-        # Load the password secret from the environment
-        
+        tag_list = [t.strip() for t in tags.split(",")]   
     
         # Call Dagger Function to build the application image
         image = (
             self.build(source)
             .with_secret_variable("GITHUB_TOKEN", token)
-            .with_registry_auth(registry, username, "$GITHUB_TOKEN")
+            .with_registry_auth(registry, username, token)
             )
     
         # Publish the image for each tag
