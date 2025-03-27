@@ -33,7 +33,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.ARV_TOKEN }}
         with:
           cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
-          args: semanticrelease
+          args: semanticrelease --token=env://GITHUB_TOKEN
 
       - name: Set the version
         id: set-next-version
