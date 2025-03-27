@@ -5,6 +5,9 @@ on:
     branches:
       - main
       - '[0-9]+-*'
+permissions:
+  contents: read # for checkout
+  packages: write
 
 jobs:
   semantic-release:
@@ -12,7 +15,7 @@ jobs:
       contents: write # to be able to publish a GitHub release
       issues: write # to be able to comment on released issues
       pull-requests: write # to be able to comment on released pull requests
-      packages: write # Required for pulling images
+      packages: write
     name: Semantic Release
     runs-on: ubuntu-latest
     steps:
@@ -105,7 +108,7 @@ jobs:
   build-for-environment:
     permissions:
       contents: read # for checkout
-      packages: write # Required for pulling images
+      packages: write
     name: Build for environment
     needs: [previous-version, determine-environment]
     if: ${{ needs.determine-environment.outputs.environment != '' }}
