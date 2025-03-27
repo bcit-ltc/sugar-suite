@@ -16,7 +16,7 @@ class SugarSuite:
         image = (
             self.build(source)
             .with_env_variable("GITHUB_TOKEN", "$GITHUB_TOKEN")
-            .with_registry_auth(registry, username, "$GITHUB_TOKEN")
+            # .with_registry_auth(registry, username, "$GITHUB_TOKEN")
             )
     
         # Publish the image for each tag
