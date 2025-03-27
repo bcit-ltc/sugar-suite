@@ -11,30 +11,50 @@ permissions:
 
 jobs:
   semantic-release:
+    name: Semantic Release
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.set-next-version.outputs.VERSION_NUM }}
     permissions:
       contents: write # to be able to publish a GitHub release
       issues: write # to be able to comment on released issues
       pull-requests: write # to be able to comment on released pull requests
-      packages: write # Required for pulling images
-    name: Semantic Release
-    runs-on: ubuntu-latest
+      id-token: write # to enable use of OIDC for npm provenance
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.ARV_TOKEN }}
-      - name: Run Dagger semantic release
-        uses: dagger/dagger-for-github@8.0.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.ARV_TOKEN }}
-        with:
-          cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
-          args: semanticrelease --token=env://GITHUB_TOKEN
+          node-version: "lts/*"
+      - run: npm init -y
+      - run: npm install --save-dev semantic-release @semantic-release/exec 
+      - name: Verify the integrity of provenance attestations and registry signatures for installed dependencies
+        run: npm audit signatures
+      - name: semantic release config
+        run: |
+          echo "Configuring local \".releaserc\" file..."
+          echo '{
+            "branches": [
+              "main" ],
+            "tagFormat": "${version}",
+            "plugins": [
+              "@semantic-release/commit-analyzer",
+              "@semantic-release/release-notes-generator",
+              [
+                "@semantic-release/exec",
+                {
+                  "verifyReleaseCmd": "echo ${nextRelease.version} > NEXT_VERSION"
+                }
+              ],
+              "@semantic-release/github"
+            ]
+          }' \
+            > .releaserc
 
+          echo "  Done."
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx semantic-release 
       - name: Set the version
         id: set-next-version
         run: |
