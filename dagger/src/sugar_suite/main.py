@@ -57,7 +57,7 @@ class SugarSuite:
             # Set the GITHUB_TOKEN environment variable
             .with_env_variable("GITHUB_TOKEN", "$GITHUB_TOKEN")
             # Copy all files from dependencies_container except node_modules
-            .with_directory("/usr/share/nginx/html/.git", source)
+            .with_directory("/usr/share/nginx/html/.git", source.directory(".git"))
             # Preserve the pre-installed node_modules in the semantic-release container
             .with_workdir("/usr/share/nginx/html")
             # Run semantic-release
