@@ -8,7 +8,8 @@ on:
 
 permissions:
   contents: read # for checkout
-
+  packages: write # Required for pushing images
+  packages: read # Required for pulling images
 jobs:
   semantic-release:
     name: Semantic Release
