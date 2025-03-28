@@ -21,14 +21,27 @@ class SugarSuite:
             .from_("ghcr.io/bcit-ltc/semantic-release:gitlab-original")
             # GITHUB_TOKEN env var is required
             .with_secret_variable("GITHUB_TOKEN", token)
-            .with_env_variable("PROJECT_URL", project_url)
             # Set working directory
             .with_workdir("/app")
             # Copy source code
             .with_directory("/app", source)
             # Run semantic-release
-            .with_exec(["ls", "-la"])
-            .with_exec(["semantic-release", "--debug", "--repository-url" "$PROJECT_URL", "--dry-run", "--no-ci"])
-            .with_exec(["echo", "$(cat NEXT_VERSION)"])
+            .with_exec(
+                [
+                    "semantic-release",
+                    "--debug",
+                    "--repository-url", ( f"{project_url}" ),
+                    "--dry-run",
+                    "--no-ci"
+                ]
+            )
+            # Return the current and next versions
+            .with_exec(
+                [
+                    "sh", "-c", 
+                    'echo "Current version: $(cat CURRENT_VERSION)"; '
+                    'if [ -f NEXT_VERSION ]; then echo "Next version: $(cat NEXT_VERSION)"; fi'
+                ]
+            )
             .stdout()
         )
