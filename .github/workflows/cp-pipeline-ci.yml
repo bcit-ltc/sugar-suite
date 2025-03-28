@@ -28,7 +28,7 @@ jobs:
           # assumes the Dagger Cloud token is in a repository secret 
           # named DAGGER_CLOUD_TOKEN set via the GitHub UI/CLI
           cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
-        env:
+        # env:
           # PACKAGE_REGISTRY: ghcr.io
           # PACKAGE_IMAGE_NAME: ${{ github.repository }}
           # REGISTRY_USERNAME: ${{ github.actor }}
