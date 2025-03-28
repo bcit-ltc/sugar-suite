@@ -5,7 +5,6 @@ import dagger
 def generate_releaserc_config(project_url: str) -> dict:
     """Generate the .releaserc configuration as a dictionary."""
     releaserc_config = {
-        "branches": ['**'],
         "plugins": [
             "@semantic-release/commit-analyzer",
             [
