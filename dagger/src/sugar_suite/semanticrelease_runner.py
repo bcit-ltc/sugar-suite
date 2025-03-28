@@ -52,7 +52,7 @@ def _initialize_container(
         [
             "sh", "-c",
             f"""
-            semantic-release {additional_flags} --repository-url {project_url} && \
+            semantic-release {additional_flags} --repository-url {project_url} --branch 6-riffing-on-dagger && \
             if [ -s CURRENT_VERSION ] && grep -q '[^[:space:]]' CURRENT_VERSION; then \
                 echo "Current version: v$(cat CURRENT_VERSION)"; \
             else \
