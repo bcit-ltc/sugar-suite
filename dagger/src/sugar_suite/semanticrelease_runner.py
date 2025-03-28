@@ -73,10 +73,11 @@ def _initialize_container(
             [
                 "sh", "-c",
                 f"""
-                echo 'Contents of /app directory:' && ls -lah && echo ''; \
-                echo 'Contents of .releaserc:' && cat .releaserc && echo ''; \
-                echo 'Contents of CURRENT_VERSION:' && cat CURRENT_VERSION && echo ''; \
-                echo 'Contents of NEXT_VERSION:' && cat NEXT_VERSION && echo ''
+                echo 'Contents of /app directory:' && ls -lah && echo '';
+                # echo 'Contents of /app directory:' && ls -lah && echo ''; \
+                # echo 'Contents of .releaserc:' && cat .releaserc && echo ''; \
+                # echo 'Contents of CURRENT_VERSION:' && cat CURRENT_VERSION && echo ''; \
+                # echo 'Contents of NEXT_VERSION:' && cat NEXT_VERSION && echo ''
                 """
             ]
         )
