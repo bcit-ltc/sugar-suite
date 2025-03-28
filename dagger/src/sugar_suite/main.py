@@ -26,8 +26,6 @@ class SugarSuite:
             .with_workdir("/app")
             # Copy source code
             .with_directory("/app", source)
-            # Copy .releaserc
-            .with_exec(["cp", "/usr/src/app/.releaserc", "./releaserc"])
             # Run semantic-release
             .with_exec(["ls", "-la"])
             .with_exec(["semantic-release", "--debug", "--repository-url" "$PROJECT_URL", "--dry-run", "--no-ci"])
