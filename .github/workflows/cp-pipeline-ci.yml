@@ -2,142 +2,35 @@ name: Course Production Pipeline CI
 
 on:
   push:
-    branches:
-      - main
-      - '[0-9]+-*'
-permissions:
-  contents: read # for checkout
-  packages: write # Required for pulling images
+    branches: [main]
 
 jobs:
-  semantic-release:
-    permissions:
-      contents: write # to be able to publish a GitHub release
-      issues: write # to be able to comment on released issues
-      pull-requests: write # to be able to comment on released pull requests
-      packages: write # Required for pushing images
-    name: Semantic Release
+  run-dagger:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     steps:
-      - name: Checkout code
+      # - name: Set up SSH
+      #   run: |
+      #     eval "$(ssh-agent -s)"
+      #     ssh-add - <<< '${{ secrets.SSH_PRIVATE_KEY }}'
+      - name: Checkout
         uses: actions/checkout@v4
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.ARV_TOKEN }}
-      - name: Run Dagger semantic release
+      - name: Run Dagger
         uses: dagger/dagger-for-github@8.0.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.ARV_TOKEN }}
         with:
+          version: "latest"
+          args: semanticrelease --source=. --token=env://GITHUB_TOKEN --project_url=env://$GITHUB_SERVER_URL/${{ github.repository }}
+          # assumes the Dagger Cloud token is in a repository secret 
+          # named DAGGER_CLOUD_TOKEN set via the GitHub UI/CLI
           cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
-          args: semanticrelease --token=env://GITHUB_TOKEN
-
-      - name: Set the version
-        id: set-next-version
-        run: |
-          echo VERSION_NUM=$(cat NEXT_VERSION) >> $GITHUB_OUTPUT
-      - name: verify the version
-        run: |
-          if [ -z "${{ steps.set-next-version.outputs.VERSION_NUM }}" ]; then
-            echo "No version found, cancelling job."
-            exit 0
-          else
-            echo "Version found: ${{ steps.set-next-version.outputs.VERSION_NUM }}"     
-          fi
-
-  previous-version:
-    name: Previous Version
-    needs: [semantic-release]
-    runs-on: ubuntu-latest
-    outputs:
-      version: ${{ steps.get-chosen-version.outputs.CHOSEN_VERSION }}
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Fetch all tags
-        run: git fetch --tags
-
-      - name: Get latest tag
-        run: echo "$(git describe --tags `git rev-list --tags --max-count=1`)" > TAG
-
-      - name: Print latest tag
-        run: echo "The latest tag is $(cat TAG)"
-
-      - name: If next version is empty choose latest tag
-        id: get-chosen-version
-        run: |
-          if [ -z "${{ needs.semantic-release.outputs.version }}" ]; then
-            echo "CHOSEN_VERSION=$(cat TAG)" >> $GITHUB_OUTPUT
-          else
-            echo "CHOSEN_VERSION=${{ needs.semantic-release.outputs.version }}" >> $GITHUB_OUTPUT
-          fi
-          
-  ## This is the step that determines the environment
-  ## conditionally chooses latest, stable or review based on branch and commit
-  determine-environment:
-    name: Determine Environment
-    needs: [semantic-release, previous-version]
-    runs-on: ubuntu-latest
-    outputs:
-      environment: ${{ steps.set-environment.outputs.ENVIRONMENT }}
-    steps:
-      - uses: actions/checkout@v4
-      - name: Get commit message
-        id: get-commit-message
-        run: echo "COMMIT_MESSAGE=$(git log -1 --pretty=%B | tr -d '\n' | sed 's/"/\\"/g')" >> $GITHUB_ENV
-      - name: Set the environment
-        id: set-environment
-        run: |
-          if [ "${{ github.ref_name }}" == "main" ]; then
-            if [[ "${{ env.COMMIT_MESSAGE }}" =~ ^(fix\s*:\s*|feat\s*:\s*|major\s*:\s*) ]]; then
-              ENV_NAME="stable"
-            else
-              ENV_NAME="latest"
-            fi
-          elif [[ "${{ github.ref_name }}" =~ ^[0-9]+-.*$ ]]; then
-            ENV_NAME="review"
-          fi
-          echo ENVIRONMENT=$ENV_NAME >> $GITHUB_OUTPUT
-
-      - name: print the environment
-        run: echo "The environment is ${{ steps.set-environment.outputs.ENVIRONMENT }}"
-
-  build-for-environment:
-    permissions:
-      contents: write # to be able to publish a GitHub release
-      issues: write # to be able to comment on released issues
-      pull-requests: write # to be able to comment on released pull requests
-      packages: write # Required for pulling images
-    name: Build for environment
-    needs: [previous-version, determine-environment]
-    if: ${{ needs.determine-environment.outputs.environment != '' }}
-    runs-on: ubuntu-latest
-    environment: ${{ needs.determine-environment.outputs.environment }}
-    steps:
-      - uses: actions/checkout@v4
-      - name: Print build environment
-        run: echo "This is the ${{ needs.determine-environment.outputs.environment }} environment"
-      - name: Print gathered version
-        run: echo "The version is ${{ needs.previous-version.outputs.version }}"
-      
-      # create string with format {semverTag}-{date}--{gitShortSha}.{timeStamp}
-      - name: Create Tag
-        run: |
-          if [ "${{ needs.determine-environment.outputs.environment }}" != "review" ]; then
-            TAGS=$(echo "${{ needs.previous-version.outputs.version }},${{ needs.determine-environment.outputs.environment }}")
-          elif [ "${{ needs.determine-environment.outputs.environment }}" == "review" ]; then
-            TAGS=$(echo "review--${{ github.ref_name }}--$(git rev-parse --short HEAD)")
-          fi
-          echo "TAGS=$TAGS" >> $GITHUB_ENV
-          echo $TAGS
-      
-      - name: Build and push Docker image using Dagger
-        uses: dagger/dagger-for-github@8.0.0
         env:
-          GITHUB_TOKEN: ${{ secrets.ARV_TOKEN }}
-        with:
-          cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
-          args: publish --registry=ghcr.io/bcit-ltc/${{ github.event.repository.name }} --username=${{ github.actor }} --token=env://GITHUB_TOKEN --tags=$TAGS
+          # PACKAGE_REGISTRY: ghcr.io
+          # PACKAGE_IMAGE_NAME: ${{ github.repository }}
+          # REGISTRY_USERNAME: ${{ github.actor }}
+          # assumes the container registry password is in a repository secret
+          # named REGISTRY_PASSWORD set via the GitHub UI/CL
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Print latest version
+        run: echo "The latest tag is $(cat NEXT_VERSION)"
