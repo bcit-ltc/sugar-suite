@@ -22,8 +22,8 @@ class SugarSuite:
             # GITHUB_TOKEN env var is required
             .with_secret_variable("GITHUB_TOKEN", token)
             .with_env_variable("PROJECT_URL", project_url)
-            # Set working directory
-            .with_workdir("/app")
+            # # Set working directory
+            # .with_workdir("/app")
             # Copy source code
             .with_directory("/app", source)
             # Run semantic-release
