@@ -2,7 +2,10 @@ name: Course Production Pipeline CI
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+      - '[0-9]+-*'
+      - '*' # for testing
 
 jobs:
   run-dagger:
