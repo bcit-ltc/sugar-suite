@@ -18,10 +18,13 @@ class SugarSuite:
         return await (
             dag.container()
             # Use prebuilt semantic-release container
-            .from_("ghcr.io/bcit-ltc/semantic-release:latest")
+            .from_("ghcr.io/bcit-ltc/semantic-release:gitlab-original")
             # GITHUB_TOKEN env var is required
             .with_secret_variable("GITHUB_TOKEN", token)
             .with_env_variable("PROJECT_URL", project_url)
+            .with_workdir("/app")
+            .with_directory("/app", source)
+            .with_exec(["cp", "/usr/src/app/.releaserc", "./releaserc"])
             .with_exec(["ls", "-la"])
             .with_exec(["semantic-release", "--debug", "--repository-url" "$PROJECT_URL", "--dry-run", "--no-ci"])
             .with_exec(["echo", "$(cat NEXT_VERSION)"])
