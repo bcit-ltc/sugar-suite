@@ -1,10 +1,10 @@
 import json
 import dagger
 
-#        "branches": ['([0-9])-(.*)', 'main'],
 def generate_releaserc_config(project_url: str) -> dict:
     """Generate the .releaserc configuration as a dictionary."""
     releaserc_config = {
+        "branches": ['([0-9])-(.*)', 'main', '6-riffing-on-dagger'],
         "plugins": [
             "@semantic-release/commit-analyzer",
             [
