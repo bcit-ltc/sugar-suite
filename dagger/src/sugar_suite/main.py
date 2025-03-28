@@ -14,6 +14,7 @@ class SugarSuite:
         source: Annotated[dagger.Directory, DefaultPath("./"), Doc("Source code to build")],
         token: Annotated[dagger.Secret | None, Doc("GitHub Action token")],
         project_url: Annotated[str, Doc("The repository URL")] = ".",
+        pipeline_debug: bool = False,  # Rename debug to pipeline_debug
     ) -> str:
         """Run semantic-release"""
-        return await semanticrelease(source, token, project_url)
+        return await semanticrelease(source, token, project_url, pipeline_debug)
