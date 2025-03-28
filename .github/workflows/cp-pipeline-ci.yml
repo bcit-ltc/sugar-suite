@@ -24,7 +24,7 @@ jobs:
         uses: dagger/dagger-for-github@8.0.0
         with:
           version: "latest"
-          args: semanticrelease --token=env://GITHUB_TOKEN --pipeline_debug=true --project_url=${{ github.server_url }}/${{ github.repository }}
+          args: semanticrelease --token=env://${{ secrets.GITHUB_TOKEN }} --pipeline_debug=true --project_url=${{ github.server_url }}/${{ github.repository }}
           # assumes the Dagger Cloud token is in a repository secret 
           # named DAGGER_CLOUD_TOKEN set via the GitHub UI/CLI
           cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
@@ -34,6 +34,6 @@ jobs:
           # REGISTRY_USERNAME: ${{ github.actor }}
           # assumes the container registry password is in a repository secret
           # named REGISTRY_PASSWORD set via the GitHub UI/CL
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       # - name: Print latest version
       #   run: echo "The latest tag is $(cat NEXT_VERSION)"
