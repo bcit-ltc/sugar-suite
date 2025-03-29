@@ -21,7 +21,7 @@ async def semanticrelease(
     return await container.stdout()
 
 def _initialize_container(
-    token: dagger.Secret | None, 
+    token: dagger.Secret, 
     source: dagger.Directory, 
     project_url: str,
     pipeline_debug: bool,  # Rename debug to pipeline_debug
@@ -73,7 +73,8 @@ def _initialize_container(
             [
                 "sh", "-c",
                 f"""
-                echo 'Contents of /app directory:' && ls -lah && echo '';
+                echo 'Contents of /app directory:' && ls -lah && echo ''; \
+                echo 'env vars:' && printenv && echo '';
                 # echo 'Contents of /app directory:' && ls -lah && echo ''; \
                 # echo 'Contents of .releaserc:' && cat .releaserc && echo ''; \
                 # echo 'Contents of CURRENT_VERSION:' && cat CURRENT_VERSION && echo ''; \
