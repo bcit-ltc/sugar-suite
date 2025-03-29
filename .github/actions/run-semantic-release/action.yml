@@ -1,43 +1,64 @@
+# Name and description of the reusable action
 name: Run Semantic Release
 description: A reusable action to run semantic release with optional debug arguments.
 
+# Inputs that the action accepts
 inputs:
-  enable_pipeline_debug:
+  enable_pipeline_debug: # Input to enable or disable debug mode
     description: Enable pipeline debug mode (true/false)
     required: false
-    default: "false"
-  github_token:
+    default: "false" # Default is "false" (debug mode disabled)
+  github_token: # GitHub token for authentication
     description: GitHub token for authentication
     required: true
-  dagger_cloud_token:
+  dagger_cloud_token: # Dagger Cloud token for authentication
     description: Dagger Cloud token for authentication
     required: true
 
+# Outputs that the action provides
 outputs:
-  result:
+  result: # Output to indicate the result of the semantic release command
     description: The result of the semantic release command
 
+# Define how the action runs
 runs:
-  using: "docker"
-  image: "ghcr.io/dagger/dagger-for-github:8.0.0"
+  using: "docker" # Use a Docker container to run the action
+  image: "ghcr.io/dagger/dagger-for-github:8.0.0" # The Docker image to use
+
+  # Environment variables passed to the container
   env:
-    GITHUB_TOKEN: ${{ inputs.github_token }}
-    DAGGER_CLOUD_TOKEN: ${{ inputs.dagger_cloud_token }}
-  entrypoint: "/bin/sh -c"
+    GITHUB_TOKEN: ${{ inputs.github_token }} # Pass the GitHub token to the container
+    DAGGER_CLOUD_TOKEN: ${{ inputs.dagger_cloud_token }} # Pass the Dagger Cloud token to the container
+
+  # Entrypoint for the container
+  entrypoint: "/bin/sh -c" # Use the shell to execute commands
+
+  # Commands to run inside the container
   args:
     - |
+      # Print a message indicating that debug arguments are being set
       echo "Setting Debug Args..." && \
+      
+      # Check if debug mode is enabled and set the DEBUG_ARGS variable accordingly
       if [ "${{ inputs.enable_pipeline_debug }}" = "true" ]; then \
-        DEBUG_ARGS="--pipeline_debug=true"; \
+        DEBUG_ARGS="--pipeline_debug=true"; \ # Enable debug mode
       else \
-        DEBUG_ARGS=""; \
+        DEBUG_ARGS=""; \ # Disable debug mode
       fi && \
+      
+      # Print a message indicating that semantic release is about to run
       echo "Running Semantic Release..." && \
+      
+      # Check if the semantic-release command is available in the container
       if ! command -v semantic-release >/dev/null 2>&1; then \
-        echo "Error: semantic-release is not installed in the container." && exit 1; \
+        echo "Error: semantic-release is not installed in the container." && exit 1; \ # Exit with an error if not installed
       fi && \
+      
+      # Run the semantic-release command with the appropriate arguments
       semantic-release \
-        --token=env://GITHUB_TOKEN \
-        --project_url=${{ github.server_url }}/${{ github.repository }} \
-        $DEBUG_ARGS && \
+        --token=env://GITHUB_TOKEN \ # Use the GitHub token for authentication
+        --project_url=${{ github.server_url }}/${{ github.repository }} \ # Set the project URL
+        $DEBUG_ARGS && \ # Add debug arguments if enabled
+      
+      # Set the output to indicate that the command completed successfully
       echo "::set-output name=result::Semantic Release completed successfully."
