@@ -15,16 +15,60 @@ jobs:
       packages: write
     env:
       ENABLE_PIPELINE_DEBUG: true # Set to true to enable pipeline debug mode
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
+      # - name: Set up SSH
+      #   run: |
+      #     eval "$(ssh-agent -s)"
+      #     ssh-add - <<< '${{ secrets.SSH_PRIVATE_KEY }}'
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Set Debug Args
+        run: |
+          if [ "${{ env.ENABLE_PIPELINE_DEBUG }}" = "true" ]; then
+            echo "DEBUG_ARGS=--pipeline_debug=true" >> $GITHUB_ENV
+          else
+            echo "DEBUG_ARGS=" >> $GITHUB_ENV
+          fi
+
       - name: Run Semantic Release
-        uses: ./.github/actions/run-semantic-release
+        uses: dagger/dagger-for-github@8.0.0
         with:
-          enable_pipeline_debug: ${{ env.ENABLE_PIPELINE_DEBUG }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          dagger_cloud_token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
-          github_server_url: ${{ github.server_url }}
-          github_repository: ${{ github.repository }}
+          version: "latest"
+          args: >-
+            semanticrelease
+            --token=env://GITHUB_TOKEN
+            --project_url=${{ github.server_url }}/${{ github.repository }}
+            $(echo $DEBUG_ARGS)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # assumes the Dagger Cloud token is in a repository secret 
+          # named DAGGER_CLOUD_TOKEN set via the GitHub UI/CLI
+          cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
+
+      # - name: Run Build
+      #   uses: dagger/dagger-for-github@8.0.0
+      #   with:
+      #     version: "latest"
+      #     args: |
+      #       semanticrelease
+      #       --PACKAGE_REGISTRY=ghcr.io
+      #       --PACKAGE_IMAGE_NAME=env://${{ github.repository }}
+      #       --REGISTRY_USERNAME=env://${{ github.actor }}
+      #       --token=env://GITHUB_TOKEN
+      #       --project_url=${{ github.server_url }}/${{ github.repository }}
+      #       ${{ env.ENABLE_PIPELINE_DEBUG == 'true' && '--pipeline_debug=true' || '' }}
+      #     # assumes the Dagger Cloud token is in a repository secret 
+      #     # named DAGGER_CLOUD_TOKEN set via the GitHub UI/CLI
+      #     cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
+      #   env:
+      #     # PACKAGE_REGISTRY: ghcr.io
+      #     # PACKAGE_IMAGE_NAME: ${{ github.repository }}
+      #     # REGISTRY_USERNAME: ${{ github.actor }}
+      #     # assumes the container registry password is in a repository secret
+      #     # named REGISTRY_PASSWORD set via the GitHub UI/CL
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   # - name: Print latest version
+      #   #   run: echo "The latest tag is $(cat NEXT_VERSION)"
