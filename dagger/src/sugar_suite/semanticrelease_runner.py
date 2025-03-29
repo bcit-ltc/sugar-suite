@@ -7,7 +7,7 @@ async def semanticrelease(
     source: Annotated[dagger.Directory, DefaultPath("./"), Doc("Source code to build")],
     token: Annotated[dagger.Secret | None, Doc("GitHub Action token")],
     project_url: Annotated[str, Doc("The repository URL")] = ".",
-    pipeline_debug: bool = False,  # Rename debug to pipeline_debug
+    pipeline_debug: bool = False,
 ) -> str:
     """Run semantic-release"""
 
@@ -24,7 +24,7 @@ def _initialize_container(
     token: dagger.Secret, 
     source: dagger.Directory, 
     project_url: str,
-    pipeline_debug: bool,  # Rename debug to pipeline_debug
+    pipeline_debug: bool,
 ) -> dagger.Container:
     """Initialize and configure the Dagger container."""
     container = dag.container().from_("ghcr.io/bcit-ltc/semantic-release:gitlab-original")
@@ -38,7 +38,7 @@ def _initialize_container(
 
     # Add the --debug flag if pipeline_debug is True
     if pipeline_debug:
-        additional_flags += " --debug"
+        additional_flags += " --debug --dry-run"
 
     # Set the working directory and copy the source code
     container = (
