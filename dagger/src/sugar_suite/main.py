@@ -12,7 +12,7 @@ class SugarSuite:
     async def semanticrelease(
         self,
         source: Annotated[dagger.Directory, DefaultPath("./"), Doc("Source code to build")],
-        token: Annotated[dagger.Secret, Doc("GitHub Action token")],
+        token: Annotated[dagger.Secret | None, Doc("GitHub Action token")],
         project_url: Annotated[str, Doc("The repository URL")] = ".",
         pipeline_debug: bool = False,
     ) -> str:
