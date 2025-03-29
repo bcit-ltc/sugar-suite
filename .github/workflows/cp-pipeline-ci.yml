@@ -26,3 +26,5 @@ jobs:
           enable_pipeline_debug: ${{ env.ENABLE_PIPELINE_DEBUG }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           dagger_cloud_token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
+          github_server_url: ${{ github.server_url }}
+          github_repository: ${{ github.repository }}

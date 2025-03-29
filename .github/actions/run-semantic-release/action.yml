@@ -14,6 +14,12 @@ inputs:
   dagger_cloud_token: # Dagger Cloud token for authentication
     description: Dagger Cloud token for authentication
     required: true
+  github_server_url: # GitHub server URL
+    description: The GitHub server URL (e.g., https://github.com)
+    required: true
+  github_repository: # GitHub repository
+    description: The GitHub repository (e.g., owner/repo)
+    required: true
 
 # Outputs that the action provides
 outputs:
@@ -57,7 +63,7 @@ runs:
       # Run the semantic-release command with the appropriate arguments
       semantic-release \
         --token=env://GITHUB_TOKEN \ # Use the GitHub token for authentication
-        --project_url=${{ github.server_url }}/${{ github.repository }} \ # Set the project URL
+        --project_url=${{ inputs.github_server_url }}/${{ inputs.github_repository }} \ # Set the project URL
         $DEBUG_ARGS && \ # Add debug arguments if enabled
       
       # Set the output to indicate that the command completed successfully
