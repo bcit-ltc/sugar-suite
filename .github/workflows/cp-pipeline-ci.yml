@@ -33,42 +33,81 @@ jobs:
             echo "DEBUG_ARGS=" >> $GITHUB_ENV
           fi
 
-      - name: Run Semantic Release
-        uses: dagger/dagger-for-github@8.0.0
-        with:
-          version: "latest"
-          args: >-
-            semanticrelease
-            --token=env://GITHUB_TOKEN
-            --project_url=${{ github.server_url }}/${{ github.repository }}
-            $(echo $DEBUG_ARGS)
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # assumes the Dagger Cloud token is in a repository secret 
-          # named DAGGER_CLOUD_TOKEN set via the GitHub UI/CLI
-          cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
-
-      # - name: Run Build
+      # - name: Run Semantic Release
       #   uses: dagger/dagger-for-github@8.0.0
       #   with:
       #     version: "latest"
-      #     args: |
+      #     args: >-
       #       semanticrelease
-      #       --PACKAGE_REGISTRY=ghcr.io
-      #       --PACKAGE_IMAGE_NAME=env://${{ github.repository }}
-      #       --REGISTRY_USERNAME=env://${{ github.actor }}
       #       --token=env://GITHUB_TOKEN
       #       --project_url=${{ github.server_url }}/${{ github.repository }}
-      #       ${{ env.ENABLE_PIPELINE_DEBUG == 'true' && '--pipeline_debug=true' || '' }}
+      #       $(echo $DEBUG_ARGS)
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       #     # assumes the Dagger Cloud token is in a repository secret 
       #     # named DAGGER_CLOUD_TOKEN set via the GitHub UI/CLI
       #     cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
-      #   env:
-      #     # PACKAGE_REGISTRY: ghcr.io
-      #     # PACKAGE_IMAGE_NAME: ${{ github.repository }}
-      #     # REGISTRY_USERNAME: ${{ github.actor }}
-      #     # assumes the container registry password is in a repository secret
-      #     # named REGISTRY_PASSWORD set via the GitHub UI/CL
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   # - name: Print latest version
-      #   #   run: echo "The latest tag is $(cat NEXT_VERSION)"
+
+      - name: Run Build
+        uses: dagger/dagger-for-github@8.0.0
+        with:
+          version: "latest"
+          args: |
+            semanticrelease
+            --PACKAGE_REGISTRY=ghcr.io
+            --PACKAGE_IMAGE_NAME=env://${{ github.repository }}
+            --REGISTRY_USERNAME=env://${{ github.actor }}
+            --token=env://GITHUB_TOKEN
+            --project_url=${{ github.server_url }}/${{ github.repository }}
+            ${{ env.ENABLE_PIPELINE_DEBUG == 'true' && '--pipeline_debug=true' || '' }}
+          # assumes the Dagger Cloud token is in a repository secret 
+          # named DAGGER_CLOUD_TOKEN set via the GitHub UI/CLI
+          cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
+        env:
+          # PACKAGE_REGISTRY: ghcr.io
+          # PACKAGE_IMAGE_NAME: ${{ github.repository }}
+          # REGISTRY_USERNAME: ${{ github.actor }}
+          # assumes the container registry password is in a repository secret
+          # named REGISTRY_PASSWORD set via the GitHub UI/CL
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        # - name: Print latest version
+        #   run: echo "The latest tag is $(cat NEXT_VERSION)"
+
+# build-for-environment:
+#     permissions:
+#       contents: write # to be able to publish a GitHub release
+#       issues: write # to be able to comment on released issues
+#       pull-requests: write # to be able to comment on released pull requests
+#       packages: write # Required for pulling images
+#     name: Build for environment
+#     needs: [previous-version, determine-environment]
+#     if: ${{ needs.determine-environment.outputs.environment != '' }}
+#     runs-on: ubuntu-latest
+#     environment: ${{ needs.determine-environment.outputs.environment }}
+#     steps:
+#       - uses: actions/checkout@v4
+#       - name: Print build environment
+#         run: echo "This is the ${{ needs.determine-environment.outputs.environment }} environment"
+#       - name: Print gathered version
+#         run: echo "The version is ${{ needs.previous-version.outputs.version }}"
+      
+#       # create string with format {semverTag}-{date}--{gitShortSha}.{timeStamp}
+#       - name: Create Tag
+#         run: |
+#           if [ "${{ needs.determine-environment.outputs.environment }}" != "review" ]; then
+#             TAGS=$(echo "${{ needs.previous-version.outputs.version }},${{ needs.determine-environment.outputs.environment }}")
+#           elif [ "${{ needs.determine-environment.outputs.environment }}" == "review" ]; then
+#             TAGS=$(echo "review--${{ github.ref_name }}--$(git rev-parse --short HEAD)")
+#           fi
+#           echo "TAGS=$TAGS" >> $GITHUB_ENV
+#           echo $TAGS
+      
+#       - name: Build and push Docker image using Dagger
+#         uses: dagger/dagger-for-github@8.0.0
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GA_TOKEN }}
+#         with:
+#           cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
+#           args: publish --registry=ghcr.io/bcit-ltc/${{ github.event.repository.name }} --username=${{ github.actor }} --token=env://GITHUB_TOKEN --tags=$TAGS
+
+
