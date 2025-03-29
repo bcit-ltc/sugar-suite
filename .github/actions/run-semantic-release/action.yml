@@ -1,8 +1,9 @@
 name: Run Semantic Release
 description: A reusable action to run semantic release with optional debug arguments.
+
 inputs:
   debug_args:
-    description: Debug arguments for semantic release
+    description: Debug arguments for semantic release (e.g., --pipeline_debug=true)
     required: false
     default: ""
   github_token:
@@ -11,18 +12,24 @@ inputs:
   dagger_cloud_token:
     description: Dagger Cloud token for authentication
     required: true
+
 outputs:
   result:
     description: The result of the semantic release command
+    value: ${{ steps.run_semantic_release.outputs.result }}
+
 runs:
   using: "composite"
   steps:
     - name: Run Semantic Release
+      shell: bash
       run: |
+        echo "Running Semantic Release..."
         semanticrelease \
-        --token=env://GITHUB_TOKEN \
-        --project_url=${{ github.server_url }}/${{ github.repository }} \
-        ${{ inputs.debug_args }}
+          --token=env://GITHUB_TOKEN \
+          --project_url=${{ github.server_url }}/${{ github.repository }} \
+          ${{ inputs.debug_args }}
+        echo "::set-output name=result::Semantic Release completed successfully."
       env:
         GITHUB_TOKEN: ${{ inputs.github_token }}
         DAGGER_CLOUD_TOKEN: ${{ inputs.dagger_cloud_token }}
