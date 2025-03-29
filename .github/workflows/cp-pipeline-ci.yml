@@ -20,17 +20,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set Debug Args
-        run: |
-          if [ "${{ env.ENABLE_PIPELINE_DEBUG }}" = "true" ]; then
-            echo "DEBUG_ARGS=--pipeline_debug=true" >> $GITHUB_ENV
-          else
-            echo "DEBUG_ARGS=" >> $GITHUB_ENV
-          fi
-
       - name: Run Semantic Release
         uses: ./.github/actions/run-semantic-release
         with:
-          debug_args: ${{ env.DEBUG_ARGS }}
+          enable_pipeline_debug: ${{ env.ENABLE_PIPELINE_DEBUG }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           dagger_cloud_token: ${{ secrets.DAGGER_CLOUD_TOKEN }}

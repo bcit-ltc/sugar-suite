@@ -2,10 +2,10 @@ name: Run Semantic Release
 description: A reusable action to run semantic release with optional debug arguments.
 
 inputs:
-  debug_args:
-    description: Debug arguments for semantic release (e.g., --pipeline_debug=true)
+  enable_pipeline_debug:
+    description: Enable pipeline debug mode (true/false)
     required: false
-    default: ""
+    default: "false"
   github_token:
     description: GitHub token for authentication
     required: true
@@ -26,9 +26,18 @@ runs:
   entrypoint: "/bin/sh -c"
   args:
     - |
-      echo "Running Semantic Release..." &&
-      semanticrelease \
+      echo "Setting Debug Args..." && \
+      if [ "${{ inputs.enable_pipeline_debug }}" = "true" ]; then \
+        DEBUG_ARGS="--pipeline_debug=true"; \
+      else \
+        DEBUG_ARGS=""; \
+      fi && \
+      echo "Running Semantic Release..." && \
+      if ! command -v semantic-release >/dev/null 2>&1; then \
+        echo "Error: semantic-release is not installed in the container." && exit 1; \
+      fi && \
+      semantic-release \
         --token=env://GITHUB_TOKEN \
         --project_url=${{ github.server_url }}/${{ github.repository }} \
-        ${{ inputs.debug_args }} && \
+        $DEBUG_ARGS && \
       echo "::set-output name=result::Semantic Release completed successfully."
