@@ -16,20 +16,19 @@ inputs:
 outputs:
   result:
     description: The result of the semantic release command
-    value: ${{ steps.run_semantic_release.outputs.result }}
 
 runs:
-  using: "composite"
-  steps:
-    - name: Run Semantic Release
-      shell: bash
-      run: |
-        echo "Running Semantic Release..."
-        semanticrelease \
-          --token=env://GITHUB_TOKEN \
-          --project_url=${{ github.server_url }}/${{ github.repository }} \
-          ${{ inputs.debug_args }}
-        echo "::set-output name=result::Semantic Release completed successfully."
-      env:
-        GITHUB_TOKEN: ${{ inputs.github_token }}
-        DAGGER_CLOUD_TOKEN: ${{ inputs.dagger_cloud_token }}
+  using: "docker"
+  image: "ghcr.io/dagger/dagger-for-github:8.0.0"
+  env:
+    GITHUB_TOKEN: ${{ inputs.github_token }}
+    DAGGER_CLOUD_TOKEN: ${{ inputs.dagger_cloud_token }}
+  entrypoint: "/bin/sh -c"
+  args:
+    - |
+      echo "Running Semantic Release..." &&
+      semanticrelease \
+        --token=env://GITHUB_TOKEN \
+        --project_url=${{ github.server_url }}/${{ github.repository }} \
+        ${{ inputs.debug_args }} && \
+      echo "::set-output name=result::Semantic Release completed successfully."
