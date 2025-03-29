@@ -8,7 +8,7 @@ on:
       - '*' # for testing
 
 env:
-  PIPELINE_DEBUG: ${{ '--pipeline_debug=true' }} # uncomment to enable debug mode
+  # PIPELINE_DEBUG: ${{ '--pipeline_debug=true' }} # uncomment to enable debug mode
 
 jobs:
   run-dagger:
