@@ -53,16 +53,13 @@ def _initialize_container(
             "sh", "-c",
             f"""
             semantic-release {additional_flags} --repository-url {project_url} && \
-            if [ -s CURRENT_VERSION ] && grep -q '[^[:space:]]' CURRENT_VERSION; then \
-                echo "Current version: v$(cat CURRENT_VERSION)"; \
-            else \
-                echo "No previous release found."; \
-            fi && \
-            if [ -s NEXT_VERSION ]; then \
-                echo "Next version: v$(cat NEXT_VERSION)"; \
-            else \
-                echo "NEXT_VERSION file is empty or not found."; \
-            fi
+            for file in CURRENT_VERSION NEXT_VERSION; do \
+                if [ -s "$file" ] && grep -q '[^[:space:]]' "$file"; then \
+                    echo "$(echo $file | tr '_' ' ' | sed 's/.*/\\u&/'): v$(cat $file)"; \
+                else \
+                    echo "$(echo $file | tr '_' ' ' | sed 's/.*/\\u&/') file is empty or not found."; \
+                fi; \
+            done
             """
         ]
     )
@@ -71,15 +68,18 @@ def _initialize_container(
     if pipeline_debug:
         container = container.with_exec(
             [
-                "sh", "-c",
-                f"""
-                echo 'Contents of /app directory:' && ls -lah && echo ''; \
-                echo 'env vars:' && printenv && echo '';
-                # echo 'Contents of /app directory:' && ls -lah && echo ''; \
-                # echo 'Contents of .releaserc:' && cat .releaserc && echo ''; \
-                # echo 'Contents of CURRENT_VERSION:' && cat CURRENT_VERSION && echo ''; \
-                # echo 'Contents of NEXT_VERSION:' && cat NEXT_VERSION && echo ''
-                """
+            "sh", "-c",
+            f"""
+            echo 'Contents of /app directory:' && ls -lah && echo ''; \
+            echo 'Environment variables:' && printenv && echo ''; \
+            for file in .releaserc CURRENT_VERSION NEXT_VERSION; do \
+                if [ -f "$file" ]; then \
+                    echo "Contents of $file:" && cat "$file" && echo ''; \
+                else \
+                    echo "$file does not exist."; \
+                fi; \
+            done
+            """
             ]
         )
 
