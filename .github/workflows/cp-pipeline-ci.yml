@@ -44,7 +44,6 @@ jobs:
             $(echo $DEBUG_ARGS)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DAGGER_CLOUD_TOKEN: ${{ secrets.DAGGER_CLOUD_TOKEN }}
           # assumes the Dagger Cloud token is in a repository secret 
           # named DAGGER_CLOUD_TOKEN set via the GitHub UI/CLI
           cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}

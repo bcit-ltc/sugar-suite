@@ -57,7 +57,7 @@ def _initialize_container(
                 if [ -s "$file" ] && grep -q '[^[:space:]]' "$file"; then \
                     echo "$(echo $file | tr '_' ' ' | sed 's/.*/\\u&/'): v$(cat $file)"; \
                 else \
-                    echo "$(echo $file | tr '_' ' ' | sed 's/.*/\\u&/') file is empty or not found."; \
+                    echo "$(echo $file | tr '_' ' ' | sed 's/.*/\\u&/') is empty or not found."; \
                 fi; \
             done
             """
