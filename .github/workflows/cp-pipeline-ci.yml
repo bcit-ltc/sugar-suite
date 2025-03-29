@@ -33,7 +33,7 @@ jobs:
             semanticrelease
             --token=env://GITHUB_TOKEN
             --project_url=${{ github.server_url }}/${{ github.repository }}
-            # ${{ env.ENABLE_PIPELINE_DEBUG == 'true' && '--pipeline_debug=true' || '' }}
+          # ${{ env.ENABLE_PIPELINE_DEBUG == 'true' && '--pipeline_debug=true' || '' }}
           # assumes the Dagger Cloud token is in a repository secret 
           # named DAGGER_CLOUD_TOKEN set via the GitHub UI/CLI
           cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
