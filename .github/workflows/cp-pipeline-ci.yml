@@ -14,7 +14,7 @@ jobs:
       contents: write
       packages: write
     env:
-      ENABLE_PIPELINE_DEBUG: false # Set to true to enable pipeline debug mode
+      ENABLE_PIPELINE_DEBUG: true # Set to true to enable pipeline debug mode
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
