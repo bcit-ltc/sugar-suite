@@ -7,9 +7,6 @@ on:
       - '([0-9]+)-(.*)' # branches with version numbers
       - '*' # for testing
 
-env:
-  # PIPELINE_DEBUG: ${{ '--pipeline_debug=true' }} # uncomment to enable debug mode
-
 jobs:
   run-dagger:
     runs-on: ubuntu-latest
@@ -32,6 +29,7 @@ jobs:
           # named DAGGER_CLOUD_TOKEN set via the GitHub UI/CLI
           cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
         env:
+          # PIPELINE_DEBUG: ${{ '--pipeline_debug=true' }} # uncomment to enable debug mode
           # PACKAGE_REGISTRY: ghcr.io
           # PACKAGE_IMAGE_NAME: ${{ github.repository }}
           # REGISTRY_USERNAME: ${{ github.actor }}
