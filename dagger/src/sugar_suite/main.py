@@ -1,4 +1,5 @@
 from typing import Annotated
+import json
 import dagger
 from dagger import DefaultPath, dag, function, object_type, Secret, Doc
 
@@ -47,10 +48,10 @@ class SugarSuite:
 
     @function
     async def semanticrelease(self, source: Annotated[dagger.Directory, DefaultPath("./")], token: Annotated[dagger.Secret, Doc("GitHub API token")]) -> str:
-        """Run the semantic-release tool"""
+        """Run the semantic-release tool and return version information"""
         
         # Use the semantic-release container and copy files from dependencies_container
-        semantic_release_container = await (
+        semantic_release_container = (
             dag.container()
             .from_("ghcr.io/bcit-ltc/semantic-release:arv2")  # Use prebuilt semantic-release container
             # Configure Git to use HTTPS with GITHUB_TOKEN
@@ -66,7 +67,14 @@ class SugarSuite:
             # Run semantic-release
             .with_exec(["npx", "semantic-release"])
         )
-        return await semantic_release_container.stdout()
+    
+        # Capture the container's output directory
+        output_directory = semantic_release_container.directory("/usr/share/nginx/html")
+    
+        # Extract the NEXT_VERSION and CURRENT_VERSION files
+        next_version = await output_directory.file("NEXT_VERSION").contents()
+    
+        return next_version
 
     
     @function

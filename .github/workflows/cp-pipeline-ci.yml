@@ -16,70 +16,54 @@ jobs:
       issues: write # to be able to comment on released issues
       pull-requests: write # to be able to comment on released pull requests
       packages: write # Required for pushing images
-    name: Semantic Release
+    name: Run Semantic Release
     runs-on: ubuntu-latest
+    outputs:
+      next-version: ${{ steps.parse-next-version.outputs.next-version }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Run Dagger semantic release
+        id: semantic-release
         uses: dagger/dagger-for-github@8.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
-          args: semanticrelease --token=env://GITHUB_TOKEN
+          args: semanticrelease --token=env://GITHUB_TOKEN > semantic-release-output.txt
 
-      - name: Set the version
-        id: set-next-version
+      - name: Parse semantic release output
+        id: parse-next-version
         run: |
-          echo VERSION_NUM=$(cat NEXT_VERSION) >> $GITHUB_OUTPUT
-      - name: verify the version
-        run: |
-          if [ -z "${{ steps.set-next-version.outputs.VERSION_NUM }}" ]; then
-            echo "No version found, cancelling job."
-            exit 0
+          # Read the output from the semantic-release step
+          if [ -s semantic-release-output.txt ]; then
+            NEXT_VERSION=$(cat semantic-release-output.txt | tr -d '\n')
           else
-            echo "Version found: ${{ steps.set-next-version.outputs.VERSION_NUM }}"     
+            echo "Semantic release output is empty. Defaulting to 1.0.0"
+            NEXT_VERSION="1.0.0"
           fi
+          echo "Next version is $NEXT_VERSION"
+          echo "next-version=$NEXT_VERSION" >> $GITHUB_OUTPUT
 
-  previous-version:
-    name: Previous Version
-    needs: [semantic-release]
-    runs-on: ubuntu-latest
-    outputs:
-      version: ${{ steps.get-chosen-version.outputs.CHOSEN_VERSION }}
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Fetch all tags
-        run: git fetch --tags
-
-      - name: Get latest tag
-        run: echo "$(git describe --tags `git rev-list --tags --max-count=1`)" > TAG
-
-      - name: Print latest tag
-        run: echo "The latest tag is $(cat TAG)"
-
-      - name: If next version is empty choose latest tag
-        id: get-chosen-version
+      - name: Check if next version is empty
         run: |
-          if [ -z "${{ needs.semantic-release.outputs.version }}" ]; then
-            echo "CHOSEN_VERSION=$(cat TAG)" >> $GITHUB_OUTPUT
-          else
-            echo "CHOSEN_VERSION=${{ needs.semantic-release.outputs.version }}" >> $GITHUB_OUTPUT
+          if [ -z "${{ steps.parse-next-version.outputs.next-version }}" ]; then
+            echo "Next version is empty. Exiting."
+            exit 1
           fi
-          
   ## This is the step that determines the environment
   ## conditionally chooses latest, stable or review based on branch and commit
   determine-environment:
     name: Determine Environment
-    needs: [semantic-release, previous-version]
+    needs: [semantic-release]
     runs-on: ubuntu-latest
     outputs:
       environment: ${{ steps.set-environment.outputs.ENVIRONMENT }}
@@ -101,7 +85,6 @@ jobs:
             ENV_NAME="review"
           fi
           echo ENVIRONMENT=$ENV_NAME >> $GITHUB_OUTPUT
-
       - name: print the environment
         run: echo "The environment is ${{ steps.set-environment.outputs.ENVIRONMENT }}"
 
@@ -112,7 +95,7 @@ jobs:
       pull-requests: write # to be able to comment on released pull requests
       packages: write # Required for pulling images
     name: Build for environment
-    needs: [previous-version, determine-environment]
+    needs: [determine-environment]
     if: ${{ needs.determine-environment.outputs.environment != '' }}
     runs-on: ubuntu-latest
     environment: ${{ needs.determine-environment.outputs.environment }}
@@ -121,23 +104,39 @@ jobs:
       - name: Print build environment
         run: echo "This is the ${{ needs.determine-environment.outputs.environment }} environment"
       - name: Print gathered version
-        run: echo "The version is ${{ needs.previous-version.outputs.version }}"
+        run: |
+          if [ -z "${{ needs.semantic-release.outputs.next-version }}" ]; then
+            echo "The version is not available. Defaulting to 1.0.0"
+          else
+            echo "The version is ${{ needs.semantic-release.outputs.next-version }}"
+          fi
       
-      # create string with format {semverTag}-{date}--{gitShortSha}.{timeStamp}
       - name: Create Tag
         run: |
-          if [ "${{ needs.determine-environment.outputs.environment }}" != "review" ]; then
-            TAGS=$(echo "${{ needs.previous-version.outputs.version }},${{ needs.determine-environment.outputs.environment }}")
-          elif [ "${{ needs.determine-environment.outputs.environment }}" == "review" ]; then
-            TAGS=$(echo "review--${{ github.ref_name }}--$(git rev-parse --short HEAD)")
+          SHORT_COMMIT=$(git rev-parse --short HEAD)
+          CURRENT_DATE=$(date +'%Y-%m-%d')
+          CURRENT_TIMESTAMP=$(date +'%s')
+          ENVIRONMENT="${{ needs.determine-environment.outputs.environment }}"
+          SHORT_VERSION_TAG="${{ needs.semantic-release.outputs.next-version }}"
+          LONG_VERSION_TAG="$SHORT_VERSION_TAG-$CURRENT_DATE--$SHORT_COMMIT.$CURRENT_TIMESTAMP"
+      
+          # Determine tags based on the environment
+          if [ "$ENVIRONMENT" == "review" ]; then
+            TAGS="review--${{ github.ref_name }}--$SHORT_COMMIT"
+          elif [ "$ENVIRONMENT" == "latest" ]; then
+            TAGS="$LONG_VERSION_TAG,latest"
+          elif [ "$ENVIRONMENT" == "stable" ]; then
+            TAGS="$SHORT_VERSION_TAG,$LONG_VERSION_TAG,latest,stable"
           fi
+      
+          # Export tags to GitHub environment
           echo "TAGS=$TAGS" >> $GITHUB_ENV
-          echo $TAGS
+          echo "$TAGS"
       
       - name: Build and push Docker image using Dagger
         uses: dagger/dagger-for-github@8.0.0
         env:
-          GITHUB_TOKEN: ${{ secrets.ARV_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
           args: publish --registry=ghcr.io/bcit-ltc/${{ github.event.repository.name }} --username=${{ github.actor }} --token=env://GITHUB_TOKEN --tags=$TAGS
