@@ -46,27 +46,10 @@ class SugarSuite:
         )
 
     @function
-    async def semanticrelease(self, source: Annotated[dagger.Directory, DefaultPath("./")], token: str) -> str:
+    def semanticrelease(self, source: Annotated[dagger.Directory, DefaultPath("./")], token: str) -> str:
         """Run the semantic-release tool"""
-        print(f"DEBUG: GITHUB_TOKEN={token}")
-        # Use the semantic-release container and copy files from dependencies_container
-        semantic_release_container = await (
-            dag.container()
-            .from_("ghcr.io/bcit-ltc/semantic-release:arv2")  # Use prebuilt semantic-release container
-            # Configure Git to use HTTPS with GITHUB_TOKEN
-            .with_exec(["git", "config", "--global", "url.https://github.com/.insteadOf", "git@github.com:"])
-            .with_exec(["git", "config", "--global", "user.name", "github-actions[bot]"])
-            .with_exec(["git", "config", "--global", "user.email", "github-actions[bot]@users.noreply.github.com"])
-            # Set the GITHUB_TOKEN environment variable
-            .with_env_variable("GITHUB_TOKEN", token)
-            # Copy all files from dependencies_container except node_modules
-            .with_directory("/usr/share/nginx/html/.git", source.directory(".git"))
-            # Preserve the pre-installed node_modules in the semantic-release container
-            .with_workdir("/usr/share/nginx/html")
-            # Run semantic-release
-            .with_exec(["npx", "semantic-release"])
-        )
-        return await token
+
+        return token
 
     
     @function
