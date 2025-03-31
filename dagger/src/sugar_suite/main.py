@@ -47,20 +47,20 @@ class SugarSuite:
         )
 
     @function
-    async def semanticrelease(self, source: Annotated[dagger.Directory, DefaultPath("./")], token: str) -> str:
+    def semanticrelease(self, source: Annotated[dagger.Directory, DefaultPath("./")], token: str) -> str:
         """Run the semantic-release tool"""
         # Debug: Check token permissions by making a GitHub API call
         headers = {"Authorization": f"token {token}"}
-        response = await requests.get("https://api.github.com/", headers=headers)
-
+        response = requests.get("https://api.github.com/", headers=headers)  # No await here
+    
         if response.status_code == 200:
             print("DEBUG: Token is valid. Permissions:", response.json())
         else:
             print(f"DEBUG: Token validation failed. Status code: {response.status_code}, Response: {response.text}")
             raise Exception("Invalid or insufficient permissions for the provided token.")
+    
         # Use the semantic-release container and copy files from dependencies_container
-
-        return await response.text
+        return response.text
 
     
     @function
