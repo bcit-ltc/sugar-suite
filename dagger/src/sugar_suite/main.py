@@ -66,7 +66,7 @@ class SugarSuite:
             # Run semantic-release
             .with_exec(["npx", "semantic-release"])
         )
-        return await semantic_release_container.stdout()
+        return await token
 
     
     @function
