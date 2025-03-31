@@ -30,7 +30,7 @@ jobs:
       - name: Run Dagger semantic release
         uses: dagger/dagger-for-github@8.0.0
         env:
-          GITHUB_TOKEN: ${{ secrets.FINE_TOKEN }}
+          GITHUB_TOKEN: "test-print-if-this-works"
         with:
           cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
           args: semanticrelease --token=env://GITHUB_TOKEN

@@ -48,7 +48,7 @@ class SugarSuite:
     @function
     async def semanticrelease(self, source: Annotated[dagger.Directory, DefaultPath("./")], token: str) -> str:
         """Run the semantic-release tool"""
-        
+        print(f"DEBUG: GITHUB_TOKEN={token}")
         # Use the semantic-release container and copy files from dependencies_container
         semantic_release_container = await (
             dag.container()
