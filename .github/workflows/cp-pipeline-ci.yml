@@ -61,7 +61,12 @@ jobs:
         run: git fetch --tags
 
       - name: Get latest tag
-        run: echo "$(git describe --tags `git rev-list --tags --max-count=1`)" > TAG
+        run: |
+          TAG=$(git describe --tags `git rev-list --tags --max-count=1` 2>/dev/null || echo "")
+          if [ -z "$TAG" ]; then
+            TAG="1.0.0"
+          fi
+          echo "$TAG" > TAG
 
       - name: Print latest tag
         run: echo "The latest tag is $(cat TAG)"
@@ -123,21 +128,32 @@ jobs:
       - name: Print gathered version
         run: echo "The version is ${{ needs.previous-version.outputs.version }}"
       
-      # create string with format {semverTag}-{date}--{gitShortSha}.{timeStamp}
       - name: Create Tag
         run: |
-          if [ "${{ needs.determine-environment.outputs.environment }}" != "review" ]; then
-            TAGS=$(echo "${{ needs.previous-version.outputs.version }},${{ needs.determine-environment.outputs.environment }}")
-          elif [ "${{ needs.determine-environment.outputs.environment }}" == "review" ]; then
-            TAGS=$(echo "review--${{ github.ref_name }}--$(git rev-parse --short HEAD)")
+          SHORT_COMMIT=$(git rev-parse --short HEAD)
+          CURRENT_DATE=$(date +'%Y-%m-%d')
+          CURRENT_TIMESTAMP=$(date +'%s')
+          SHORT_VERSION_TAG="${{ needs.previous-version.outputs.version }}"
+          LONG_VERSION_TAG="$SHORT_VERSION_TAG-$CURRENT_DATE--$SHORT_COMMIT.$CURRENT_TIMESTAMP"
+          ENVIRONMENT="${{ needs.determine-environment.outputs.environment }}"
+      
+          # Determine tags based on the environment
+          if [ "$ENVIRONMENT" == "review" ]; then
+            TAGS="review--${{ github.ref_name }}--$SHORT_COMMIT"
+          elif [ "$ENVIRONMENT" == "latest" ]; then
+            TAGS="$LONG_VERSION_TAG,latest"
+          elif [ "$ENVIRONMENT" == "stable" ]; then
+            TAGS="$SHORT_VERSION_TAG,$LONG_VERSION_TAG,latest,stable"
           fi
+      
+          # Export tags to GitHub environment
           echo "TAGS=$TAGS" >> $GITHUB_ENV
-          echo $TAGS
+          echo "$TAGS"
       
       - name: Build and push Docker image using Dagger
         uses: dagger/dagger-for-github@8.0.0
         env:
-          GITHUB_TOKEN: ${{ secrets.ARV_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
           args: publish --registry=ghcr.io/bcit-ltc/${{ github.event.repository.name }} --username=${{ github.actor }} --token=env://GITHUB_TOKEN --tags=$TAGS
