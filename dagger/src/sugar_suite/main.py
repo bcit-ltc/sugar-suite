@@ -1,7 +1,6 @@
 from typing import Annotated
 import dagger
 from dagger import DefaultPath, dag, function, object_type, Secret, Doc
-import requests
 
 
 @object_type
@@ -47,20 +46,27 @@ class SugarSuite:
         )
 
     @function
-    def semanticrelease(self, source: Annotated[dagger.Directory, DefaultPath("./")], token: str) -> str:
+    async def semanticrelease(self, source: Annotated[dagger.Directory, DefaultPath("./")], token: Annotated[dagger.Secret, Doc("GitHub API token")]) -> str:
         """Run the semantic-release tool"""
-        # Debug: Check token permissions by making a GitHub API call
-        headers = {"Authorization": f"token {token}"}
-        response = requests.get("https://api.github.com/", headers=headers)  # No await here
-    
-        if response.status_code == 200:
-            print("DEBUG: Token is valid. Permissions:", response.json())
-        else:
-            print(f"DEBUG: Token validation failed. Status code: {response.status_code}, Response: {response.text}")
-            raise Exception("Invalid or insufficient permissions for the provided token.")
-    
+        
         # Use the semantic-release container and copy files from dependencies_container
-        return response.text
+        semantic_release_container = await (
+            dag.container()
+            .from_("ghcr.io/bcit-ltc/semantic-release:arv2")  # Use prebuilt semantic-release container
+            # Configure Git to use HTTPS with GITHUB_TOKEN
+            .with_exec(["git", "config", "--global", "url.https://github.com/.insteadOf", "git@github.com:"])
+            .with_exec(["git", "config", "--global", "user.name", "github-actions[bot]"])
+            .with_exec(["git", "config", "--global", "user.email", "github-actions[bot]@users.noreply.github.com"])
+            # Set the GITHUB_TOKEN environment variable
+            .with_env_variable("GITHUB_TOKEN", token)
+            # Copy all files from dependencies_container except node_modules
+            .with_directory("/usr/share/nginx/html/.git", source.directory(".git"))
+            # Preserve the pre-installed node_modules in the semantic-release container
+            .with_workdir("/usr/share/nginx/html")
+            # Run semantic-release
+            .with_exec(["npx", "semantic-release"])
+        )
+        return await semantic_release_container.stdout()
 
     
     @function
