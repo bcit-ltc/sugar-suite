@@ -27,7 +27,7 @@
     "gulp-uglify": "^3.0.2",
     "jshint": "^2.13.6",
     "node-sass-magic-importer": "^5.3.3",
-    "sass": "^1.86.0"
+    "sass": "^1.86.1"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",

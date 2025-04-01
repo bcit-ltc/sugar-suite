@@ -16,8 +16,11 @@ jobs:
       issues: write # to be able to comment on released issues
       pull-requests: write # to be able to comment on released pull requests
       packages: write # Required for pushing images
-    name: Semantic Release
+    name: Run Semantic Release
     runs-on: ubuntu-latest
+    outputs:
+      next-version: ${{ steps.set-version.outputs.NEXT_VERSION || '1.0.0' }}
+      current-version: ${{ steps.set-version.outputs.CURRENT_VERSION || '1.0.0' }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -36,55 +39,17 @@ jobs:
           args: semanticrelease --token=env://GITHUB_TOKEN
 
       - name: Set the version
-        id: set-next-version
+        id: set-version
         run: |
-          echo VERSION_NUM=$(cat NEXT_VERSION) >> $GITHUB_OUTPUT
-      - name: verify the version
-        run: |
-          if [ -z "${{ steps.set-next-version.outputs.VERSION_NUM }}" ]; then
-            echo "No version found, cancelling job."
-            exit 0
-          else
-            echo "Version found: ${{ steps.set-next-version.outputs.VERSION_NUM }}"     
-          fi
-
-  previous-version:
-    name: Previous Version
-    needs: [semantic-release]
-    runs-on: ubuntu-latest
-    outputs:
-      version: ${{ steps.get-chosen-version.outputs.CHOSEN_VERSION }}
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Fetch all tags
-        run: git fetch --tags
-
-      - name: Get latest tag
-        run: |
-          TAG=$(git describe --tags `git rev-list --tags --max-count=1` 2>/dev/null || echo "")
-          if [ -z "$TAG" ]; then
-            TAG="1.0.0"
-          fi
-          echo "$TAG" > TAG
-
-      - name: Print latest tag
-        run: echo "The latest tag is $(cat TAG)"
-
-      - name: If next version is empty choose latest tag
-        id: get-chosen-version
-        run: |
-          if [ -z "${{ needs.semantic-release.outputs.version }}" ]; then
-            echo "CHOSEN_VERSION=$(cat TAG)" >> $GITHUB_OUTPUT
-          else
-            echo "CHOSEN_VERSION=${{ needs.semantic-release.outputs.version }}" >> $GITHUB_OUTPUT
-          fi
+            echo NEXT_VERSION=$(cat NEXT_VERSION) >> $GITHUB_OUTPUT
+            echo CURRENT_VERSION=$(cat CURRENT_VERSION) >> $GITHUB_OUTPUT
+        
           
   ## This is the step that determines the environment
   ## conditionally chooses latest, stable or review based on branch and commit
   determine-environment:
     name: Determine Environment
-    needs: [semantic-release, previous-version]
+    needs: [semantic-release]
     runs-on: ubuntu-latest
     outputs:
       environment: ${{ steps.set-environment.outputs.ENVIRONMENT }}
@@ -117,7 +82,7 @@ jobs:
       pull-requests: write # to be able to comment on released pull requests
       packages: write # Required for pulling images
     name: Build for environment
-    needs: [previous-version, determine-environment]
+    needs: [determine-environment]
     if: ${{ needs.determine-environment.outputs.environment != '' }}
     runs-on: ubuntu-latest
     environment: ${{ needs.determine-environment.outputs.environment }}
@@ -126,16 +91,21 @@ jobs:
       - name: Print build environment
         run: echo "This is the ${{ needs.determine-environment.outputs.environment }} environment"
       - name: Print gathered version
-        run: echo "The version is ${{ needs.previous-version.outputs.version }}"
+        run: echo "The version is ${{ needs.semantic-release.outputs.next-version }}"
       
       - name: Create Tag
         run: |
           SHORT_COMMIT=$(git rev-parse --short HEAD)
           CURRENT_DATE=$(date +'%Y-%m-%d')
           CURRENT_TIMESTAMP=$(date +'%s')
-          SHORT_VERSION_TAG="${{ needs.previous-version.outputs.version }}"
-          LONG_VERSION_TAG="$SHORT_VERSION_TAG-$CURRENT_DATE--$SHORT_COMMIT.$CURRENT_TIMESTAMP"
           ENVIRONMENT="${{ needs.determine-environment.outputs.environment }}"
+          # Determine SHORT_VERSION_TAG based on the environment
+          if [ "$ENVIRONMENT" == "latest" ]; then
+            SHORT_VERSION_TAG="${{ needs.semantic-release.outputs.current-version }}"
+          elif [ "$ENVIRONMENT" == "stable" ]; then
+            SHORT_VERSION_TAG="${{ needs.semantic-release.outputs.next-version }}"
+          fi
+          LONG_VERSION_TAG="$SHORT_VERSION_TAG-$CURRENT_DATE--$SHORT_COMMIT.$CURRENT_TIMESTAMP"
       
           # Determine tags based on the environment
           if [ "$ENVIRONMENT" == "review" ]; then

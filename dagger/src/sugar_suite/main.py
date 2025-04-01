@@ -52,7 +52,7 @@ class SugarSuite:
         # Use the semantic-release container and copy files from dependencies_container
         semantic_release_container = await (
             dag.container()
-            .from_("ghcr.io/bcit-ltc/semantic-release:arv2")  # Use prebuilt semantic-release container
+            .from_("ghcr.io/bcit-ltc/semantic-release:arv3")  # Use prebuilt semantic-release container
             # Configure Git to use HTTPS with GITHUB_TOKEN
             .with_exec(["git", "config", "--global", "url.https://github.com/.insteadOf", "git@github.com:"])
             .with_exec(["git", "config", "--global", "user.name", "github-actions[bot]"])
@@ -68,7 +68,6 @@ class SugarSuite:
         )
         return await semantic_release_container.stdout()
 
-    
     @function
     def unittesting(self, source: Annotated[dagger.Directory, DefaultPath("./")]) -> str:
         """Return the result of running unit tests"""
@@ -88,7 +87,7 @@ class SugarSuite:
         return (
             dag.container()
             # start from a base Node.js container
-            .from_("node:18-alpine")
+            .from_("node:20-alpine")
             # add the source code at /app
             .with_directory("/usr/share/nginx/html", source)
             # mount the cache volume at /app/node_modules
