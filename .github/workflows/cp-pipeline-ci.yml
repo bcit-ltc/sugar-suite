@@ -47,19 +47,12 @@ jobs:
           if [ -s semantic-release-output.txt ]; then
             NEXT_VERSION=$(cat semantic-release-output.txt | tr -d '\n')
           else
-            echo "Semantic release output is empty. Defaulting to 1.0.0"
-            NEXT_VERSION="1.0.0"
+            echo "Semantic release output is empty. Exiting..."
+            exit 1
           fi
           echo "next-version=$NEXT_VERSION" >> $GITHUB_OUTPUT
+          echo "Next version: ${{ steps.parse-next-version.outputs.next-version }}"
 
-      - name: Check if next version is empty
-        run: |
-          if [ -z "${{ steps.parse-next-version.outputs.next-version }}" ]; then
-            echo "Next version is empty. Exiting."
-            exit 1
-          else
-            echo "Next version: ${{ steps.parse-next-version.outputs.next-version }}"
-          fi
   ## This is the step that determines the environment
   ## conditionally chooses latest, stable or review based on branch and commit
   determine-environment:
