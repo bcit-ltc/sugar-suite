@@ -47,36 +47,45 @@ class SugarSuite:
         )
 
     @function
-    async def semanticrelease(self, source: Annotated[dagger.Directory, DefaultPath("./")], token: Annotated[dagger.Secret, Doc("GitHub API token")], branch: str) -> str:
-        """Run the semantic-release tool and return version information"""
+    async def semanticrelease(self, source: Annotated[dagger.Directory, DefaultPath("./")]) -> str:
+        """Run the semantic-release tool"""
         
         # Use the semantic-release container and copy files from dependencies_container
-        semantic_release_container = (
+        semantic_release_container = await (
             dag.container()
-            .from_("ghcr.io/bcit-ltc/semantic-release:arv3")  # Use prebuilt semantic-release container
+            .from_("ghcr.io/bcit-ltc/semantic-release:arv2")  # Use prebuilt semantic-release container
             # Configure Git to use HTTPS with GITHUB_TOKEN
             .with_exec(["git", "config", "--global", "url.https://github.com/.insteadOf", "git@github.com:"])
             .with_exec(["git", "config", "--global", "user.name", "github-actions[bot]"])
             .with_exec(["git", "config", "--global", "user.email", "github-actions[bot]@users.noreply.github.com"])
             # Set the GITHUB_TOKEN environment variable
-            .with_secret_variable("GITHUB_TOKEN", token)
+            .with_env_variable("GITHUB_TOKEN", "$GITHUB_TOKEN")
             # Copy all files from dependencies_container except node_modules
             .with_directory("/usr/share/nginx/html/.git", source.directory(".git"))
             # Preserve the pre-installed node_modules in the semantic-release container
             .with_workdir("/usr/share/nginx/html")
             # Run semantic-release
-            .with_exec(["npx", "semantic-release", "--branches", branch])
+            .with_exec(["npx", "semantic-release"])
         )
-    
+
         # Capture the container's output directory
         output_directory = semantic_release_container.directory("/usr/share/nginx/html")
-    
-        # Extract the NEXT_VERSION and CURRENT_VERSION files
-        next_version = await output_directory.file("NEXT_VERSION").contents()
-    
-        return next_version
+        next_version_file = output_directory.file("NEXT_VERSION")
+
+        try:
+            return (await next_version_file.contents()).strip()
+        except dagger.QueryError:  # Catch the error if the file doesn't exist
+            try:
+                # If the NEXT_VERSION file doesn't exist, try to get the last tag
+                git_container = semantic_release_container.with_exec(["git", "describe", "--tags", "`git rev-list --tags --max-count=1`"])
+                last_tag = (await git_container.stdout()).strip()
+                return last_tag
+            except Exception:
+                # If no tags are found, default to 0.0.0
+                return "0.0.0"
 
     
+
     @function
     def unittesting(self, source: Annotated[dagger.Directory, DefaultPath("./")]) -> str:
         """Return the result of running unit tests"""
