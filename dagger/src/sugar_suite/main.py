@@ -74,11 +74,17 @@ class SugarSuite:
         next_version_file = output_directory.file("NEXT_VERSION")
 
         try:
-            next_version = (await next_version_file.contents()).strip()
+            return (await next_version_file.contents()).strip()
         except dagger.QueryError:  # Catch the error if the file doesn't exist
-            next_version = "0.0.0"
+            try:
+                # git describe --tags `git rev-list --tags --max-count=1`
+                git_container = semantic_release_container.with_exec(["git", "describe", "--tags", "`git rev-list --tags --max-count=1`"])
+                last_tag = (await git_container.stdout()).strip()
+                return last_tag
+            except Exception:
+                # If no tags are found, default to 0.0.0
+                return "0.0.0"
 
-        return next_version
     
 
     @function
