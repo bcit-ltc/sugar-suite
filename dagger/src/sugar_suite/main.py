@@ -47,7 +47,7 @@ class SugarSuite:
         )
 
     @function
-    async def semanticrelease(self, source: Annotated[dagger.Directory, DefaultPath("./")]) -> str:
+    async def semanticrelease(self, source: Annotated[dagger.Directory, DefaultPath("./")], token: Annotated[dagger.Secret, Doc("GitHub API token")]) -> str:
         """Run the semantic-release tool"""
         
         # Use the semantic-release container and copy files from dependencies_container
@@ -58,6 +58,7 @@ class SugarSuite:
             .with_exec(["git", "config", "--global", "url.https://github.com/.insteadOf", "git@github.com:"])
             .with_exec(["git", "config", "--global", "user.name", "github-actions[bot]"])
             .with_exec(["git", "config", "--global", "user.email", "github-actions[bot]@users.noreply.github.com"])
+            .with_secret_variable("GITHUB_TOKEN", token)
             # Set the GITHUB_TOKEN environment variable
             .with_env_variable("GITHUB_TOKEN", "$GITHUB_TOKEN")
             # Copy all files from dependencies_container except node_modules
