@@ -106,7 +106,8 @@ jobs:
       - name: Print gathered version
         run: |
           if [ -z "${{ needs.semantic-release.outputs.next-version }}" ]; then
-            echo "The version is not available. Defaulting to 1.0.0"
+            echo "The version is not available. exiting..."
+            exit 1
           else
             echo "The version is ${{ needs.semantic-release.outputs.next-version }}"
           fi
