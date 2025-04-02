@@ -51,7 +51,7 @@ class SugarSuite:
         """Run the semantic-release tool and return version information"""
         
         # Use the semantic-release container and copy files from dependencies_container
-        semantic_release_container = (
+        semantic_release_container = await (
             dag.container()
             .from_("ghcr.io/bcit-ltc/semantic-release:arv2")  # Use prebuilt semantic-release container
             # Configure Git to use HTTPS with GITHUB_TOKEN
