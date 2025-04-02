@@ -45,6 +45,7 @@ class SugarSuite:
             .with_file("/usr/share/nginx/html/favicon.ico", builder_output.file('favicon.ico'))
             # .with_exposed_port(8080)
         )
+
     @function
     async def semanticrelease(self, source: Annotated[dagger.Directory, DefaultPath("./")]) -> str:
         """Run the semantic-release tool"""
@@ -67,8 +68,15 @@ class SugarSuite:
             # Run semantic-release
             .with_exec(["npx", "semantic-release"])
         )
-        return await semantic_release_container.stdout()
 
+        # Capture the container's output directory
+        output_directory = semantic_release_container.directory("/usr/share/nginx/html")
+        try:
+            next_version = await output_directory.file("NEXT_VERSION").contents().strip()
+        except dagger.FileNotFoundError:
+            next_version = "0.0.0"
+
+        return next_version
     
     @function
     def unittesting(self, source: Annotated[dagger.Directory, DefaultPath("./")]) -> str:
