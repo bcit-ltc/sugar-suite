@@ -58,6 +58,8 @@ jobs:
           if [ -z "${{ steps.parse-next-version.outputs.next-version }}" ]; then
             echo "Next version is empty. Exiting."
             exit 1
+          else
+            echo "Next version output: ${{ steps.parse-next-version.outputs.next-version }}"
           fi
   ## This is the step that determines the environment
   ## conditionally chooses latest, stable or review based on branch and commit
@@ -101,8 +103,12 @@ jobs:
     environment: ${{ needs.determine-environment.outputs.environment }}
     steps:
       - uses: actions/checkout@v4
-      - name: Print build environment
-        run: echo "This is the ${{ needs.determine-environment.outputs.environment }} environment"
+      - name: Print build environment and semantic release version
+        run: |
+          echo "Environment: ${{ needs.determine-environment.outputs.environment }}"
+          echo "Semantic Release Version: ${{ needs.semantic-release.outputs.next-version }}"
+
+      
       - name: Print gathered version
         run: |
           if [ -z "${{ needs.semantic-release.outputs.next-version }}" ]; then
