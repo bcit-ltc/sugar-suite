@@ -50,7 +50,6 @@ jobs:
             echo "Semantic release output is empty. Defaulting to 1.0.0"
             NEXT_VERSION="1.0.0"
           fi
-          echo "Next version is $NEXT_VERSION"
           echo "next-version=$NEXT_VERSION" >> $GITHUB_OUTPUT
 
       - name: Check if next version is empty
@@ -59,7 +58,7 @@ jobs:
             echo "Next version is empty. Exiting."
             exit 1
           else
-            echo "Next version output: ${{ steps.parse-next-version.outputs.next-version }}"
+            echo "Next version: ${{ steps.parse-next-version.outputs.next-version }}"
           fi
   ## This is the step that determines the environment
   ## conditionally chooses latest, stable or review based on branch and commit
@@ -74,6 +73,7 @@ jobs:
       - name: Get commit message
         id: get-commit-message
         run: echo "COMMIT_MESSAGE=$(git log -1 --pretty=%B | tr -d '\n' | sed 's/"/\\"/g')" >> $GITHUB_ENV
+      
       - name: Set the environment
         id: set-environment
         run: |
@@ -87,6 +87,7 @@ jobs:
             ENV_NAME="review"
           fi
           echo ENVIRONMENT=$ENV_NAME >> $GITHUB_OUTPUT
+      
       - name: print the environment
         run: echo "The environment is ${{ steps.set-environment.outputs.ENVIRONMENT }}"
 
@@ -107,16 +108,6 @@ jobs:
         run: |
           echo "Environment: ${{ needs.determine-environment.outputs.environment }}"
           echo "Semantic Release Version: ${{ needs.semantic-release.outputs.next-version }}"
-
-      
-      - name: Print gathered version
-        run: |
-          if [ -z "${{ needs.semantic-release.outputs.next-version }}" ]; then
-            echo "The version is not available. exiting..."
-            exit 1
-          else
-            echo "The version is ${{ needs.semantic-release.outputs.next-version }}"
-          fi
       
       - name: Create Tag
         run: |
