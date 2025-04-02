@@ -38,7 +38,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.ARV_TOKEN }}
         with:
           cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
-          args: semanticrelease --branch=${{ github.ref_name }} > semantic-release-output.txt
+          args: semanticrelease > semantic-release-output.txt
 
       - name: Parse semantic release output
         id: parse-next-version

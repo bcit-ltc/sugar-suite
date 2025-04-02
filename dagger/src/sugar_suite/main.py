@@ -45,10 +45,9 @@ class SugarSuite:
             .with_file("/usr/share/nginx/html/favicon.ico", builder_output.file('favicon.ico'))
             # .with_exposed_port(8080)
         )
-
     @function
-    async def semanticrelease(self, source: Annotated[dagger.Directory, DefaultPath("./")], branch: str) -> str:
-        """Run the semantic-release tool and return version information"""
+    async def semanticrelease(self, source: Annotated[dagger.Directory, DefaultPath("./")]) -> str:
+        """Run the semantic-release tool"""
         
         # Use the semantic-release container and copy files from dependencies_container
         semantic_release_container = await (
@@ -68,23 +67,7 @@ class SugarSuite:
             # Run semantic-release
             .with_exec(["npx", "semantic-release"])
         )
-        
-        # Capture the container's output directory
-        output_directory = semantic_release_container.directory("/usr/share/nginx/html")
-        
-        try:
-            # Try to extract the NEXT_VERSION file
-            next_version = await output_directory.file("NEXT_VERSION").contents()
-            return next_version.strip()
-        except FileNotFoundError:
-            # If NEXT_VERSION is not found, use git to get the last release tag
-            try:
-                git_container = semantic_release_container.with_exec(["git", "describe", "--tags", "--abbrev=0"])
-                last_tag = (await git_container.stdout()).strip()
-                return last_tag
-            except Exception:
-                # If no tags are found, default to 0.0.0
-                return "0.0.0"
+        return await semantic_release_container.stdout()
 
     
     @function
