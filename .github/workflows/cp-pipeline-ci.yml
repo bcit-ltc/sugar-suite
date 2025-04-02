@@ -38,7 +38,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
-          args: semanticrelease --token=env://GITHUB_TOKEN > semantic-release-output.txt
+          args: semanticrelease --token=env://GITHUB_TOKEN --branch=${{ github.ref_name }} > semantic-release-output.txt
 
       - name: Parse semantic release output
         id: parse-next-version
@@ -50,7 +50,6 @@ jobs:
             echo "Semantic release output is empty. Defaulting to 1.0.0"
             NEXT_VERSION="1.0.0"
           fi
-          echo "Next version is $NEXT_VERSION"
           echo "next-version=$NEXT_VERSION" >> $GITHUB_OUTPUT
 
       - name: Check if next version is empty
@@ -58,6 +57,8 @@ jobs:
           if [ -z "${{ steps.parse-next-version.outputs.next-version }}" ]; then
             echo "Next version is empty. Exiting."
             exit 1
+          else
+            echo "Next version: ${{ steps.parse-next-version.outputs.next-version }}"
           fi
   ## This is the step that determines the environment
   ## conditionally chooses latest, stable or review based on branch and commit
@@ -72,6 +73,7 @@ jobs:
       - name: Get commit message
         id: get-commit-message
         run: echo "COMMIT_MESSAGE=$(git log -1 --pretty=%B | tr -d '\n' | sed 's/"/\\"/g')" >> $GITHUB_ENV
+      
       - name: Set the environment
         id: set-environment
         run: |
@@ -85,6 +87,7 @@ jobs:
             ENV_NAME="review"
           fi
           echo ENVIRONMENT=$ENV_NAME >> $GITHUB_OUTPUT
+      
       - name: print the environment
         run: echo "The environment is ${{ steps.set-environment.outputs.ENVIRONMENT }}"
 
@@ -95,21 +98,16 @@ jobs:
       pull-requests: write # to be able to comment on released pull requests
       packages: write # Required for pulling images
     name: Build for environment
-    needs: [determine-environment]
+    needs: [semantic-release, determine-environment]
     if: ${{ needs.determine-environment.outputs.environment != '' }}
     runs-on: ubuntu-latest
     environment: ${{ needs.determine-environment.outputs.environment }}
     steps:
       - uses: actions/checkout@v4
-      - name: Print build environment
-        run: echo "This is the ${{ needs.determine-environment.outputs.environment }} environment"
-      - name: Print gathered version
+      - name: Print build environment and semantic release version
         run: |
-          if [ -z "${{ needs.semantic-release.outputs.next-version }}" ]; then
-            echo "The version is not available. Defaulting to 1.0.0"
-          else
-            echo "The version is ${{ needs.semantic-release.outputs.next-version }}"
-          fi
+          echo "Environment: ${{ needs.determine-environment.outputs.environment }}"
+          echo "Semantic Release Version: ${{ needs.semantic-release.outputs.next-version }}"
       
       - name: Create Tag
         run: |
