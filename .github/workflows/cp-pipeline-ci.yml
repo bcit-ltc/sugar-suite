@@ -51,7 +51,7 @@ jobs:
             exit 1
           fi
           echo "next-version=$NEXT_VERSION" >> $GITHUB_OUTPUT
-          echo "Next version: ${{ steps.parse-next-version.outputs.next-version }}"
+          echo "Next version: $NEXT_VERSION"
 
   ## This is the step that determines the environment
   ## conditionally chooses latest, stable or review based on branch and commit
