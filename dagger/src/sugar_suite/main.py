@@ -72,7 +72,7 @@ class SugarSuite:
         # Capture the container's output directory
         output_directory = semantic_release_container.directory("/usr/share/nginx/html")
         try:
-            next_version = await output_directory.file("NEXT_VERSION").contents().strip()
+            next_version = (await output_directory.file("NEXT_VERSION").contents()).strip()
         except FileNotFoundError:
             next_version = "0.0.0"
 
