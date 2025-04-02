@@ -67,14 +67,23 @@ class SugarSuite:
             # Run semantic-release
             .with_exec(["npx", "semantic-release"])
         )
-    
+        
         # Capture the container's output directory
         output_directory = semantic_release_container.directory("/usr/share/nginx/html")
-    
-        # Extract the NEXT_VERSION and CURRENT_VERSION files
-        next_version = await output_directory.file("NEXT_VERSION").contents()
-    
-        return next_version
+        
+        try:
+            # Try to extract the NEXT_VERSION file
+            next_version = await output_directory.file("NEXT_VERSION").contents()
+            return next_version.strip()
+        except FileNotFoundError:
+            # If NEXT_VERSION is not found, use git to get the last release tag
+            try:
+                git_container = semantic_release_container.with_exec(["git", "describe", "--tags", "--abbrev=0"])
+                last_tag = (await git_container.stdout()).strip()
+                return last_tag
+            except Exception:
+                # If no tags are found, default to 0.0.0
+                return "0.0.0"
 
     
     @function
