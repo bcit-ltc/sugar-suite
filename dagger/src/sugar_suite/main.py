@@ -66,7 +66,7 @@ class SugarSuite:
             # Preserve the pre-installed node_modules in the semantic-release container
             .with_workdir("/usr/share/nginx/html")
             # Run semantic-release
-            .with_exec(["npx", "semantic-release"])
+            .with_exec(["npx", "semantic-release", "--no-ci"])
         )
 
         # Capture the container's output directory
