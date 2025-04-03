@@ -47,7 +47,7 @@ class SugarSuite:
         )
 
     @function
-    async def semanticrelease(self, source: Annotated[dagger.Directory, DefaultPath("./")], token: Annotated[dagger.Secret, Doc("GitHub API token")]) -> str:
+    async def semanticrelease(self, source: Annotated[dagger.Directory, DefaultPath("./")]) -> str:
         """Run the semantic-release tool"""
         
         # Use the semantic-release container and copy files from dependencies_container
@@ -58,7 +58,6 @@ class SugarSuite:
             .with_exec(["git", "config", "--global", "url.https://github.com/.insteadOf", "git@github.com:"])
             .with_exec(["git", "config", "--global", "user.name", "github-actions[bot]"])
             .with_exec(["git", "config", "--global", "user.email", "github-actions[bot]@users.noreply.github.com"])
-            .with_secret_variable("GITHUB_TOKEN", token)
             # Set the GITHUB_TOKEN environment variable
             .with_env_variable("GITHUB_TOKEN", "$GITHUB_TOKEN")
             # Copy all files from dependencies_container except node_modules
@@ -66,7 +65,7 @@ class SugarSuite:
             # Preserve the pre-installed node_modules in the semantic-release container
             .with_workdir("/usr/share/nginx/html")
             # Run semantic-release
-            .with_exec(["npx", "semantic-release"])
+            .with_exec(["npx", "semantic-release", "--no-ci"])
         )
 
         # Capture the container's output directory
@@ -78,7 +77,7 @@ class SugarSuite:
         except dagger.QueryError:  # Catch the error if the file doesn't exist
             try:
                 # If the NEXT_VERSION file doesn't exist, try to get the last tag
-                git_container = semantic_release_container.with_exec(["git", "describe", "--tags", "`git rev-list --tags --max-count=1`"])
+                git_container = semantic_release_container.with_exec(["git", "describe", "--tags", "--abbrev=0"])
                 last_tag = (await git_container.stdout()).strip()
                 return last_tag
             except Exception:
