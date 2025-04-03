@@ -78,7 +78,7 @@ class SugarSuite:
         except dagger.QueryError:  # Catch the error if the file doesn't exist
             try:
                 # If the NEXT_VERSION file doesn't exist, try to get the last tag
-                git_container = semantic_release_container.with_exec(["git", "describe", "--tags", "`git rev-list --tags --max-count=1`"])
+                git_container = semantic_release_container.with_exec(["git", "describe", "--tags", "--abbrev=0"])
                 last_tag = (await git_container.stdout()).strip()
                 return last_tag
             except Exception:
