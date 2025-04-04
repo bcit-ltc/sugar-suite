@@ -130,4 +130,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
-          args: publish --registry=ghcr.io/bcit-ltc/${{ github.event.repository.name }} --username=${{ github.actor }} --token=env://GITHUB_TOKEN --tags=$TAGS
+          args: publish --username=${{ github.actor }} --token=env://GITHUB_TOKEN --tags=$TAGS
