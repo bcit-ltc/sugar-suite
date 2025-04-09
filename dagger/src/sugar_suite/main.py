@@ -45,9 +45,12 @@ class SugarSuite:
                 return "0.0.0"
 
     @function
-    def determineenvironment() -> str:
+    def determineenvironment(self, 
+                            source: Annotated[Directory, DefaultPath("./"), Doc("Source directory containing the project files")],
+                            ) -> str:
         return (
             dag.determine_environment()
+		    .getenv()
         )
     
     @function
