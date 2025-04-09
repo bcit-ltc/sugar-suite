@@ -45,7 +45,7 @@ class SugarSuite:
                 return "0.0.0"
 
     @function
-    def determineenvironment() -> dag.DetermineEnvironment:
+    def determineenvironment() -> str:
         return (
             dag.determine_environment()
         )
