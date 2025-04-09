@@ -1,8 +1,15 @@
 {
   "name": "sugar-suite",
-  "engineVersion": "v0.17.0",
+  "engineVersion": "v0.18.2",
   "sdk": {
     "source": "python"
   },
+  "dependencies": [
+    {
+      "name": "determine-environment",
+      "source": "github.com/BCIT-LTC/daggerverse/determine-environment@5dd15a85f673dc3886957ccd0f57d81db86c155a",
+      "pin": "5dd15a85f673dc3886957ccd0f57d81db86c155a"
+    }
+  ],
   "source": "dagger"
 }

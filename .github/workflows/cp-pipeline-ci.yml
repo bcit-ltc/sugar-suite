@@ -10,124 +10,115 @@ permissions:
   packages: write # Required for pulling images
 
 jobs:
-  semantic-release:
-    permissions:
-      contents: write # to be able to publish a GitHub release
-      issues: write # to be able to comment on released issues
-      pull-requests: write # to be able to comment on released pull requests
-      packages: write # Required for pushing images
-    name: Run Semantic Release
-    runs-on: ubuntu-latest
-    outputs:
-      next-version: ${{ steps.parse-next-version.outputs.next-version }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+  # semantic-release:
+  #   permissions:
+  #     contents: write # to be able to publish a GitHub release
+  #     issues: write # to be able to comment on released issues
+  #     pull-requests: write # to be able to comment on released pull requests
+  #   name: Run Semantic Release
+  #   runs-on: ubuntu-latest
+  #   outputs:
+  #     next-version: ${{ steps.parse-next-version.outputs.next-version }}
+  #   steps:
+  #     - name: Run Dagger semantic release
+  #       id: semantic-release
+  #       uses: dagger/dagger-for-github@8.0.0
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #       with:
+  #         cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
+  #         args: semanticrelease --token=env://GITHUB_TOKEN > semantic-release-output.txt
 
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Run Dagger semantic release
-        id: semantic-release
-        uses: dagger/dagger-for-github@8.0.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
-          args: semanticrelease --token=env://GITHUB_TOKEN > semantic-release-output.txt
-
-      - name: Parse semantic release output
-        id: parse-next-version
-        run: |
-          # Read the output from the semantic-release step
-          if [ -s semantic-release-output.txt ]; then
-            NEXT_VERSION=$(cat semantic-release-output.txt | tr -d '\n')
-          else
-            echo "Semantic release output is empty. Exiting..."
-            exit 1
-          fi
-          echo "next-version=$NEXT_VERSION" >> $GITHUB_OUTPUT
-          echo "Next version: $NEXT_VERSION"
+  #     - name: Parse semantic release output
+  #       id: parse-next-version
+  #       run: |
+  #         # Read the output from the semantic-release step
+  #         if [ -s semantic-release-output.txt ]; then
+  #           NEXT_VERSION=$(cat semantic-release-output.txt | tr -d '\n')
+  #         else
+  #           echo "Semantic release output is empty. Exiting..."
+  #           exit 1
+  #         fi
+  #         echo "next-version=$NEXT_VERSION" >> $GITHUB_OUTPUT
+  #         echo "Next version: $NEXT_VERSION"
 
   ## This is the step that determines the environment
   ## conditionally chooses latest, stable or review based on branch and commit
   determine-environment:
-    name: Determine Environment
-    needs: [semantic-release]
-    runs-on: ubuntu-latest
-    outputs:
-      environment: ${{ steps.set-environment.outputs.ENVIRONMENT }}
-    steps:
-      - uses: actions/checkout@v4
-      - name: Get commit message
-        id: get-commit-message
-        run: echo "COMMIT_MESSAGE=$(git log -1 --pretty=%B | tr -d '\n' | sed 's/"/\\"/g')" >> $GITHUB_ENV
-      
-      - name: Set the environment
-        id: set-environment
-        run: |
-          if [ "${{ github.ref_name }}" == "main" ]; then
-            if [[ "${{ env.COMMIT_MESSAGE }}" =~ ^(fix\s*:\s*|feat\s*:\s*|major\s*:\s*) ]]; then
-              ENV_NAME="stable"
-            else
-              ENV_NAME="latest"
-            fi
-          elif [[ "${{ github.ref_name }}" =~ ^[0-9]+-.*$ ]]; then
-            ENV_NAME="review"
-          fi
-          echo ENVIRONMENT=$ENV_NAME >> $GITHUB_OUTPUT
-      
-      - name: print the environment
-        run: echo "The environment is ${{ steps.set-environment.outputs.ENVIRONMENT }}"
-
-  build-for-environment:
     permissions:
       contents: write # to be able to publish a GitHub release
-      issues: write # to be able to comment on released issues
-      pull-requests: write # to be able to comment on released pull requests
-      packages: write # Required for pulling images
-    name: Build for environment
-    needs: [semantic-release, determine-environment]
-    if: ${{ needs.determine-environment.outputs.environment != '' }}
+    name: Determine Environment
+    # needs: [semantic-release]
     runs-on: ubuntu-latest
-    environment: ${{ needs.determine-environment.outputs.environment }}
+    outputs:
+      ci-environment: ${{ steps.parse-environment.outputs.ENVIRONMENT }}
     steps:
-      - uses: actions/checkout@v4
-      - name: Print build environment and semantic release version
-        run: |
-          echo "Environment: ${{ needs.determine-environment.outputs.environment }}"
-          echo "Semantic Release Version: ${{ needs.semantic-release.outputs.next-version }}"
-      
-      - name: Create Tag
-        run: |
-          SHORT_COMMIT=$(git rev-parse --short HEAD)
-          CURRENT_DATE=$(date +'%Y-%m-%d')
-          CURRENT_TIMESTAMP=$(date +'%s')
-          ENVIRONMENT="${{ needs.determine-environment.outputs.environment }}"
-          SHORT_VERSION_TAG="${{ needs.semantic-release.outputs.next-version }}"
-          LONG_VERSION_TAG="$SHORT_VERSION_TAG-$CURRENT_DATE--$SHORT_COMMIT.$CURRENT_TIMESTAMP"
-      
-          # Determine tags based on the environment
-          if [ "$ENVIRONMENT" == "review" ]; then
-            TAGS="review--${{ github.ref_name }}--$SHORT_COMMIT"
-          elif [ "$ENVIRONMENT" == "latest" ]; then
-            TAGS="$LONG_VERSION_TAG,latest"
-          elif [ "$ENVIRONMENT" == "stable" ]; then
-            TAGS="$SHORT_VERSION_TAG,$LONG_VERSION_TAG,latest,stable"
-          fi
-      
-          # Export tags to GitHub environment
-          echo "TAGS=$TAGS" >> $GITHUB_ENV
-          echo "$TAGS"
-      
-      - name: Build and push Docker image using Dagger
+      - name: Run Dagger determine-environment
+        id: determine-environment
         uses: dagger/dagger-for-github@8.0.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
-          args: publish --username=${{ github.actor }} --token=env://GITHUB_TOKEN --tags=$TAGS
+          args: determineenvironment > env-output.txt
+
+      - name: Parse determine-environment output
+        id: parse-environment
+        run: |
+          # Read the output from the semantic-release step
+          if [ -s env-output.txt ]; then
+            ENVIRONMENT=$(cat env-output.txt | tr -d '\n')
+          else
+            echo "Semantic release output is empty. Exiting..."
+            exit 1
+          fin
+          echo "ci-environment=$ENVIRONMENT" >> $GITHUB_OUTPUT
+          echo "Environment: $ENVIRONMENT"
+
+  # build-for-environment:
+  #   permissions:
+  #     contents: write # to be able to publish a GitHub release
+  #     issues: write # to be able to comment on released issues
+  #     pull-requests: write # to be able to comment on released pull requests
+  #     packages: write # Required for pulling images
+  #   name: Build for environment
+  #   needs: [semantic-release, determine-environment]
+  #   if: ${{ needs.determine-environment.outputs.environment != '' }}
+  #   runs-on: ubuntu-latest
+  #   environment: ${{ needs.determine-environment.outputs.environment }}
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - name: Print build environment and semantic release version
+  #       run: |
+  #         echo "Environment: ${{ needs.determine-environment.outputs.environment }}"
+  #         echo "Semantic Release Version: ${{ needs.semantic-release.outputs.next-version }}"
+      
+  #     - name: Create Tag
+  #       run: |
+  #         SHORT_COMMIT=$(git rev-parse --short HEAD)
+  #         CURRENT_DATE=$(date +'%Y-%m-%d')
+  #         CURRENT_TIMESTAMP=$(date +'%s')
+  #         ENVIRONMENT="${{ needs.determine-environment.outputs.environment }}"
+  #         SHORT_VERSION_TAG="${{ needs.semantic-release.outputs.next-version }}"
+  #         LONG_VERSION_TAG="$SHORT_VERSION_TAG-$CURRENT_DATE--$SHORT_COMMIT.$CURRENT_TIMESTAMP"
+          
+  #         # TODO:  review--27-remove-elast--1.2.2-0fa963b0--2024-09-20.1726847558 
+          
+  #         # Determine tags based on the environment
+  #         if [ "$ENVIRONMENT" == "review" ]; then
+  #           TAGS="review--${{ github.ref_name }}--$SHORT_COMMIT"
+  #         elif [ "$ENVIRONMENT" == "latest" ]; then
+  #           TAGS="$LONG_VERSION_TAG,latest"
+  #         elif [ "$ENVIRONMENT" == "stable" ]; then
+  #           TAGS="$SHORT_VERSION_TAG,$LONG_VERSION_TAG,latest,stable"
+  #         fi
+      
+  #         # Export tags to GitHub environment
+  #         echo "TAGS=$TAGS" >> $GITHUB_ENV
+  #         echo "$TAGS"
+      
+  #     - name: Build and push Docker image using Dagger
+  #       uses: dagger/dagger-for-github@8.0.0
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #       with:
+  #         cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
+  #         args: publish --username=${{ github.actor }} --token=env://GITHUB_TOKEN --tags=$TAGS

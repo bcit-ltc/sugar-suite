@@ -5,7 +5,10 @@ from dagger import Container, DaggerError, DefaultPath, Directory, Doc, QueryErr
 class SugarSuite:
 
     @function
-    async def semanticrelease(self, source: Annotated[Directory, DefaultPath("./")], token: Annotated[Secret, Doc("GitHub API token")]) -> str:
+    async def semanticrelease(self, 
+                              source: Annotated[Directory, DefaultPath("./"), Doc("Source directory containing the project files")],
+                              token: Annotated[Secret, Doc("GitHub API token for authentication")]
+                              ) -> str:
         """Run the semantic-release tool to determine the next version and publish the release"""
         
         # Use the semantic-release container and copy files from dependencies_container
@@ -41,9 +44,20 @@ class SugarSuite:
                 # If no tags are found, default to 0.0.0
                 return "0.0.0"
 
-      
     @function
-    async def publish(self, source: Annotated[Directory, DefaultPath("./")], registry: str | None,  tags: str, username: str | None, token: Annotated[Secret, Doc("GitHub API token")] | None) -> str:
+    def determineenvironment() -> dag.DetermineEnvironment:
+        return (
+            dag.determine_environment()
+        )
+    
+    @function
+    async def publish(self,
+                      source: Annotated[Directory, DefaultPath("./"), Doc("Source directory containing the project files")],
+                      tags: Annotated[str, Doc("Comma-separated list of tags for the container")],
+                      registry: Annotated[str | None, Doc("Registry URL to publish the container")],
+                      username: Annotated[str | None, Doc("Username for registry authentication")],
+                      token: Annotated[Secret | None, Doc("GitHub API token for registry authentication")]
+                      ) -> str:
         """Publish the application container to a registry"""
         if (token is None) != (username is None):  # XOR check: one is provided but not the other
             raise DaggerError("Both 'token' and 'username' must be provided together, or neither.")
@@ -73,7 +87,7 @@ class SugarSuite:
             # SSH format (if run locally): git@github.com:my-org/repo-name.git
             repo_location = git_url.split(":", 1)[1].rsplit(".", 1)[0].lower()  # Get the part after `:` and remove `.git`
         elif git_url.startswith("https://"):
-            # HTTPS format (if run from CI): https://github.com/my-org/repo-name:some-tag
+            # HTTPS format (if run from CI): https://github.com/my-org/repo-name:some-branch
             repo_location = git_url.split("/", 3)[-1].split(":", 1)[0].lower()  # Get the part after the domain and before `:`
         else:
             raise DaggerError(f"Unsupported Git URL format: {git_url}")
@@ -97,7 +111,9 @@ class SugarSuite:
 
 
     @function
-    def build(self, source: Annotated[Directory, DefaultPath("./")]) -> Container:
+    def build(self,
+              source: Annotated[Directory, DefaultPath("./"), Doc("Source directory containing the project files")]
+              ) -> Container:
         """Build a ready-to-use production environment"""
         builder_output = (
             self.installdependencies(source)
@@ -120,7 +136,9 @@ class SugarSuite:
     
 
     @function
-    def unittesting(self, source: Annotated[Directory, DefaultPath("./")]) -> str:
+    def unittesting(self,
+                    source: Annotated[Directory, DefaultPath("./"), Doc("Source directory containing the project files")]
+                    ) -> str:
         """Return the result of running unit tests"""
         
         return (
@@ -130,7 +148,9 @@ class SugarSuite:
         )
     
     @function
-    def installdependencies(self, source: Annotated[Directory, DefaultPath("./")]) -> Container:
+    def installdependencies(self,
+                            source: Annotated[Directory, DefaultPath("./"), Doc("Source directory containing the project files")]
+                            ) -> Container:
         """Install all dependencies"""
         # create a Dagger cache volume for node_modules
         node_modules_cache = dag.cache_volume("node_modules_cache")
