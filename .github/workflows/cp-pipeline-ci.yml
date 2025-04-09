@@ -53,6 +53,8 @@ jobs:
     outputs:
       ci-environment: ${{ steps.parse-environment.outputs.ENVIRONMENT }}
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
       - name: Run Dagger determine-environment
         id: determine-environment
         uses: dagger/dagger-for-github@8.0.0
