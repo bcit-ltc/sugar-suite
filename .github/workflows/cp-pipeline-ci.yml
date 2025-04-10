@@ -96,12 +96,11 @@ jobs:
           ENVIRONMENT="${{ needs.run-dagger.outputs.ci-environment }}"
           SHORT_VERSION_TAG="${{ needs.run-dagger.outputs.next-version }}"
           LONG_VERSION_TAG="$SHORT_VERSION_TAG-$CURRENT_DATE--$SHORT_COMMIT.$CURRENT_TIMESTAMP"
-          
-          # TODO:  review--27-remove-elast--1.2.2-0fa963b0--2024-09-20.1726847558 
-          
+          BRANCH_NAME=$(echo "${{ github.ref_name }}" | tr -cd '[:alnum:]' | cut -c1-15)
+
           # Determine tags based on the environment
           if [ "$ENVIRONMENT" == "review" ]; then
-            TAGS="review--${{ github.ref_name }}--$SHORT_COMMIT"
+            TAGS="review--$BRANCH_NAME--$SHORT_VERSION_TAG-$SHORT_COMMIT.$CURRENT_TIMESTAMP"
           elif [ "$ENVIRONMENT" == "latest" ]; then
             TAGS="$LONG_VERSION_TAG,latest"
           elif [ "$ENVIRONMENT" == "stable" ]; then
