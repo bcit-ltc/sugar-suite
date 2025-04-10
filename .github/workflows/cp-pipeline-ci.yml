@@ -20,6 +20,9 @@ jobs:
     outputs:
       next-version: ${{ steps.parse-next-version.outputs.next-version }}
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
       - name: Run Dagger semantic release
         id: semantic-release
         uses: dagger/dagger-for-github@8.0.0
