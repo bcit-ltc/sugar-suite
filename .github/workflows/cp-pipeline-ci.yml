@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       next-version: ${{ steps.parse-next-version.outputs.next-version }}
-      ci-environment: ${{ steps.parse-environment.outputs.ENVIRONMENT }}
+      ci-environment: ${{ steps.parse-environment.outputs.ci-environment }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
