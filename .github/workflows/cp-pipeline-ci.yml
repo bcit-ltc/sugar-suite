@@ -96,8 +96,8 @@ jobs:
           ENVIRONMENT="${{ needs.run-dagger.outputs.ci-environment }}"
           SHORT_VERSION_TAG="${{ needs.run-dagger.outputs.next-version }}"
           LONG_VERSION_TAG="$SHORT_VERSION_TAG-$CURRENT_DATE--$SHORT_COMMIT.$CURRENT_TIMESTAMP"
-          BRANCH_NAME=$(echo "${{ github.ref_name }}" | tr -cd '[:alnum:]' | cut -c1-15)
-
+          BRANCH_NAME=$(echo "${{ github.ref_name }}" | tr -cd '[:alnum:]-' | cut -c1-15)
+          
           # Determine tags based on the environment
           if [ "$ENVIRONMENT" == "review" ]; then
             TAGS="review--$BRANCH_NAME--$SHORT_VERSION_TAG-$SHORT_COMMIT.$CURRENT_TIMESTAMP"
