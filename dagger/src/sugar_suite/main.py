@@ -43,18 +43,6 @@ class SugarSuite:
             except Exception:
                 # If no tags are found, default to 0.0.0
                 return "0.0.0"
-
-    @function
-    def determineenvironment(
-        self,
-        source: Annotated[Directory, DefaultPath("./"), Doc("Source directory containing the project files")],
-        branch: Annotated[str | None, Doc("Branch name to check for the environment")],
-        mapfile: Annotated[str, Doc("Name of the JSON file containing the environment map")] = "env_map.json",
-        ) -> str:
-
-        return (
-            dag.determine_environment().getenv(source, branch, mapfile)
-        )
     
     @function
     async def publish(self,
