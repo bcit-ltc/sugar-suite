@@ -10,15 +10,16 @@ permissions:
   packages: write # Required for pulling images
 
 jobs:
-  semantic-release:
+  run-dagger:
     permissions:
       contents: write # to be able to publish a GitHub release
       issues: write # to be able to comment on released issues
       pull-requests: write # to be able to comment on released pull requests
-    name: Run Semantic Release
+    name: Run dagger
     runs-on: ubuntu-latest
     outputs:
       next-version: ${{ steps.parse-next-version.outputs.next-version }}
+      ci-environment: ${{ steps.parse-environment.outputs.ENVIRONMENT }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -45,19 +46,6 @@ jobs:
           echo "next-version=$NEXT_VERSION" >> $GITHUB_OUTPUT
           echo "Next version: $NEXT_VERSION"
 
-  ## This is the step that determines the environment
-  ## conditionally chooses latest, stable or review based on branch and commit
-  determine-environment:
-    permissions:
-      contents: write # to be able to publish a GitHub release
-    name: Determine Environment
-    needs: [semantic-release]
-    runs-on: ubuntu-latest
-    outputs:
-      ci-environment: ${{ steps.parse-environment.outputs.ENVIRONMENT }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
       - name: Run Dagger for determine-environment
         id: determine-environment
         uses: dagger/dagger-for-github@8.0.0
@@ -66,19 +54,19 @@ jobs:
         with:
           module: github.com/BCIT-LTC/daggerverse/determine-environment
           cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
-          # pipe the result to ENVIRONMENT variable
           call: getenv --source=. > env-output.txt
           version: "latest"
+
       - name: Parse determine-environment output
         id: parse-environment
         run: |
-          # Read the output from the semantic-release step
+          # Read the output from the determine-environment step
           if [ -s env-output.txt ]; then
             ENVIRONMENT=$(cat env-output.txt | tr -d '\n')
           else
-            echo "Semantic release output is empty. Exiting..."
+            echo "Determine environment output is empty. Exiting..."
             exit 1
-          fin
+          fi
           echo "ci-environment=$ENVIRONMENT" >> $GITHUB_OUTPUT
           echo "Environment: $ENVIRONMENT"
 
@@ -89,24 +77,24 @@ jobs:
       pull-requests: write # to be able to comment on released pull requests
       packages: write # Required for pulling images
     name: Build for environment
-    needs: [semantic-release, determine-environment]
-    if: ${{ needs.determine-environment.outputs.environment != '' }}
+    needs: [run-dagger]
+    if: ${{ needs.run-dagger.outputs.ci-environment != '' }}
     runs-on: ubuntu-latest
-    environment: ${{ needs.determine-environment.outputs.environment }}
+    environment: ${{ needs.run-dagger.outputs.ci-environment }}
     steps:
       - uses: actions/checkout@v4
       - name: Print build environment and semantic release version
         run: |
-          echo "Environment: ${{ needs.determine-environment.outputs.environment }}"
-          echo "Semantic Release Version: ${{ needs.semantic-release.outputs.next-version }}"
+          echo "Environment: ${{ needs.run-dagger.outputs.ci-environment }}"
+          echo "Semantic Release Version: ${{ needs.run-dagger.outputs.next-version }}"
       
       - name: Create Tag
         run: |
           SHORT_COMMIT=$(git rev-parse --short HEAD)
           CURRENT_DATE=$(date +'%Y-%m-%d')
           CURRENT_TIMESTAMP=$(date +'%s')
-          ENVIRONMENT="${{ needs.determine-environment.outputs.environment }}"
-          SHORT_VERSION_TAG="${{ needs.semantic-release.outputs.next-version }}"
+          ENVIRONMENT="${{ needs.run-dagger.outputs.ci-environment }}"
+          SHORT_VERSION_TAG="${{ needs.run-dagger.outputs.next-version }}"
           LONG_VERSION_TAG="$SHORT_VERSION_TAG-$CURRENT_DATE--$SHORT_COMMIT.$CURRENT_TIMESTAMP"
           
           # TODO:  review--27-remove-elast--1.2.2-0fa963b0--2024-09-20.1726847558 
