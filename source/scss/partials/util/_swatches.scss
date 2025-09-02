@@ -1,0 +1,79 @@
+// Simple set of classes for accessing colors and fonts
+// These are primarily used in the styleguide
+.primary-text-color {
+	background-color: $primary-text-color;
+}
+
+.primary-font {
+	font-family: $primary-font;
+}
+
+.secondary-font {
+	font-family: $secondary-font;
+}
+
+.primary-color {
+	background-color: $primary-color;
+	&-light {
+		background-color: $primary-color-light;
+		&er {
+			background-color: $primary-color-lighter;
+		}
+		&est {
+			background-color: $primary-color-lightest;
+		}
+	}
+	&-dark {
+		background-color: $primary-color-dark;
+		&er {
+			background-color: $primary-color-darker;
+		}
+		&est {
+			background-color: $primary-color-darkest;
+		}
+	}
+}
+
+.secondary-color {
+	background-color: $secondary-color;
+	&-light {
+		background-color: $secondary-color-light;
+		&er {
+			background-color: $secondary-color-lighter;
+		}
+		&est {
+			background-color: $secondary-color-lightest;
+		}
+	}
+	&-dark {
+		background-color: $secondary-color-dark;
+		&er {
+			background-color: $secondary-color-darker;
+		}
+		&est {
+			background-color: $secondary-color-darkest;
+		}
+	}
+}
+
+.complement-color {
+	background-color: $complement-color;
+	&-light {
+		background-color: $complement-color-light;
+		&er {
+			background-color: $complement-color-lighter;
+		}
+		&est {
+			background-color: $complement-color-lightest;
+		}
+	}
+	&-dark {
+		background-color: $complement-color-dark;
+		&er {
+			background-color: $complement-color-darker;
+		}
+		&est {
+			background-color: $complement-color-darkest;
+		}
+	}
+}

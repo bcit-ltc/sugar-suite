@@ -1,0 +1,240 @@
+.debug {
+	//@import "mixins/font-size";
+	@mixin highlight($color) {
+		padding: 10px !important;
+		background: $color !important;
+	}
+	// Used to create the base styling for 
+	// before/after content readouts
+	@mixin normal-text() {
+		font-size: 16px !important;
+		//font-family: $base-font !important;
+		font-style: normal !important;
+		font-weight: bold !important;
+		text-transform: none !important;
+		text-align: center !important;
+		text-decoration: none !important;
+		text-shadow: none !important;
+		line-height: 1.5 !important;
+		// Aesthetic
+		border-radius: 5px;
+		padding: 5px;
+		display: block;
+		border: 1px dotted black !important;
+	}
+	[rowspan],
+	[colspan] {
+		background: magenta !important;
+		&:after {
+			@include normal-text();
+			background: black;
+			content: "Spanning cells should be avoided";
+		}
+	}
+	figure > *:not(table):not(figcaption):not(h2):not(h3):not(h4):not(h5):not(h6) {
+		font-style: italic;
+	}
+	figure > cite,
+	figure > p cite {
+		color: cyan;
+	}
+	ul > *:not(li),
+	ol > *:not(li) {
+		&:after {
+			@include normal-text();
+			background: red;
+			content: "List contents must be placed in <li> tags";
+		}
+	}
+	ul + ul,
+	ol + ol,
+	ul + ol,
+	ol + ul {
+		&:before {
+			@include normal-text();
+			background: red;
+			content: "Adjacent lists should be combined or separated with a paragraph/heading"
+		}
+	}
+	.callout {
+		@include highlight(violet);
+	}
+	.attn {
+		@include highlight(#d33682);
+	}
+	// Provide a visual indication of the heading level
+	h1:not(.accordion-button):after,
+	h2:not(.accordion-button):after,
+	h3:not(.accordion-button):after,
+	h4:not(.accordion-button):after,
+	h5:not(.accordion-button):after,
+	h6:not(.accordion-button):after {
+		@include normal-text();
+		color: white;
+		display: inline;
+		margin-left: 5px;
+	}
+	h1:not(.accordion-button):after {
+		content: "[H1]";
+		font-size: 20px !important;
+		background: black !important;
+	}
+	h2:not(.accordion-button):after {
+		content: "[H2]";
+		font-size: 18px !important;
+		background: lighten(black, 20) !important;
+	}
+	h3:not(.accordion-button):after {
+		content: "[H3]";
+		font-size: 16px !important;
+		background: lighten(black, 40) !important;
+	}
+	h4:not(.accordion-button):after {
+		content: "[H4]";
+		color: black;
+		font-size: 14px !important;
+		background: lighten(black, 60) !important;
+	}
+	h5:not(.accordion-button):after {
+		content: "[H5]";
+		color: black;
+		font-size: 12px !important;
+		background: lighten(black, 80) !important;
+	}
+	h6:not(.accordion-button):after {
+		content: "[H6]";
+		color: black;
+		font-size: 10px !important;
+		background: white !important;
+	}
+	// Removes heading level indicator from normal content
+	#container > h1:after,
+	#container > h2:after {
+		//#container > h3:after,
+		//#container > h4:after,
+		//#container > h5:after,
+		//#container > h6:after {
+		content: none;
+	}
+	[start]:after {
+		@include normal-text();
+		content: "List Start: "attr(start) !important;
+		background: lightgreen;
+	}
+	[style]:not([style='']):not([style='display: block;']):not([style^='transform']):not([style^='left']):not(body) {
+		&:after {
+			@include normal-text();
+			content: 'style="'attr(style)'"' !important;
+			background: red;
+		}
+	}
+	[class]:not(.night-mask):not([class^="_"]):not([class='']):not([class^='d2l-']):not([class*='mod-']):not(.external):not(.append-nav):not(.no-js):not(.found-code):not(.view-image):not(.container):not(.card):not(.card-controls):not(.front):not(.back):not(.page-name):not(.course-name):not(.mceContentBody):not(.token):not(.tag):not(.lf):not(.tag-id):not(.punctuation):not(.language-markup):not(.definition):not(.important):not(.more):not(.reflection):not(.interview):not(.interview_left):not(.interview_right):not(.photo):not(.transcript):not(.activity):not(.reveal):not(.further):not(.stack):not(.centered):not(.top-card):not(.bottom-card):not(.transcript-button):not(.more-button):not(.reveal-button):not(figure):not(.description):not(.demo):not(.unsure):not([class^="width"]):not([class^="height"]):not(.left):not(.right):not(.center):not(.top):not(.bottom):not(.middle):not([class^='feedback']):not([class^='mce']):not(.break):not(.accordion):not(.accordion-button):not(.open):not(.sr-only):not(.competencies):not(.multi-choice):not(.feedback-survey):not(.math) {
+		&:before {
+			@include normal-text();
+			content: 'class="'attr(class)'"';
+			color: white;
+			background: slateblue;
+		}
+	}
+	[id]:not(#night-mask):not(#debug):not(#night-mode):not(input):not([id^="_"]):not([id='']):not(#container):not(#footer):not(#tinymce):not(#table):not(#prev):not(#next):not(#flip):not(#multi-choice) {
+		&:after {
+			@include normal-text();
+			content: 'id="'attr(id)'"';
+			background: purple;
+			color: white;
+		}
+	}
+	blockquote em,
+	blockquote strong {
+		color: cyan;
+	}
+	._wrong-heading {
+		&:before {
+			@include normal-text();
+			content: attr(data-message);
+			color: white;
+			background: #d33682;
+		}
+	}
+	._empty-tag {
+		&:before {
+			@include normal-text();
+			content: "<"attr(data-tag)"></"attr(data-tag)">";
+			color: white;
+			background: #d33682;
+		}
+	}
+	.break {
+		//@include font-size(10);
+		//color: $phac-red-dark;
+		font-weight: normal;
+		font-style: normal;
+		display: block;
+		text-align: center;
+		width: 100%;
+		//border-top: 1px dashed $phac-red-dark;
+		//background-color: $phac-red-light;
+		border-bottom: 1px dashed red;
+		position: relative;
+		top: 1em;
+	}
+	.missing-alt {
+		@include highlight(purple);
+	}
+	._img-text {
+		border: 5px dashed seagreen;
+		display: inline-block;
+		p {
+			@include normal-text();
+			color: white;
+			background: seagreen;
+			width: 100%;
+			margin: 0;
+			padding: 5px 10px;
+		}
+	}
+	a:after {
+		@include normal-text();
+		content: "["attr(href)"]";
+		display: inline;
+		color: black;
+		background: lightblue;
+	}
+	nav a:after {
+		display: none;
+	}
+	i[data-debug]:after {
+		@include normal-text();
+		content: "["attr(data-debug)"]" !important;
+		display: block;
+		background: red;
+		color: white;
+		margin-left: 5px;
+	}
+	hr {
+		height: 35px;
+		background: cyan;
+		&:after {
+			@include normal-text();
+			content: "[hr]";
+			display: block;
+		}
+	}
+	// Overide for Screen Reader Text
+	.sr-only {
+		position: relative !important;
+		clip: auto !important;
+		/* IE6, IE7 */
+		clip: rect(1px, 1px, 1px, 1px);
+		padding: 10px !important;
+		border: 10px !important;
+		height: auto !important;
+		width: auto !important;
+		overflow: visible;
+	}
+	body:hover .sr-only a,
+	body:hover .sr-only input,
+	body:hover .sr-only button {
+		display: block !important;
+	}
+}

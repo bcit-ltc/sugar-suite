@@ -1,0 +1,89 @@
+$reveal-text-color: $secondary-text-color !default;
+$reveal-panel-background-color: lighten($secondary-color-lightest, 2%) !default;
+$reveal-border-color: $secondary-color !default;
+$reveal-visited-link-color: $primary-color !default;
+$reveal-hover-link-color: $secondary-color !default;
+$reveal-link-color: $secondary-color !default;
+$reveal-button-background-color: $secondary-color-dark !default;
+
+.reveal-button {
+	@extend .btn;
+	background: $reveal-button-background-color;
+	
+	&:hover:enabled {
+		cursor: pointer;
+	}
+	&:disabled {
+		background: $gray-light;
+	}
+}
+
+.reveal, .active-reveal {
+	@include remove-top-bottom-margin();
+	color: $reveal-text-color;
+	max-width: $container-width-small;
+	margin-left: auto;
+	margin-right: auto;
+	border-top: 1px dotted $reveal-border-color;
+	border-right: 1px dotted $reveal-border-color;
+	border-bottom: 1px dotted $reveal-border-color;
+	border-left: 1px dotted $reveal-border-color;
+	border-top-left-radius: none;
+	border-top-right-radius: none;
+	border-bottom-left-radius: $border-radius-base $border-radius-base;
+	border-bottom-right-radius: $border-radius-base $border-radius-base;
+	padding: $pad-and-half;
+	background-color: $reveal-panel-background-color;
+
+	a {
+		position: relative;
+		text-decoration: none;
+		transition: all .3s ease;
+
+		&:link {
+			color: $reveal-link-color;
+			border-bottom: 1px dotted $reveal-link-color;
+			outline: 0;
+		}
+
+		&:visited {
+			color: $reveal-visited-link-color;
+			border-bottom: 1px dotted $reveal-visited-link-color;
+			outline: 0;
+		}
+
+		&:hover:enabled {
+			color: $reveal-hover-link-color;
+			border-bottom: 1px solid $reveal-hover-link-color;
+		}
+
+		&:active {
+			top: 1px;
+		}
+
+		&:focus {}
+	}
+
+	h2,
+	h3 {
+		margin-bottom: .75em !important;
+	}
+
+	&>* {
+		max-width: $container-width-small;
+		margin-left: auto;
+		margin-right: auto;
+		margin-bottom: $space-and-half;
+	}
+}
+
+.reveal-textarea {
+	display: block;
+	max-width: 35rem !important;
+	width: 90%;
+	resize: vertical;
+	border-radius: 5px;
+	margin: 0 auto;
+	margin-bottom: 1.5em;
+	padding: 0.75em;
+}

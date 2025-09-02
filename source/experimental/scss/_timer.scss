@@ -1,0 +1,24 @@
+._timer-background {
+	display: block;
+	float: right;
+	background-image: url(../assets/timer.png);
+	background-size: "contain";
+	background-repeat: no-repeat;
+	height: 70px;
+	width: 70px;
+	margin: 10px;
+}
+
+._timer-display {
+	cursor: pointer;
+	margin-top: 20px;
+	margin-left: 28px;
+	font-size: 25px;
+	text-align: center;
+	font-weight: bold;
+	font-family: $secondary-font;
+	color: black;
+	background: white;
+	border-radius: 50%;
+	width: 35px;
+}

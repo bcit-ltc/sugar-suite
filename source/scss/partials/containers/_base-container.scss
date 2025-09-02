@@ -1,0 +1,119 @@
+$icon-small: 2em;
+$icon-large: 3em;
+
+// For use on classes to customize the icon
+@mixin icon-path($icon) {
+	&:before {
+		background-image: $icon;
+	}
+
+	// Create a class that can be accessed with JS
+	&__icon {
+		background-image: $icon;
+	}
+}
+
+// Basic styling for displaying icons
+[class$='__icon'] {
+	background-size: contain;
+	background-repeat: no-repeat;
+	width: 100%;
+	height: 0;
+	padding-bottom: 100% !important;
+}
+
+
+// Basic Shape
+%base-container {
+	@include remove-top-bottom-margin();
+	position: relative;
+	clear: right;
+	padding: $pad-double $pad;
+	margin-top: $space-quad;
+	margin-left: $space;
+	margin-right: $space;
+}
+
+// Contents
+%base-container {
+	>* {
+		margin-bottom: $space-and-half;
+	}
+
+	@include heading(1) {
+		@extend .heading3;
+		border-bottom: none;
+	}
+
+	@include heading(2) {
+		@extend .heading4;
+	}
+
+	@include heading(3) {
+		@extend .heading5;
+	}
+
+	@include heading(4) {
+		@extend .heading6;
+	}
+}
+
+// Icon Behaviour
+%base-container {
+	&:before {
+		content: "";
+		position: absolute;
+		z-index: 2;
+		top: 0;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		padding: calc($icon-small / 2 * 1.5);
+		border-radius: 50%;
+		box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+		background-size: $icon-small;
+		background-color: $white;
+		background-repeat: no-repeat;
+		background-position: center;
+		transition: left 1.5s ease, top 1.2s ease, transform 0.3s ease, border 1.2s ease, background-size 1.2s ease, border 1.2s ease, padding 1.2s ease;
+	}
+
+	&:hover:before {
+		transform: translate(-50%, -50%) scale(1.1);
+	}
+}
+
+// Icon Behaviour when direct child of .container
+.container>%base-container {
+
+	// Medium: Increase size of icon
+	@include media("screen", ">650px") {
+		padding-top: 50px;
+
+		&:before {
+			background-size: $icon-large;
+			padding: calc($icon-large / 2 * 1.5);
+		}
+	}
+
+	// Large: Move icon to left of the container
+	@include media("screen", ">939px") {
+		padding-top: $pad-double;
+		margin-top: $space;
+		&:before {
+			box-shadow: none;
+			left: -50px;
+			top: 70px;
+			border: 0px solid transparent;
+		}
+
+		&.large, &.larger, &.largest, &.full-width {
+			padding-top: $space-quad;
+			margin-top: $space-quad;
+			&:before {
+				box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+				left: 50%;
+				top: 0;
+			}
+		}
+	}
+}

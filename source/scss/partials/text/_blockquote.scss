@@ -1,0 +1,26 @@
+$blockquote-default-accent-color: $complement-color !default;
+$blockquote-pullquote-accent-color: $complement-color !default;
+
+blockquote:not([class]) {
+    font-family: $secondary-font;
+    font-size: 1.11em;
+    line-height: 1.5;
+    padding: 0 $pad-and-half;
+    border-left: 4px solid $blockquote-default-accent-color;
+    margin-top: $space;
+    margin-bottom: $space;
+}
+blockquote.pull-quote:before {
+        font-family: FontAwesome;
+        font-size: 1.5em;
+        float: left;
+        line-height: 1;
+        margin-right: $space-quarter;
+        content: "\f10d"; //quote
+	color: $blockquote-pullquote-accent-color;
+    }
+//Pullquote
+.pullquote {
+    font-family: $secondary-font;
+    font-size: $font-size-large;
+}

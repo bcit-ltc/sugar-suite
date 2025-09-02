@@ -1,0 +1,26 @@
+/// Mixin to transition a reflective shine across an element with the addition or removal of a class.
+/// 
+/// @param {Bool} $before [true] - Use the :before pseudo element.  If set to false, the :after pseudo element will be used
+/// @param {String} $activate ["open"] - Adding or removing this class will activate the effect
+/// @param {Float} $speed [.4] - Time in seconds that it takes for the effect to occur
+/// @param {Color} $highlight [rgba(255, 255, 255, 0.5)] - The color of the highlight
+@mixin shiny($before: true, $activate: "open", $speed: .4, $highlight: rgba(255, 255, 255, 0.5)) {
+	$pseudo: ":before";
+	@if not($before) {
+		$pseudo: ":after";
+	}
+	overflow: hidden;
+	&#{$pseudo} {
+		content: "";
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: -100%;
+		background: linear-gradient(70deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 30%, $highlight 50%, rgba(255, 255, 255, 0) 70%, rgba(255, 255, 255, 0) 100%);
+		transition: left #{$speed}s ease;
+	}
+	&.#{$activate}#{$pseudo} {
+		left: 100%;
+	}
+}

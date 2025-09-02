@@ -1,0 +1,74 @@
+/*------------------------------------*\
+$MEDIA ELEMENTS
+\*------------------------------------*/
+
+
+/* Flexible Media */
+
+img,
+video,
+object {
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto $space-quarter auto;
+}
+
+audio {
+    width: 100%;
+    margin-left: $space-half;
+    margin-right: $space-half;
+}
+
+video {
+    margin: 0 auto;
+    display: block;
+}
+
+iframe {
+    margin-bottom: $space;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+// figure-caption side
+iframe,
+audio {
+    display: block;
+    margin: 0 0 $space-half 0;
+}
+
+
+video {
+  width: 100%    !important;
+  height: auto   !important;
+  //box-shadow: 0px 0px 15px gray;
+}
+
+// Responsive Youtube Videos
+.video-wrapper {
+	position: relative;
+	width: 100%;
+	height: 0;
+	padding-bottom: 56.25%;
+	margin: 0 auto;
+
+	&.square {
+		padding-bottom: 75%;
+	}
+
+	iframe,
+	object,
+	embed {
+		border: none; 
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+	}
+}
+
+.square .video-wrapper {
+	padding-bottom: 75%;
+}

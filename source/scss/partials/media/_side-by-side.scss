@@ -1,0 +1,26 @@
+.side-by-side {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+
+    &.align-top {
+        align-items: flex-start;
+    }
+
+    &.align-bottom {
+        align-items: flex-end;
+    }
+
+    &>*:not(figcaption) {
+        margin: 1.5em 0.188em;
+        flex-grow: 1;
+        flex-basis: 0;
+
+        @media (max-width: 450px) {
+            flex: 0 1 100%;
+            margin: 0.188em 1.5em;
+        }
+    }
+}

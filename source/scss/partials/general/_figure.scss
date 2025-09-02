@@ -1,0 +1,326 @@
+$figure-largest: 2000px;
+$figure-larger: 1100px;
+$figure-large: 900px;
+$figure-default: 720px;
+$figure-small: 600px;
+$figure-smaller: 400px;
+$figure-smallest: 200px;
+$wall-margin: 10%; // How much space will floated images have against the wall
+$min-text-width: 300px; // How small can text be squeezed by floated images
+$paragraph-size: 720px; // Manually converted from $container-width-small (40em * 18px);
+
+// GENERIC
+figure {
+	width: 100%;
+	max-width: 100% !important;
+	margin: 10px auto;
+	display: block;
+}
+
+// SIZING
+.container > figure {
+	width: $figure-default;
+}
+figure {
+	&.full-width {
+		width: 100% !important;
+	}
+	&.largest {
+		width: $figure-largest !important;
+	}
+	&.larger {
+		width: $figure-larger !important;
+	}
+	&.large {
+		width: $figure-large !important;
+	}
+	&.small {
+		width: $figure-small !important;
+	}
+	&.smaller {
+		width: $figure-smaller !important;
+	}
+	&.smallest {
+		width: $figure-smallest !important;
+	}
+}
+
+// Stretches images to fit the containing figure
+figure {
+	&.full-width,
+	&.largest,
+	&.larger,
+	&.large,
+	&.small,
+	&.smaller,
+	&.smallest {
+		img {
+			width: 100%;
+		}
+	}
+}
+
+// FLOATING
+figure {
+	clear: both;
+	&.left + p {
+		clear: right;
+	}
+	&.right + p {
+		clear: left;
+	}
+}
+
+figure {
+	// TODO: Consider scoping this to sizing classes in preparation for eventual wide-screen display
+	&.left,
+	&.right {
+		width: auto;
+	}
+	&.left {
+		@extend .clearfix;
+		float: left;
+		margin-right: 20px;
+	}
+	&.right {
+		@extend .clearfix;
+		float: right;
+		margin-left: 20px;
+	}
+}
+
+.container > figure {
+	&.left {
+		margin-left: $wall-margin;
+	}
+	&.right {
+		margin-right: $wall-margin;
+	}
+}
+
+
+@mixin figureDefault() {
+	float: none;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+$image-margin: calc($wall-margin/100%);
+@function getScreenWidth($figure-size, $margin: $image-margin) {
+	$x: calc((2 * ($figure-size + $min-text-width) - $paragraph-size)/(1 - 2 * $margin));
+	@if($x < $paragraph-size) {
+		$x: calc(($figure-size + $min-text-width)/(1 - $margin));
+	}
+	//@debug $x;
+	@return $x;
+}
+
+// TODO: Flesh out the following media queries
+.container > figure {
+	&.right,
+	&.left {
+		&.largest {
+			@include media("screen", "<" + getScreenWidth($figure-largest)) {
+				@include figureDefault;
+			}
+		}
+		&.larger {
+			@include media("screen", "<" + getScreenWidth($figure-larger)) {
+				@include figureDefault;
+			}
+		}
+		&.large {
+			@include media("screen", "<" + getScreenWidth($figure-large)) {
+				@include figureDefault;
+			}
+		}
+		&.small {
+			@include media("screen", "<" + getScreenWidth($figure-small)) {
+				@include figureDefault;
+			}
+		}
+		&.smaller {
+			@include media("screen", "<" + getScreenWidth($figure-smaller)) {
+				@include figureDefault;
+			}
+		}
+		&.smallest {
+			@include media("screen", "<" + getScreenWidth($figure-smallest)) {
+				@include figureDefault;
+			}
+		}
+	}
+	&.left {
+		&.largest {}
+		&.larger {
+			@include media("screen", ">3000px") {
+				margin-left: 15%;
+			}
+			@include media("screen", ">3400px") {
+				margin-left: 20%;
+			}
+		}
+		&.large {
+			@include media("screen", ">2650px") {
+				margin-left: 15%;
+			}
+			@include media("screen", ">3100px") {
+				margin-left: 22%;
+			}
+			@include media("screen", ">3500px") {
+				margin-left: 26%;
+			}
+		}
+		&.small {
+			@include media("screen", ">1800px") {
+				margin-left: 15%;
+			}
+			@include media("screen", ">2200px") {
+				margin-left: 25%;
+			}
+			@include media("screen", ">3000px") {
+				margin-left: 32%;
+			}
+		}
+		&.smaller {
+			@include media("screen", ">1350px") {
+				margin-left: 15%;
+			}
+			@include media("screen", ">1600px") {
+				margin-left: 20%;
+			}
+			@include media("screen", ">2000px") {
+				margin-left: 25%;
+			}
+			@include media("screen", ">2400px") {
+				margin-left: 30%;
+			}
+			@include media("screen", ">2800px") {
+				margin-left: 35%;
+			}
+		}
+		&.smallest {
+			@include media("screen", ">1150px") {
+				margin-left: 15%;
+			}
+			@include media("screen", ">1350px") {
+				margin-left: 18%;
+			}
+			@include media("screen", ">1550px") {
+				margin-left: 21%;
+			}
+			@include media("screen", ">1750px") {
+				margin-left: 24%;
+			}
+			@include media("screen", ">1950px") {
+				margin-left: 28%;
+			}
+			@include media("screen", ">2250px") {
+				margin-left: 32%;
+			}
+			@include media("screen", ">2750px") {
+				margin-left: 36%;
+			}
+			@include media("screen", ">3500px") {
+				margin-left: 40%;
+			}
+		}
+	}
+	&.right {
+		&.largest {}
+		&.larger {
+			@include media("screen", ">3000px") {
+				margin-right: 15%;
+			}
+			@include media("screen", ">3400px") {
+				margin-right: 20%;
+			}
+		}
+		&.large {
+			@include media("screen", ">2650px") {
+				margin-right: 15%;
+			}
+			@include media("screen", ">3100px") {
+				margin-right: 22%;
+			}
+			@include media("screen", ">3500px") {
+				margin-right: 26%;
+			}
+		}
+		&.small {
+			@include media("screen", ">1800px") {
+				margin-right: 15%;
+			}
+			@include media("screen", ">2200px") {
+				margin-right: 25%;
+			}
+			@include media("screen", ">3000px") {
+				margin-right: 32%;
+			}
+		}
+		&.smaller {
+			@include media("screen", ">1350px") {
+				margin-right: 15%;
+			}
+			@include media("screen", ">1600px") {
+				margin-right: 20%;
+			}
+			@include media("screen", ">2000px") {
+				margin-right: 25%;
+			}
+			@include media("screen", ">2400px") {
+				margin-right: 30%;
+			}
+			@include media("screen", ">2800px") {
+				margin-right: 35%;
+			}
+		}
+		&.smallest {
+			@include media("screen", ">1150px") {
+				margin-right: 15%;
+			}
+			@include media("screen", ">1350px") {
+				margin-right: 18%;
+			}
+			@include media("screen", ">1550px") {
+				margin-right: 21%;
+			}
+			@include media("screen", ">1750px") {
+				margin-right: 24%;
+			}
+			@include media("screen", ">1950px") {
+				margin-right: 28%;
+			}
+			@include media("screen", ">2250px") {
+				margin-right: 32%;
+			}
+			@include media("screen", ">2750px") {
+				margin-right: 36%;
+			}
+			@include media("screen", ">3500px") {
+				margin-right: 40%;
+			}
+		}
+	}
+}
+
+// Figcaptions
+figcaption {
+	box-sizing: border-box;
+	width: 100%;
+	font-size: $font-size-x-small;
+	margin: 3px 0 $space-quarter 0;
+	text-align: center;
+	* {
+		text-align: center;
+	}
+
+	ul, ol, li {
+		list-style-position: inside;
+		padding-inline-start: 0;
+	}
+
+	&>*:first-child {
+		display: inline;
+	}
+}

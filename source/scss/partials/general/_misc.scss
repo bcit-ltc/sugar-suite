@@ -1,0 +1,16 @@
+//.uppercase {
+//    text-transform: uppercase;
+//}
+
+$hr-line-color: $gray-light !default;
+hr {
+    border: 0;
+    height: 1px;
+    background: $hr-line-color;
+    margin: $space-double 0;
+}
+
+abbr {
+    border-bottom: 1px dotted $gray;
+    cursor: help;
+}

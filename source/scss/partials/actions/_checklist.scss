@@ -1,0 +1,41 @@
+.checklist {
+    ul,
+    ol {
+        list-style: none;
+        margin-top: .25em;
+        padding-left: 22px;
+    }
+    label {
+        @include remove-top-bottom-margin;
+        display: inline-block;
+        position: relative;
+        vertical-align: middle;
+        padding: 3px 7px;
+        border-radius: 4px;
+        background: initial;
+        max-width: 85%;
+        transition: background .5s ease;
+        &:hover {
+            transition: background .5s ease;
+            background: #deffff;
+        }
+        &.selected {
+            background: #f4f4f4;
+            transition: background .5s ease;
+        }
+        &.selected {
+            &:hover {
+                transition: background .5s ease;
+                background: #c3ffff;
+            }
+        }
+    }
+    input[type=checkbox] {
+        position: relative;
+        vertical-align: middle;
+        margin-right: 5px;
+    }
+    .redacted {
+        text-decoration: line-through;
+    }
+}

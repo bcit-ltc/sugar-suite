@@ -1,0 +1,8 @@
+@import "../../bcit";
+
+.idea {
+	@extend .note;
+	&:before {
+		background-image: url("assets/icons/temp/idea.png");
+	}
+}

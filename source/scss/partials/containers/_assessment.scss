@@ -1,0 +1,49 @@
+$assessment-assignment-icon: url(../assets/icons/newest/assignment.svg) !default;
+$assessment-quiz-icon: url(../assets/icons/newest/quiz.svg) !default;
+
+$assessment-background-color: $primary-color-dark !default;
+$assessment-foreground-color: $white !default;
+$assessment-icon-border-color: $primary-color !default;
+$assessment-link-default-color: $global-link-default-color !default;
+$assessment-link-visited-color: $global-link-visited-color !default;
+$assessment-link-hover-color: $global-link-hover-color !default;
+$assessment-link-active-color: $global-link-active-color !default;
+
+$l: $assessment-link-default-color;
+$v: $assessment-link-visited-color;
+$h: $assessment-link-hover-color;
+$a: $assessment-link-active-color;
+
+%assessment {
+	@extend %base-container;
+	background: white;
+	border: 1px solid $secondary-color;
+	border-top: 8px solid $secondary-color;
+	border-bottom: 5px solid $secondary-color;
+	//background: $assessment-background-color;
+	//color: $assessment-foreground-color;
+	@include love-hate($l, $v, $h, $a);
+	&:before {
+		border: 5px solid $secondary-color;
+		//border: 5px solid $assessment-icon-border-color;
+	}
+	&.large, &.larger, &.largest, &.full-width {
+		&:before {
+			border: 5px solid $secondary-color;
+		}
+	}
+}
+
+.assignment,
+.quiz {
+	@extend %assessment;
+	@extend %custom-max-width;
+}
+
+.assignment {
+	@include icon-path($assessment-assignment-icon);
+}
+
+.quiz {
+	@include icon-path($assessment-quiz-icon);
+}

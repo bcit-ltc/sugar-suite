@@ -1,0 +1,80 @@
+$note-definition-icon: url(../assets/icons/newest/definition.svg) !default;
+$note-example-icon: url(../assets/icons/newest/example.svg) !default;
+$note-key-point-icon: url(../assets/icons/newest/key-point.svg) !default;
+$note-link-icon: url(../assets/icons/newest/link.svg) !default;
+$note-note-icon: url(../assets/icons/newest/note.svg) !default;
+$note-warning-icon: url(../assets/icons/newest/warning.svg) !default;
+$note-knowing-icon: url(../assets/icons/newest/knowing.svg) !default;
+
+$note-background-color: $secondary-color-lightest !default;
+$note-border-color: $secondary-color-lighter;
+$note-foreground-color: $gray !default;
+$note-icon-border-color: $secondary-color-light !default;
+$note-link-default-color: $global-link-default-color !default;
+$note-link-visited-color: $global-link-visited-color !default;
+$note-link-hover-color: $global-link-hover-color !default;
+$note-link-active-color: $global-link-active-color !default;
+
+$l: $note-link-default-color;
+$v: $note-link-visited-color;
+$h: $note-link-hover-color;
+$a: $note-link-active-color;
+
+%note {
+	@extend %base-container;
+	background-color: $note-background-color;
+	border: 1px solid $note-border-color;
+	border-radius: 4px;
+	color: $note-foreground-color;
+	@include love-hate($l, $v, $h, $a);
+
+	&:before {
+		border: 5px solid $note-icon-border-color;
+	}
+
+	&.large, &.larger, &.largest, &.full-width {
+		&:before {
+			border: 5px solid $note-icon-border-color;
+		}
+	}
+}
+
+.example,
+.definition,
+.key-point,
+.link,
+.note,
+.warning,
+ .knowing {
+	@extend %note;
+	@extend %custom-max-width;
+
+}
+
+.example {
+	@include icon-path($note-example-icon);
+}
+
+.definition {
+	@include icon-path($note-definition-icon);
+}
+
+.key-point {
+	@include icon-path($note-key-point-icon);
+}
+
+.link {
+	@include icon-path($note-link-icon);
+}
+
+.note {
+	@include icon-path($note-note-icon);
+}
+
+.warning {
+	@include icon-path($note-warning-icon);
+}
+
+.knowing {
+	@include icon-path($note-knowing-icon);
+}

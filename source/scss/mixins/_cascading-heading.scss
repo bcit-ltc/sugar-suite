@@ -1,0 +1,83 @@
+@mixin heading($level) {
+	@if $level==1 {
+		@include cascading-heading1() {
+			@content;
+		}
+	}
+	@if $level==2 {
+		@include cascading-heading2() {
+			@content;
+		}
+	}
+	@if $level==3 {
+		@include cascading-heading3() {
+			@content;
+		}
+	}
+	@if $level==4 {
+		@include cascading-heading4() {
+			@content;
+		}
+	}
+	@if $level==5 {
+		@include cascading-heading5() {
+			@content;
+		}
+	}
+	@if $level==6 {
+		@include cascading-heading5() {
+			@content;
+		}
+	}
+}
+
+@mixin cascading-heading1() {
+	h1:not([role='button']),
+	h2:not([role='button']),
+	h3:not([role='button']),
+	h4:not([role='button']),
+	h5:not([role='button']),
+	h6:not([role='button']) {
+		@content;
+	}
+}
+
+@mixin cascading-heading2() {
+	h1~h2:not([role='button']),
+	h2~h3:not([role='button']),
+	h3~h4:not([role='button']),
+	h4~h5:not([role='button']),
+	h5~h6:not([role='button']) {
+		@content;
+	}
+}
+
+@mixin cascading-heading3() {
+	h1~h2~h3:not([role='button']),
+	h2~h3~h4:not([role='button']),
+	h3~h4~h5:not([role='button']),
+	h4~h5~h6:not([role='button']) {
+		@content;
+	}
+}
+
+@mixin cascading-heading4() {
+	h1~h2~h3~h4:not([role='button']),
+	h2~h3~h4~h5:not([role='button']),
+	h3~h4~h5~h6:not([role='button']) {
+		@content;
+	}
+}
+
+@mixin cascading-heading5() {
+	h1~h2~h3~h4~h5:not([role='button']),
+	h2~h3~h4~h5~h6:not([role='button']) {
+		@content;
+	}
+}
+
+@mixin cascading-heading6() {
+	h1~h2~h3~h4~h5~h6:not([role='button']) {
+		@content;
+	}
+}

@@ -1,0 +1,92 @@
+$activity-activity-icon: url(../assets/icons/newest/activity.svg) !default;
+$activity-case-icon: url(../assets/icons/newest/case.svg) !default;
+$activity-discussion-icon: url(../assets/icons/newest/discussion.svg) !default;
+$activity-group-icon-activity: url(../assets/icons/newest/group-activity.svg) !default;
+$activity-outcome-icon: url(../assets/icons/newest/outcome.svg) !default;
+$activity-reading-icon: url(../assets/icons/newest/reading.svg) !default;
+$activity-reflection-icon: url(../assets/icons/newest/reflection.svg) !default;
+$activity-review-icon: url(../assets/icons/newest/review.svg) !default;
+$activity-doing-icon: url(../assets/icons/newest/doing.svg) !default;
+
+$activity-background-color: $secondary-color-light !default;
+$activity-foreground-color: $white !default;
+$activity-icon-border-color: $secondary-color-light !default;
+$activity-link-default-color: $global-link-default-color !default;
+$activity-link-visited-color: $global-link-visited-color !default;
+$activity-link-hover-color: $global-link-hover-color !default;
+$activity-link-active-color: $global-link-active-color !default;
+
+$l: $activity-link-default-color;
+$v: $activity-link-visited-color;
+$h: $activity-link-hover-color;
+$a: $activity-link-active-color;
+
+%activity {
+	@extend %base-container;
+	background: white;
+	border: 1px solid $complement-color;
+	border-top: 8px solid $complement-color;
+	border-bottom: 5px solid $complement-color;
+	//border-radius: $border-radius-large;
+	//background: $activity-background-color;
+	//color: $activity-foreground-color;
+	@include love-hate($l, $v, $h, $a);
+	&:before {
+		border: 5px solid $complement-color;
+		//border: 5px solid $activity-icon-border-color;
+	}
+	&.large, &.larger, &.largest, &.full-width {
+		&:before {
+			border: 5px solid $complement-color;
+		}
+	}
+}
+
+.activity,
+.case,
+.discussion,
+.group-activity,
+.outcome,
+.reading,
+.reflection,
+.review,
+.doing {
+	@extend %activity;
+	@extend %custom-max-width;
+}
+
+.activity {
+	@include icon-path($activity-activity-icon);
+}
+
+.case {
+	@include icon-path($activity-case-icon);
+}
+
+.discussion {
+	@include icon-path($activity-discussion-icon);
+}
+
+.group-activity {
+	@include icon-path($activity-group-icon-activity);
+}
+
+.outcome {
+	@include icon-path($activity-outcome-icon);
+}
+
+.reading {
+	@include icon-path($activity-reading-icon);
+}
+
+.reflection {
+	@include icon-path($activity-reflection-icon);
+}
+
+.review {
+	@include icon-path($activity-review-icon);
+}
+
+.doing {
+	@include icon-path($activity-doing-icon);
+}

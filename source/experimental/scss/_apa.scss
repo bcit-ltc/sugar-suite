@@ -1,0 +1,11 @@
+/* Reference style */
+ol,
+ul {
+	&.apa {
+		list-style-type: none;
+		text-indent: -$space-double;
+		> li {
+			margin-bottom: $space;
+		}
+	}
+}

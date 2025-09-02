@@ -1,0 +1,46 @@
+{
+  "name": "sugar-suite-v1",
+  "version": "1.0.0",
+  "description": "BCIT Online Course Framework",
+  "author": "BCIT Course Production: courseproduction@bcit.ca",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:bcit-ltc/sugar-suite.git"
+  },
+  "scripts": {
+    "watch": "gulp watch",
+    "build": "gulp build && node snappy.js",
+    "test": "mocha --reporter spec"
+  },
+  "dependencies": {
+    "@babel/core": "^7.26.10",
+    "@babel/preset-env": "^7.26.9",
+    "@floating-ui/core": "^1.6.9",
+    "browser-sync": "^3.0.3",
+    "gulp": "^5.0.0",
+    "gulp-autoprefixer": "8.0.0",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-sass": "^5.1.0",
+    "gulp-sourcemaps": "^3.0.0",
+    "gulp-uglify": "^3.0.2",
+    "jshint": "^2.13.6",
+    "node-sass-magic-importer": "^5.3.3",
+    "sass": "^1.86.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "fs-extra": "^11.3.0",
+    "gulp-babel": "^8.0.0",
+    "gulp-if": "^3.0.0",
+    "gulp-jshint": "^2.1.0",
+    "gulp-replace": "^1.1.4",
+    "snappyjs": "^0.7.0",
+    "mocha": "^11.1.0",
+    "chai": "^5.2.0",
+    "jsdom": "^26.0.0",
+    "jquery": "^3.7.1"
+  }
+}

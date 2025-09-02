@@ -1,0 +1,17 @@
+//Defaults
+$space: 1em;
+$space-and-half: calc($space*1.5);
+$space-double: calc($space*2);
+$space-quad: calc($space*4);
+$space-half: calc($space/2);
+$space-two-third: calc($space*2/3);
+$space-quarter: calc($space/4);
+$pad: 1em;
+$pad-and-half: calc($pad*1.5);
+$pad-double: calc($pad*2);
+$pad-half: calc($pad/2);
+
+$border-radius-base: 4px !default;
+$border-radius-large: 6px !default;
+
+$container-width-small: 40rem; // 18px*40rem = 720px

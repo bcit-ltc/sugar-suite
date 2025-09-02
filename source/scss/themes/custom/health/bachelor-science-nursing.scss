@@ -1,0 +1,9 @@
+// Vanilla Theme - All defaults apply
+@import "../../bcit";
+
+.admit-ticket {
+	@extend .note;
+	&:before {
+		background-image: url("assets/icons/temp/ticket.svg");
+	}
+}

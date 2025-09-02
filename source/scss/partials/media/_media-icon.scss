@@ -1,0 +1,114 @@
+/*------------------------------------*\
+        $Media Icons
+\*------------------------------------*/
+
+.media {
+	padding-left: 25px;
+	padding-right: 25px;
+	&:before {
+		font-family: FontAwesome;
+		//margin: 0 $space-half 0 0;
+		margin-left: -20px;
+		margin-right: 7px;
+	}
+	&:after {
+		font-family: FontAwesome;
+		margin: 0 0 0 $space-half;
+	}
+}
+
+figcaption {
+	@extend .media;
+}
+
+//figure.table caption {
+//	@extend figcaption;
+//	display: table-caption !important;
+//	margin-top: 5px; // TODO: Fix this hack which replicates margin-bottom on img, video, audio in figures.
+//}
+//
+figure.table figcaption:before {
+	content: "\f0ce";
+}
+
+figure.image, figure.img{
+    figcaption:before {
+        content: "\f030";
+    }
+} 
+
+figure.audio figcaption:before {
+	content: "\f028";
+}
+
+figure.video figcaption:before {
+	content: "\f008";
+}
+
+figure.math figcaption:before {
+	content: "\f1ec";
+}
+
+@font-face {
+  font-family: 'Fake-MathJax';
+  src: url('../assets/MathJax_Math-Italic.woff') format('woff');
+}
+@font-face {
+  font-family: 'Fake-MathJax-Numbers';
+  src: url('../assets/MathJax_Main-Regular.woff') format('woff');
+}
+
+figure.math {
+	> p {
+		font-family: "Fake-MathJax", $font-stack-open-sans;
+		font-size: 1.3em;
+	}
+	.fake-mathjax-numbers {
+		font-family: "Fake-MathJax-Numbers", $font-stack-open-sans;
+	}
+	> p,
+	> .MathJax {
+		margin-bottom: .25em;
+		display: block;
+		overflow-x: auto;
+		overflow-y: hidden;
+		padding-top: 10px;
+		text-align: center;
+	}
+	&.left {
+		> p,
+		> .MathJax {
+			text-align: left;
+			padding-left: 10%;
+			
+		}
+	}
+}
+
+.external-link-icon {
+	@extend .media;
+	&:after {
+		content: "\f08e";
+	}
+}
+
+.pdf-icon {
+	@extend .media;
+	&:after {
+		content: "\f1c1";
+	}
+}
+
+.word-icon {
+	@extend .media;
+	&:after {
+		content: "\f1c2";
+	}
+}
+
+.excel-icon {
+	@extend .media;
+	&:after {
+		content: "\f1c3";
+	}
+}
