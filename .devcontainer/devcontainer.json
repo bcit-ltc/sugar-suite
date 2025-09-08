@@ -19,9 +19,6 @@
         "skaffold",
         "yq"
       ]
-    },
-    "ghcr.io/devcontainers/features/node:1": {
-      "version": "22"
     }
   },
   "postCreateCommand": ".devcontainer/scripts/post-create.sh",
