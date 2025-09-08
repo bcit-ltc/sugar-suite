@@ -1,5 +1,5 @@
 // Vanilla Theme - All defaults apply
-@import "../../bcit";
+@use "../../bcit";
 
 .stethoscope {
 	@extend .note;

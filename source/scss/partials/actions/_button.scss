@@ -1,3 +1,5 @@
+@use "../../variables/sizing" as *;
+@use "../../variables/colors" as *;
 $btn-background: $secondary-color-dark !default;
 $btn-color: $white !default;
 $btn-hover-focus-background: $secondary-color !default;

@@ -1,5 +1,7 @@
-$primary-color: #0072CE;
-$secondary-color: #00A160;
-$complement-color: #FF9400;
 
-@import "bcit";
+@use "../variables/colors" with (
+  $primary-color: #0072CE,
+  $secondary-color: #00A160,
+  $complement-color: #FF9400
+);
+@use "./bcit";

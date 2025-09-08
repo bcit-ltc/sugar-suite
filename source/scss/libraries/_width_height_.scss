@@ -1,3 +1,4 @@
+@use "sass:math";
 // The following provides utility classes for styling the height and width of table cells
 // This can be used to adjust column widths or provide height for "fill in the blank" style tables
 // Width in %
@@ -18,7 +19,7 @@
 // Height Gaps
 @for $i from 1 through 500 {
     @if $i % 25 !=0 {
-        $int: (ceil(calc($i/25)) * 25);
+        $int: (math.ceil(calc($i/25)) * 25);
         .height#{$i} {
             @extend .height#{$int};
         }

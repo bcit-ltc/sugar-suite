@@ -1,10 +1,18 @@
+@use "sass:color";
+@use "../../variables/fonts" as *;
+@use "../../variables/colors" as *;
+@use "../../variables/sizing" as *;
+@use "../../mixins/remove-top-bottom-margin";
+@use "../../partials/containers/custom-max-width";
+@use "../../partials/actions/button";
+
 $accordion-text-color: $primary-text-color !default;
 $accordion-button-background-color: $secondary-color-dark !default;
 $accordion-button-text-color: $white !default;
 $accordion-button-hover-background-color: $secondary-color !default;
 $accordion-button-open-background-color: $secondary-color-darker !default;
 $accordion-button-open-text-color: white !default;
-$accordion-panel-background-color: lighten($secondary-color-lightest, 2%) !default;
+$accordion-panel-background-color: color.adjust($secondary-color-lightest, $lightness:  2%) !default;
 $accordion-panel-border-color: $secondary-color !default;
 //Accordion Main Styles
 .accordion,
@@ -103,7 +111,7 @@ $accordion-panel-border-color: $secondary-color !default;
 
 //accordion content styles
 ._bellow {
-	@include remove-top-bottom-margin();
+	@include remove-top-bottom-margin.remove-top-bottom-margin();
 	background-color: $accordion-panel-background-color;
 	font-family: $primary-font;
 	padding: $pad-and-half;

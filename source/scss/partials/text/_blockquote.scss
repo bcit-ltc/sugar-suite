@@ -1,3 +1,6 @@
+@use "../../variables/sizing" as *;
+@use "../../variables/colors" as *;
+@use "../../variables/fonts" as *;
 $blockquote-default-accent-color: $complement-color !default;
 $blockquote-pullquote-accent-color: $complement-color !default;
 

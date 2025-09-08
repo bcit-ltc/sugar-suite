@@ -1,12 +1,13 @@
 //School of Energy Colors
+@use "sass:color";
 $primary-color: #49C5B1;
-$primary-color-light: tint($primary-color, 76%);
-$primary-color-dark: shade($primary-color, 36%);
+$primary-color-light: color.mix(white, $primary-color, 76%);
+$primary-color-dark: color.mix(black, $primary-color, 36%);
 $secondary-color: #3868B5;
-$secondary-color-light: tint($secondary-color, 76%);
-$secondary-color-dark: shade($secondary-color, 29%);
+$secondary-color-light: color.mix(white, $secondary-color, 76%);
+$secondary-color-dark: color.mix(black, $secondary-color, 29%);
 $complement-color: #F86E10;
-$complement-color-light: tint($complement-color, 76%);
-$complement-color-dark: shade($complement-color, 29%);
+$complement-color-light: color.mix(white, $complement-color, 76%);
+$complement-color-dark: color.mix(black, $complement-color, 29%);
 
 @import "themes/main";

@@ -1,3 +1,7 @@
+@use "sass:list";
+@use "../../variables/colors" as *;
+@use "../../variables/fonts" as *;
+
 .line-matching {
     .line-matching-header {
         width: 100%;
@@ -139,13 +143,13 @@
 
         @mixin colourClick {
 
-            @for $i from 1 through length($colors) {
+            @for $i from 1 through list.length($colors) {
                 .clicked-item-#{$i} {
-                    background: nth($colors, $i)
+                    background: list.nth($colors, $i)
                 }
 
                 .line-#{$i} {
-                    background: nth($colors, $i)
+                    background: list.nth($colors, $i)
                 }
             }
         }

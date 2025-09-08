@@ -1,3 +1,4 @@
+@use "./developer-comments" as developer-comments;
 .under-construction {
 	&:before {
 		content: "Under Construction!\A Changes to this page will be lost";
@@ -17,5 +18,5 @@
 		font-weight: bold;
 	}
 	
-	@include showDeveloperComments();
+	@include developer-comments.showDeveloperComments();
 }

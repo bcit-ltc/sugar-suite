@@ -1,43 +1,56 @@
-@import "../mixins/*";
-@import "../libraries/*";
-@import "../variables/*";
+@use "../variables/breakpoints";
+@use "../variables/colors" as *;
+@use "../variables/fonts";
+@use "../variables/sizing";
 
-@import "../partials/general/misc";
-@import "../partials/general/page-layout";
-@import "../partials/general/figure";
-@import "../partials/general/references";
+@use "../mixins/cascading-heading";
+@use "../mixins/inline-media-queries";
+@use "../mixins/love-hate";
+@use "../mixins/remove-top-bottom-margin";
+@use "../mixins/shiny";
 
-@import "../partials/text/hyperlinks";
-@import "../partials/text/blockquote";
-@import "../partials/text/list";
-@import "../partials/text/headings";
-@import "../partials/text/text";
+@use "../libraries/clearfix";
+@use "../libraries/normalize";
+@use "../libraries/reset";
+@use "../libraries/width_height_";
 
-@import "../partials/media/media-icon";
-@import "../partials/media/media";
-@import "../partials/media/side-by-side";
 
-@import "../partials/tables/table";
+@use "../partials/general/misc";
+@use "../partials/general/page-layout";
+@use "../partials/general/figure";
+@use "../partials/general/references";
 
-@import "../partials/containers/base-container";
-@import "../partials/containers/custom-max-width";
-@import "../partials/containers/activity";
-@import "../partials/containers/assessment";
-@import "../partials/containers/note";
+@use "../partials/text/hyperlinks";
+@use "../partials/text/blockquote";
+@use "../partials/text/list";
+@use "../partials/text/headings";
+@use "../partials/text/text";
 
-@import "../partials/actions/button";
-@import "../partials/actions/accordion";
-@import "../partials/actions/reveal";
-@import "../partials/actions/knowledge-check";
-@import "../partials/actions/swapper";
-@import "../partials/actions/checklist";
-@import "../partials/actions/slider";
-@import "../partials/actions/line-matching";
-@import "../partials/actions/tabs";
+@use "../partials/media/media-icon";
+@use "../partials/media/media";
+@use "../partials/media/side-by-side";
 
-@import "../partials/util/night-mode";
-@import "../partials/util/swatches";
-@import "../partials/util/print";
+@use "../partials/tables/table";
+
+@use "../partials/containers/base-container";
+@use "../partials/containers/custom-max-width";
+@use "../partials/containers/activity";
+@use "../partials/containers/assessment";
+@use "../partials/containers/note";
+
+@use "../partials/actions/button";
+@use "../partials/actions/accordion";
+@use "../partials/actions/reveal";
+@use "../partials/actions/knowledge-check";
+@use "../partials/actions/swapper";
+@use "../partials/actions/checklist";
+@use "../partials/actions/slider";
+@use "../partials/actions/line-matching";
+@use "../partials/actions/tabs";
+
+@use "../partials/util/night-mode";
+@use "../partials/util/swatches";
+@use "../partials/util/print";
 
 .video-activity {
 	@extend .activity;

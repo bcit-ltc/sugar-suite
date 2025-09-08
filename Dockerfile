@@ -1,5 +1,5 @@
 # Build stage
-FROM node:18-alpine AS builder
+FROM node:22-alpine AS builder
 
 WORKDIR /app
 
@@ -29,7 +29,7 @@ COPY --from=builder /app/favicon.ico ./
 
 FROM nginxinc/nginx-unprivileged AS release
 
-LABEL maintainer courseproduction@bcit.ca
+LABEL maintainer="courseproduction@bcit.ca"
 
 WORKDIR /usr/share/nginx/html
 

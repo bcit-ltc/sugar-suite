@@ -1,3 +1,7 @@
+@use "../../mixins/remove-top-bottom-margin";
+@use "../../variables/colors" as *;
+@use "../../variables/sizing" as *;
+
 dl {
 	padding: 1em;
 	dt {
@@ -25,7 +29,7 @@ ul {
 }
 
 li {
-    @include remove-top-bottom-margin();
+    @include remove-top-bottom-margin.remove-top-bottom-margin();
 	margin-bottom: $space-two-third;
 	p {
 		margin-bottom: $space-half;

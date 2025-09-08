@@ -1,11 +1,12 @@
+@use "sass:color";
 $primary-color: #00ACA0;
-$primary-color-dark: shade($primary-color, 29%);
-$primary-color-light: tint($primary-color, 76%);
+$primary-color-dark: color.mix(black, $primary-color, 29%);
+$primary-color-light: color.mix(white, $primary-color, 76%);
 $secondary-color: #124AB7;
-$secondary-color-light: tint($secondary-color, 76%);
-$secondary-color-dark: shade($secondary-color, 29%);
+$secondary-color-light: color.mix(white, $secondary-color, 76%);
+$secondary-color-dark: color.mix(black, $secondary-color, 29%);
 $complement-color: #FF6F00;
-$complement-color-light: tint($complement-color, 76%);
-$complement-color-dark: shade($complement-color, 29%);
+$complement-color-light: color.mix(white, $complement-color, 76%);
+$complement-color-dark: color.mix(black, $complement-color, 29%);
 
 @import "themes/main";

@@ -1,6 +1,8 @@
 /*------------------------------------*\
         $Media Icons
 \*------------------------------------*/
+@use "../../variables/sizing" as *;
+@use "../../variables/fonts" as *;
 
 .media {
 	padding-left: 25px;

@@ -1,5 +1,8 @@
 // Simple set of classes for accessing colors and fonts
 // These are primarily used in the styleguide
+@use "../../variables/colors" as *;
+@use "../../variables/fonts" as *;
+
 .primary-text-color {
 	background-color: $primary-text-color;
 }
