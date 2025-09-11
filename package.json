@@ -1,9 +1,9 @@
 {
-  "name": "sugar-suite-v1",
+  "name": "sugar-suite",
   "version": "1.0.0",
-  "description": "BCIT Online Course Framework",
+  "description": "Sugar-Suite is a \"Framework Factory\" used to produce customized stylesheets designed for building online courses in HTML.",
   "author": "BCIT Course Production: courseproduction@bcit.ca",
-  "license": "MIT",
+  "license": "MPL-2.0",
   "repository": {
     "type": "git",
     "url": "git@github.com:bcit-ltc/sugar-suite.git"
