@@ -1,20 +1,17 @@
+name: sugar-suite
+
 services:
-  sugar-suite-v1:
-    image: sugar-suite-v1
+  app:
+    image: sugar-suite
     build:
-      context: .
       target: builder
-
     command: npm run watch
-
-    environment:
-      - DEBUG=True
-
-    working_dir: /app
-
+    # working_dir: /app
     volumes:
       - .:/app
       - /app/node_modules
-
     ports:
-      - 8080:80
+      - "8080:80"
+    environment:
+      - DEBUG=true
+      - CI=false
