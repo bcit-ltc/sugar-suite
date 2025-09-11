@@ -20,7 +20,9 @@
 //$modal-lg: 900px !default;
 //$modal-md: 600px !default;
 //$modal-sm: 300px !default;
-
+@use "../../scss/variables/colors" as *;
+@use "../../scss/variables/breakpoints" as *;
+@use "../../scss/variables/sizing" as *;
 
 .tooltip-container {
 	display: inline-block;

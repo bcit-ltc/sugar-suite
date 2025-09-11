@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .debug {
 	//@import "mixins/font-size";
 	@mixin highlight($color) {
@@ -82,24 +84,24 @@
 	h2:not(.accordion-button):after {
 		content: "[H2]";
 		font-size: 18px !important;
-		background: lighten(black, 20) !important;
+		background: color.adjust(black, $lightness:  20%) !important;
 	}
 	h3:not(.accordion-button):after {
 		content: "[H3]";
 		font-size: 16px !important;
-		background: lighten(black, 40) !important;
+		background: color.adjust(black, $lightness:  40%) !important;
 	}
 	h4:not(.accordion-button):after {
 		content: "[H4]";
 		color: black;
 		font-size: 14px !important;
-		background: lighten(black, 60) !important;
+		background: color.adjust(black, $lightness:  60%) !important;
 	}
 	h5:not(.accordion-button):after {
 		content: "[H5]";
 		color: black;
 		font-size: 12px !important;
-		background: lighten(black, 80) !important;
+		background: color.adjust(black, $lightness:  80%) !important;
 	}
 	h6:not(.accordion-button):after {
 		content: "[H6]";

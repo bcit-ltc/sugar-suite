@@ -1,3 +1,8 @@
+@use "../../mixins/love-hate" as love-hate;
+@use "../../partials/containers/base-container" as base-container;
+@use "../../variables/colors" as *;
+@use "../../partials/containers/custom-max-width";
+
 $note-definition-icon: url(../assets/icons/newest/definition.svg) !default;
 $note-example-icon: url(../assets/icons/newest/example.svg) !default;
 $note-key-point-icon: url(../assets/icons/newest/key-point.svg) !default;
@@ -26,7 +31,7 @@ $a: $note-link-active-color;
 	border: 1px solid $note-border-color;
 	border-radius: 4px;
 	color: $note-foreground-color;
-	@include love-hate($l, $v, $h, $a);
+	@include love-hate.love-hate($l, $v, $h, $a);
 
 	&:before {
 		border: 5px solid $note-icon-border-color;
@@ -52,29 +57,29 @@ $a: $note-link-active-color;
 }
 
 .example {
-	@include icon-path($note-example-icon);
+	@include base-container.icon-path($note-example-icon);
 }
 
 .definition {
-	@include icon-path($note-definition-icon);
+	@include base-container.icon-path($note-definition-icon);
 }
 
 .key-point {
-	@include icon-path($note-key-point-icon);
+	@include base-container.icon-path($note-key-point-icon);
 }
 
 .link {
-	@include icon-path($note-link-icon);
+	@include base-container.icon-path($note-link-icon);
 }
 
 .note {
-	@include icon-path($note-note-icon);
+	@include base-container.icon-path($note-note-icon);
 }
 
 .warning {
-	@include icon-path($note-warning-icon);
+	@include base-container.icon-path($note-warning-icon);
 }
 
 .knowing {
-	@include icon-path($note-knowing-icon);
+	@include base-container.icon-path($note-knowing-icon);
 }

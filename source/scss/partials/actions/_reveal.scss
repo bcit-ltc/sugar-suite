@@ -1,5 +1,12 @@
+@use "sass:color";
+@use "../../variables/colors" as *;
+@use "../../mixins/remove-top-bottom-margin";
+@use "../../variables/sizing" as *;
+@use "../../variables/fonts" as *;
+@use "../../partials/actions/button";
+
 $reveal-text-color: $secondary-text-color !default;
-$reveal-panel-background-color: lighten($secondary-color-lightest, 2%) !default;
+$reveal-panel-background-color: color.adjust($secondary-color-lightest, $lightness:  2%) !default;
 $reveal-border-color: $secondary-color !default;
 $reveal-visited-link-color: $primary-color !default;
 $reveal-hover-link-color: $secondary-color !default;
@@ -19,7 +26,7 @@ $reveal-button-background-color: $secondary-color-dark !default;
 }
 
 .reveal, .active-reveal {
-	@include remove-top-bottom-margin();
+	@include remove-top-bottom-margin.remove-top-bottom-margin();
 	color: $reveal-text-color;
 	max-width: $container-width-small;
 	margin-left: auto;

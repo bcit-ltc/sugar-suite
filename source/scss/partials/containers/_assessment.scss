@@ -1,3 +1,8 @@
+@use "../../variables/colors" as *;
+@use "../../mixins/love-hate" as love-hate;
+@use "../../partials/containers/base-container" as base-container;
+@use "../../partials/containers/custom-max-width";
+
 $assessment-assignment-icon: url(../assets/icons/newest/assignment.svg) !default;
 $assessment-quiz-icon: url(../assets/icons/newest/quiz.svg) !default;
 
@@ -22,7 +27,7 @@ $a: $assessment-link-active-color;
 	border-bottom: 5px solid $secondary-color;
 	//background: $assessment-background-color;
 	//color: $assessment-foreground-color;
-	@include love-hate($l, $v, $h, $a);
+	@include love-hate.love-hate($l, $v, $h, $a);
 	&:before {
 		border: 5px solid $secondary-color;
 		//border: 5px solid $assessment-icon-border-color;
@@ -41,9 +46,9 @@ $a: $assessment-link-active-color;
 }
 
 .assignment {
-	@include icon-path($assessment-assignment-icon);
+	@include base-container.icon-path($assessment-assignment-icon);
 }
 
 .quiz {
-	@include icon-path($assessment-quiz-icon);
+	@include base-container.icon-path($assessment-quiz-icon);
 }

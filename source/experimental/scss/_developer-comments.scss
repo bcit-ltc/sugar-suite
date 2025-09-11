@@ -1,3 +1,4 @@
+@use "../../scss/mixins/remove-top-bottom-margin";
 ._developer-comments {
 	display: none;
 }
@@ -10,7 +11,7 @@
 		padding: 10px;
 		position: relative;
 		margin: 20px auto;
-		@include remove-top-bottom-margin();
+		@include remove-top-bottom-margin.remove-top-bottom-margin();
 		&:before {
 			content: "Developer Comments";
 			background: gray;

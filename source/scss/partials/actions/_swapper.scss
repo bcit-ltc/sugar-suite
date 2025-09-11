@@ -1,3 +1,7 @@
+@use "../../variables/sizing" as *;
+@use "../../variables/colors" as *;
+@use "../../partials/actions/button";
+
 .swapper {
 	position: relative;
 	overflow: visible;

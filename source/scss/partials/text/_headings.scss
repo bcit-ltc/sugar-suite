@@ -1,3 +1,7 @@
+@use "../../variables/fonts" as *;
+@use "../../variables/colors" as *;
+@use "../../variables/sizing" as *;
+
 $h1-color: $primary-color-light !default;
 $h2-color: inherit !default;
 $h3-color: $primary-color !default;

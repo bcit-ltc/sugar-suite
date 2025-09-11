@@ -1,7 +1,4 @@
-$global-link-default-color: $secondary-color-dark !default;
-$global-link-visited-color: $primary-color !default;
-$global-link-hover-color: $secondary-color !default;
-$global-link-active-color: $secondary-color !default;
+@use "../../variables/colors" as *;
 
 /* Links */
 a {

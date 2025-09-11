@@ -1,3 +1,6 @@
+@use "sass:list";
+@use "../../partials/containers/custom-max-width";
+
 $pastel-colors: #b3e0cc,
     #fde3a7,
     #f4baba,
@@ -56,7 +59,7 @@ $mono-color: #b3e0cc;
                     border-bottom: 2px solid #ffffff;
                     font-weight: bold;
 
-                    @for $i from 1 through length($pastel-colors) {
+                    @for $i from 1 through list.length($pastel-colors) {
 
                         &:nth-child(#{$i}) {
                             border-bottom-color: #ffffff !important;
@@ -132,8 +135,8 @@ $mono-color: #b3e0cc;
                 border-bottom: 2px solid #FF5722;
                 font-weight: bold;
 
-                @for $i from 1 through length($pastel-colors) {
-                    $color: nth($pastel-colors, $i);
+                @for $i from 1 through list.length($pastel-colors) {
+                    $color: list.nth($pastel-colors, $i);
 
                     &:nth-child(#{$i}) {
                         border-bottom-color: $color;
@@ -164,8 +167,8 @@ $mono-color: #b3e0cc;
             }
         }
 
-        @for $i from 1 through length($pastel-colors) {
-            $color: nth($pastel-colors, $i);
+        @for $i from 1 through list.length($pastel-colors) {
+            $color: list.nth($pastel-colors, $i);
 
             li:nth-child(#{$i}) {
                 background: $color;
@@ -174,14 +177,14 @@ $mono-color: #b3e0cc;
     }
 
     .tab-nav .selected {
-        @for $i from 1 through length($pastel-colors) {
+        @for $i from 1 through list.length($pastel-colors) {
             &:nth-child(#{$i}) {
                 @if ($i ==1) {
-                    border-color: nth($pastel-colors, 1);
+                    border-color: list.nth($pastel-colors, 1);
                 }
 
                 @else {
-                    border-color: nth($pastel-colors, $i);
+                    border-color: list.nth($pastel-colors, $i);
                 }
             }
         }

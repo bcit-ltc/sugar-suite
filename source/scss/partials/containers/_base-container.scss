@@ -1,3 +1,10 @@
+@use "../../mixins/remove-top-bottom-margin";
+@use "../../mixins/inline-media-queries";
+@use "../../mixins/cascading-heading";
+@use "../../partials/text/headings";
+@use "../../variables/sizing" as *;
+@use "../../variables/colors" as *;
+
 $icon-small: 2em;
 $icon-large: 3em;
 
@@ -25,7 +32,7 @@ $icon-large: 3em;
 
 // Basic Shape
 %base-container {
-	@include remove-top-bottom-margin();
+	@include remove-top-bottom-margin.remove-top-bottom-margin();
 	position: relative;
 	clear: right;
 	padding: $pad-double $pad;
@@ -40,20 +47,20 @@ $icon-large: 3em;
 		margin-bottom: $space-and-half;
 	}
 
-	@include heading(1) {
+	@include cascading-heading.heading(1) {
 		@extend .heading3;
 		border-bottom: none;
 	}
 
-	@include heading(2) {
+	@include cascading-heading.heading(2) {
 		@extend .heading4;
 	}
 
-	@include heading(3) {
+	@include cascading-heading.heading(3) {
 		@extend .heading5;
 	}
 
-	@include heading(4) {
+	@include cascading-heading.heading(4) {
 		@extend .heading6;
 	}
 }
@@ -86,7 +93,7 @@ $icon-large: 3em;
 .container>%base-container {
 
 	// Medium: Increase size of icon
-	@include media("screen", ">650px") {
+	@include inline-media-queries.media("screen", ">650px") {
 		padding-top: 50px;
 
 		&:before {
@@ -96,7 +103,7 @@ $icon-large: 3em;
 	}
 
 	// Large: Move icon to left of the container
-	@include media("screen", ">939px") {
+	@include inline-media-queries.media("screen", ">939px") {
 		padding-top: $pad-double;
 		margin-top: $space;
 		&:before {

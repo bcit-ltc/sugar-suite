@@ -1,3 +1,8 @@
+@use "../../variables/colors" as *;
+@use "../../mixins/love-hate" as love-hate;
+@use "../../partials/containers/base-container" as base-container;
+@use "../../partials/containers/custom-max-width";
+
 $activity-activity-icon: url(../assets/icons/newest/activity.svg) !default;
 $activity-case-icon: url(../assets/icons/newest/case.svg) !default;
 $activity-discussion-icon: url(../assets/icons/newest/discussion.svg) !default;
@@ -30,7 +35,7 @@ $a: $activity-link-active-color;
 	//border-radius: $border-radius-large;
 	//background: $activity-background-color;
 	//color: $activity-foreground-color;
-	@include love-hate($l, $v, $h, $a);
+	@include love-hate.love-hate($l, $v, $h, $a);
 	&:before {
 		border: 5px solid $complement-color;
 		//border: 5px solid $activity-icon-border-color;
@@ -56,37 +61,37 @@ $a: $activity-link-active-color;
 }
 
 .activity {
-	@include icon-path($activity-activity-icon);
+	@include base-container.icon-path($activity-activity-icon);
 }
 
 .case {
-	@include icon-path($activity-case-icon);
+	@include base-container.icon-path($activity-case-icon);
 }
 
 .discussion {
-	@include icon-path($activity-discussion-icon);
+	@include base-container.icon-path($activity-discussion-icon);
 }
 
 .group-activity {
-	@include icon-path($activity-group-icon-activity);
+	@include base-container.icon-path($activity-group-icon-activity);
 }
 
 .outcome {
-	@include icon-path($activity-outcome-icon);
+	@include base-container.icon-path($activity-outcome-icon);
 }
 
 .reading {
-	@include icon-path($activity-reading-icon);
+	@include base-container.icon-path($activity-reading-icon);
 }
 
 .reflection {
-	@include icon-path($activity-reflection-icon);
+	@include base-container.icon-path($activity-reflection-icon);
 }
 
 .review {
-	@include icon-path($activity-review-icon);
+	@include base-container.icon-path($activity-review-icon);
 }
 
 .doing {
-	@include icon-path($activity-doing-icon);
+	@include base-container.icon-path($activity-doing-icon);
 }

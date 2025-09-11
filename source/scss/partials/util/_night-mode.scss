@@ -1,3 +1,4 @@
+@use "../../mixins/inline-media-queries";
 button#night-mode {
 	position: fixed;
 	top: 20px;
@@ -19,7 +20,7 @@ button#night-mode {
 
 // TODO: Add to new class
 .night-mask {
-	@include media("print") {
+	@include inline-media-queries.media("print") {
 		display: none !important;
 	}
 }
