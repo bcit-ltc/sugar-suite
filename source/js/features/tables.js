@@ -14,7 +14,11 @@
 
 	// Allows tables to scroll when the content is too large for the screen width
 	$("table").each(function () {
-		$(this).wrap("<div class='overflow-x'>");
+        if($(this).hasClass("flashcards")){
+            $(this).wrap("<div>");
+        } else {
+            $(this).wrap("<div class='overflow-x'>");
+        }
 	});
 
 	// Adds additional styling to the minimal table
