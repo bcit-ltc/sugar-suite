@@ -5,20 +5,6 @@ Flash Cards
     /*************
 Initialization
 **************/
-    var keyCodes = {
-        backspace: 8,
-        tab: 9,
-        enter: 13,
-        shift: 16,
-        ctrl: 17,
-        alt: 18,
-        escape: 27,
-        space: 32,
-        left: 37,
-        up: 38,
-        right: 39,
-        down: 40
-    };
 
     function createButton(className, text) {
         var $button = $("<button>");
@@ -28,77 +14,36 @@ Initialization
         return $button;
     }
 
+    // Helper to build a card from table row
+    function buildCard($cells) {
+        const $card = $("<div>").addClass("card");
+        const $front = $("<div>").addClass("front").attr({
+            "data-side": "front",
+            "role": "region",
+            "aria-label": "Flashcard Front",
+            "aria-hidden": "false"
+        }).html($cells.first().html());
+        if ($front.children().length <= 1) $front.addClass("center-content");
+        const $back = $("<div>").addClass("back").attr({
+            "data-side": "back",
+            "role": "region",
+            "aria-label": "Flashcard Back",
+            "aria-hidden": "true"
+        }).html($cells.last().html());
+        if ($back.children().length <= 1) $back.addClass("center-content");
+        $card.append($front, $back);
+        return $card;
+    }
+
     $("table.flashcards").each(function () {
-        // Components
-        var $table = $(this),
-            $container,
-            $cardStack,
-            $cards;
-
-        // Create Stack
-        $cardStack = $("<section>");
-        $cardStack.addClass("card-stack");
-        $cardStack.attr("tabindex", "0");
-
-        // Create Container
-        $container = $("<article>");
-        $container.addClass("flashcard-container");
-        $container.append($cardStack);
-
-        // Deal with table
+        const $table = $(this);
+        const $cardStack = $("<section>").addClass("card-stack").attr("tabindex", "0");
+        const $container = $("<article>").addClass("flashcard-container").append($cardStack);
         $container.data("flashcard-table", $table);
-        $table.before($container);
-        $table.hide();
+        $table.before($container).hide();
         $table.find("tr").each(function () {
-            var $cells = $(this).children("td"),
-                $front,
-                $back,
-                $card;
-
-            if ($cells.length > 0) {
-                $card = $("<div>");
-                $card.addClass("card");
-
-
-                $front = $("<div>");
-                $front.addClass("front");
-                $front.attr({
-                    "data-side": "front",
-                    "role": "region",
-                    "aria-label": "Flashcard Front",
-                    "aria-hidden": "false"
-                });
-                $front.html($cells.first().html());
-                // Center content if only one child or one text node
-                if ($front.children().length <= 1) {
-                    $front.addClass("center-content");
-                }
-
-                $back = $("<div>");
-                $back.addClass("back");
-                $back.attr({
-                    "data-side": "back",
-                    "role": "region",
-                    "aria-label": "Flashcard Back",
-                    "aria-hidden": "true"
-                });
-                $back.html($cells.last().html());
-                if ($back.children().length <= 1) {
-                    $back.addClass("center-content");
-                }
-
-                $card.append($front, $back);
-                $cardStack.append($card);
-            }
-
-            // Utility function to check which side is visible for a given card
-            function getVisibleSide($card) {
-                if ($card.hasClass("flipped")) {
-                    return "back";
-                } else {
-                    return "front";
-                }
-            }
+            const $cells = $(this).children("td");
+            if ($cells.length > 0) $cardStack.append(buildCard($cells));
         });
     });
 
@@ -118,47 +63,34 @@ Initialization
             prevCardComplete,
             zVal;
 
-        var $controls,
-            $prevButton,
-            $nextButton,
-            $flipButton,
-            $flipAllButton,
-            $shuffleButton,
-            $resetButton,
-            $viewTableButton;
 
-        // Create Buttons
-        $prevButton = createButton("prev", "Previous");
-        $flipButton = createButton("flip", "Flip Card");
-        $nextButton = createButton("next", "Next");
-        $flipAllButton = createButton("flip-all", "Flip All Cards");
-        $shuffleButton = createButton("shuffle", "Shuffle Card");
-        $resetButton = createButton("reset", "Reset Cards");
-        $viewTableButton = createButton("view-table", "View as Table");
-
-        $prevButton.attr('aria-label', 'Previous card');
-        $nextButton.attr('aria-label', 'Next card');
-        $flipButton.attr('aria-label', 'Flip card');
-        $flipAllButton.attr('aria-label', 'Flip all cards');
-        $shuffleButton.attr('aria-label', 'Shuffle cards');
-        $resetButton.attr('aria-label', 'Reset cards');
-        $viewTableButton.attr('aria-label', 'View as table');
-
+        // Create controls/buttons in a loop for DRY
+        const buttonConfigs = [
+            { class: "prev", text: "Previous", aria: "Previous card" },
+            { class: "flip", text: "Flip Card", aria: "Flip card" },
+            { class: "next", text: "Next", aria: "Next card" },
+            { class: "flip-all", text: "Flip All Cards", aria: "Flip all cards" },
+            { class: "shuffle", text: "Shuffle Card", aria: "Shuffle cards" },
+            { class: "reset", text: "Reset Cards", aria: "Reset cards" },
+            { class: "view-table", text: "View as Table", aria: "View as table" }
+        ];
+        const $controls = $("<nav>").addClass("card-controls");
+        const $buttons = {};
+        buttonConfigs.forEach(cfg => {
+            const $btn = createButton(cfg.class, cfg.text).attr('aria-label', cfg.aria);
+            $controls.append($btn);
+            $buttons[cfg.class.replace(/-/g,"")] = $btn;
+        });
 
         // Store the original card order for reset
-        var $originalCards = $cards.clone(true, true);
+        const $originalCards = $cards.clone(true, true);
 
-        $resetButton.on("click", function resetCards() {
-            $cardStack.empty();
-            $originalCards.each(function () {
-                var $card = $(this).clone(true, true);
-                $card.removeClass('flipped top-card bottom-card');
-                $card.find('.front').attr('aria-hidden', 'false');
-                $card.find('.back').attr('aria-hidden', 'true');
-                $cardStack.append($card);
-            });
-            // Re-select $cards and reapply top/bottom classes and z-index
+        // Card initialization logic (used for reset, shuffle, init)
+        function initializeCards() {
             $cards = $cardStack.children();
+            $cards.removeClass('flipped top-card bottom-card');
+            $cards.find('.front').attr('aria-hidden', 'false');
+            $cards.find('.back').attr('aria-hidden', 'true');
             $cards.first().addClass("top-card");
             $cards.last().addClass("bottom-card");
             TOP_CARD = 1000;
@@ -167,20 +99,29 @@ Initialization
             $cards.each(function () {
                 $(this).css({
                     transform: "rotate(" + getRandomFloat(-5, 5, 2) + "deg)",
-                    top: getRandomInt(-20, 20) + "px",
+                    top: getRandomInt(-10, 10) + "px",
                     left: getRandomInt(-20, 20) + "px",
                     "z-index": zVal
                 });
                 zVal--;
             });
+        }
+
+        $buttons.reset.on("click", function resetCards() {
+            $cardStack.empty();
+            $originalCards.each(function () {
+                $cardStack.append($(this).clone(true, true));
+            });
+            initializeCards();
+            waitForAllImagesThenSetHeight();
         });
 
-        $flipAllButton.on("click", function flipAll() {
-            var allFlipped = $cards.length && $cards.filter('.flipped').length === $cards.length;
+        $buttons.flipall.on("click", function flipAll() {
+            const allFlipped = $cards.length && $cards.filter('.flipped').length === $cards.length;
             $cards.each(function () {
-                var $card = $(this);
-                var $front = $card.find('.front');
-                var $back = $card.find('.back');
+                const $card = $(this);
+                const $front = $card.find('.front');
+                const $back = $card.find('.back');
                 if (allFlipped) {
                     $card.removeClass('flipped');
                     $front.attr('aria-hidden', 'false');
@@ -194,29 +135,11 @@ Initialization
         });
 
         // Create Controls
-        $controls = $("<nav>");
-        $controls.addClass("card-controls");
-        // Order: Prev, Flip, Next, Flip All, Shuffle, View as Table
-        $controls.append($prevButton, $flipButton, $nextButton, $flipAllButton, $shuffleButton, $resetButton, $viewTableButton);
 
-        $container.append($controls);
+    $container.append($controls);
 
         // Init Cards
-        $cards = $cardStack.children();
-        $cards.first().addClass("top-card");
-        $cards.last().addClass("bottom-card");
-        TOP_CARD = 1000;
-        BOTTOM_CARD = TOP_CARD - $cards.length + 1;
-        zVal = TOP_CARD;
-        $cards.each(function () {
-            $(this).css({
-                transform: "rotate(" + getRandomFloat(-5, 5, 2) + "deg)",
-                top: getRandomInt(-20, 20) + "px",
-                left: getRandomInt(-20, 20) + "px",
-                "z-index": zVal
-            });
-            zVal--;
-        });
+        initializeCards();
 
         // Set .card-stack height to match the first .card
         function setAllCardsSameHeight() {
@@ -276,26 +199,19 @@ Initialization
         /*****
         Events
         ******/
-        $viewTableButton.on("click", function () {
-            var $table = $container.data("flashcard-table");
+
+        // Grouped event handlers for clarity
+        $buttons.viewtable.on("click", function () {
+            const $table = $container.data("flashcard-table");
             if ($table && $table.length) {
                 $table.stop().fadeToggle();
                 $(this).toggleClass("toggled");
             }
         });
-
-        $nextButton.on("click", function nextCard() {
-            $cardStack.trigger("next");
-        });
-        $prevButton.on("click", function prevCard() {
-            $cardStack.trigger("prev");
-        });
-        $flipButton.on("click", function flipCard() {
-            $cardStack.trigger("flip");
-        });
-        $shuffleButton.on("click", function shuffle() {
-            $cardStack.trigger("shuffle");
-        });
+        $buttons.next.on("click", () => $cardStack.trigger("next"));
+        $buttons.prev.on("click", () => $cardStack.trigger("prev"));
+        $buttons.flip.on("click", () => $cardStack.trigger("flip"));
+        $buttons.shuffle.on("click", () => $cardStack.trigger("shuffle"));
 
         $cardStack.on("shuffle", function () {
             $controls.find("button").prop("disabled", true);
@@ -305,41 +221,15 @@ Initialization
                 $controls.find("button").prop("disabled", false);
             }, 1000);
 
-            var $cards = $cardStack.children('.card');
-            var cardArray = $cards.toArray();
-
-            // Fisher-Yates shuffle
-            for (let i = cardArray.length - 1; i > 0; i--) {
+            // Shuffle logic
+            const $cardsArr = $cardStack.children('.card').toArray();
+            for (let i = $cardsArr.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
-                [cardArray[i], cardArray[j]] = [cardArray[j], cardArray[i]];
+                [$cardsArr[i], $cardsArr[j]] = [$cardsArr[j], $cardsArr[i]];
             }
-
-            // Remove all cards and append in new order
             $cardStack.empty();
-            $(cardArray).each(function () {
-                $cardStack.append(this);
-            });
-
-            // Re-select $cards and reapply top/bottom classes and z-index
-            $cards = $cardStack.children();
-            $cards.removeClass('flipped top-card bottom-card');
-            $cards.find('.front').attr('aria-hidden', 'false');
-            $cards.find('.back').attr('aria-hidden', 'true');
-            $cards.first().addClass("top-card");
-            $cards.last().addClass("bottom-card");
-            TOP_CARD = 1000;
-            BOTTOM_CARD = TOP_CARD - $cards.length + 1;
-            zVal = TOP_CARD;
-            $cards.each(function () {
-                $(this).css({
-                    transform: "rotate(" + getRandomFloat(-5, 5, 2) + "deg)",
-                    top: getRandomInt(-20, 20) + "px",
-                    left: getRandomInt(-20, 20) + "px",
-                    "z-index": zVal
-                });
-                zVal--;
-            });
-
+            $($cardsArr).each(function () { $cardStack.append(this); });
+            initializeCards();
         });
 
 
