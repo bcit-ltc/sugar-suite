@@ -69,6 +69,10 @@ Initialization
                     "aria-hidden": "false"
                 });
                 $front.html($cells.first().html());
+                // Center content if only one child or one text node
+                if ($front.children().length <= 1) {
+                    $front.addClass("center-content");
+                }
 
                 $back = $("<div>");
                 $back.addClass("back");
@@ -79,6 +83,9 @@ Initialization
                     "aria-hidden": "true"
                 });
                 $back.html($cells.last().html());
+                if ($back.children().length <= 1) {
+                    $back.addClass("center-content");
+                }
 
                 $card.append($front, $back);
                 $cardStack.append($card);
@@ -99,6 +106,7 @@ Initialization
     $(".flashcard-container").each(function () {
         var $container = $(this);
         var $cards = $(this).find(".card");
+
         var $cardStack = $(this).find(".card-stack");
         // Animation Variables
         var swapNextDuration,
@@ -142,7 +150,7 @@ Initialization
 
         $resetButton.on("click", function resetCards() {
             $cardStack.empty();
-            $originalCards.each(function() {
+            $originalCards.each(function () {
                 var $card = $(this).clone(true, true);
                 $card.removeClass('flipped top-card bottom-card');
                 $card.find('.front').attr('aria-hidden', 'false');
@@ -209,6 +217,61 @@ Initialization
             });
             zVal--;
         });
+
+        // Set .card-stack height to match the first .card
+        function setAllCardsSameHeight() {
+            var $cards = $cardStack.children('.card');
+            var maxHeight = 0;
+            $cards.css({ 'height': '', 'min-height': '' });
+            $cards.find('.front, .back').css({ 'height': '', 'min-height': '', 'display': '' });
+            $cards.each(function () {
+                var $front = $(this).find('.front');
+                var $back = $(this).find('.back');
+                // Temporarily show both faces for measurement
+                var origFront = $front.css('display');
+                var origBack = $back.css('display');
+                $front.css('display', 'block');
+                $back.css('display', 'block');
+                var frontHeight = $front.outerHeight(true);
+                var backHeight = $back.outerHeight(true);
+                var h = Math.max(frontHeight, backHeight);
+                if (h > maxHeight) maxHeight = h;
+                $front.css('display', origFront);
+                $back.css('display', origBack);
+            });
+            $cards.css('min-height', maxHeight + 'px');
+            $cards.find('.front, .back').css('min-height', maxHeight + 'px');
+            $cardStack.height(maxHeight);
+        }
+
+        function waitForAllImagesThenSetHeight() {
+            var $cards = $cardStack.children('.card');
+            var $imgs = $cards.find('img');
+            if ($imgs.length === 0) {
+                setAllCardsSameHeight();
+                return;
+            }
+            var loaded = 0;
+            var total = $imgs.length;
+            function checkAllLoaded() {
+                loaded++;
+                if (loaded === total) setAllCardsSameHeight();
+            }
+            $imgs.each(function () {
+                if (this.complete && this.naturalHeight !== 0) {
+                    loaded++;
+                } else {
+                    $(this).one('load error', checkAllLoaded);
+                }
+            });
+            if (loaded === total) setAllCardsSameHeight();
+        }
+
+        waitForAllImagesThenSetHeight();
+        // Update on window resize
+        $(window).on('resize', waitForAllImagesThenSetHeight);
+        // Also update after shuffle, reset, or flip all
+        $cardStack.on('shuffle reset flipAll', waitForAllImagesThenSetHeight);
 
         /*****
         Events
@@ -361,6 +424,11 @@ Initialization
             }
         });
 
+        // Flip card on click
+        $cardStack.on('click', '.card.top-card', function (e) {
+            $cardStack.trigger('flip');
+        });
+
         $cardStack.on("unflip", function () {
             var $flipped = $(this).find(".flipped");
             if ($flipped.length) {
@@ -375,19 +443,21 @@ Initialization
 
         //makes it so you can use desktop key controls for cards 
         $cardStack.on("keydown", function (e) {
-            if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
+            if (e.key === "ArrowUp" || e.key === "ArrowDown") {
                 $cardStack.trigger("flip");
-            } else if (e.key === "ArrowDown") {
+            } else if (e.key === "ArrowLeft") {
                 $cardStack.trigger("prev");
                 e.preventDefault();
                 return false;
-            } else if (e.key === "ArrowUp") {
+            } else if (e.key === "ArrowRight") {
                 $(this).trigger("next");
                 e.preventDefault();
                 return false;
             }
             return true;
         });
+
+
 
         function applyTopClass() {
             $cardStack.find(".top-card").removeClass("top-card");
