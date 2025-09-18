@@ -63,6 +63,10 @@
         if ($table.hasClass('no-number')) {
             $container.addClass('no-number');
         }
+        // Hide navigation controls if .no-nav is present
+        if ($table.hasClass('no-nav')) {
+            $container.addClass('no-nav');
+        }
 
         /**
          * Create a button for flashcard controls.
@@ -284,8 +288,40 @@
 
             $container.append($controls);
 
+
             // Init Cards
             initializeCards();
+
+            // --- Swipe gesture support for mobile/tablet when .no-nav is present ---
+            if ($container.hasClass('no-nav')) {
+                let touchStartX = 0, touchStartY = 0, touchEndX = 0, touchEndY = 0;
+                const minSwipeDist = 40; // px
+                $cardStack.on('touchstart', function(e) {
+                    if (e.originalEvent.touches && e.originalEvent.touches.length === 1) {
+                        touchStartX = e.originalEvent.touches[0].clientX;
+                        touchStartY = e.originalEvent.touches[0].clientY;
+                    }
+                });
+                $cardStack.on('touchend', function(e) {
+                    if (e.originalEvent.changedTouches && e.originalEvent.changedTouches.length === 1) {
+                        touchEndX = e.originalEvent.changedTouches[0].clientX;
+                        touchEndY = e.originalEvent.changedTouches[0].clientY;
+                        const dx = touchEndX - touchStartX;
+                        const dy = touchEndY - touchStartY;
+                            if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > minSwipeDist) {
+                                e.preventDefault();
+                                if (dx < 0) {
+                                    $cardStack.trigger('prev'); // swipe left triggers prev
+                                } else {
+                                    $cardStack.trigger('next'); // swipe right triggers next
+                                }
+                        } else if (Math.abs(dy) > minSwipeDist) {
+                            // Vertical swipe
+                            $cardStack.trigger('flip');
+                        }
+                    }
+                });
+            }
 
 
             // Modularized height/image logic

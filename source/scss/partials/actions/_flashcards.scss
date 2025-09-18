@@ -168,12 +168,14 @@
 
 
     // hide card counter if .no-number is present on container
-    &.no-number .card-counter {
+    // hide navigation controls if .no-nav is present on container
+    &.no-number .card-counter,
+    &.no-nav .card-controls {
         display: none !important;
     }
 
-    // Control Buttons
 
+    // Control Buttons
     .card-controls {
         display: flex;
         flex-direction: row;
