@@ -45,6 +45,11 @@ Initialization
             const $cells = $(this).children("td");
             if ($cells.length > 0) $cardStack.append(buildCard($cells));
         });
+
+        // Hide card counter if .no-number is present
+        if ($table.hasClass('no-number')) {
+            $container.addClass('no-number');
+        }
     });
 
 
@@ -64,6 +69,17 @@ Initialization
             zVal;
 
 
+
+        // Card counter element
+        const $counter = $("<div>").addClass("card-counter").css({
+            'font-size': '1.1em',
+            'font-weight': 'bold',
+            'min-width': '4em',
+            'margin': '1em auto',
+            'text-align': 'center',
+            'width': 'fit-content'
+        });
+
         // Create controls/buttons in a loop for DRY
         const buttonConfigs = [
             { class: "prev", text: "Previous", aria: "Previous card" },
@@ -75,6 +91,8 @@ Initialization
             { class: "view-table", text: "View as Table", aria: "View as table" }
         ];
         const $controls = $("<nav>").addClass("card-controls");
+        // Place counter below card stack, above controls
+        $container.append($counter);
         const $buttons = {};
         buttonConfigs.forEach(cfg => {
             const $btn = createButton(cfg.class, cfg.text).attr('aria-label', cfg.aria);
@@ -85,8 +103,29 @@ Initialization
         // Store the original card order for reset
         const $originalCards = $cards.clone(true, true);
 
+        // Track current card index
+        let currentCardIndex = 0;
+
+        function updateCounter() {
+            const total = $cardStack.children('.card').length;
+            // Find the index of the card with class 'top-card'
+            let topIndex = 0;
+            $cardStack.children('.card').each(function(i) {
+                if ($(this).hasClass('top-card')) topIndex = i;
+            });
+            currentCardIndex = topIndex;
+            $counter.text((currentCardIndex + 1) + ' of ' + total);
+        }
+
+        // Helper to update counter after DOM/class changes
+        function updateCounterAfterDOMChange() {
+            requestAnimationFrame(updateCounter);
+        }
+
         // Card initialization logic (used for reset, shuffle, init)
         function initializeCards() {
+            currentCardIndex = 0;
+            updateCounter();
             $cards = $cardStack.children();
             $cards.removeClass('flipped top-card bottom-card');
             $cards.find('.front').attr('aria-hidden', 'false');
@@ -112,6 +151,7 @@ Initialization
         }
 
         $buttons.reset.on("click", function resetCards() {
+            requestAnimationFrame(updateCounter);
             $cardStack.empty();
             $originalCards.each(function () {
                 $cardStack.append($(this).clone(true, true));
@@ -121,6 +161,7 @@ Initialization
         });
 
         $buttons.flipall.on("click", function flipAll() {
+            // No change to currentCardIndex
             const allFlipped = $cards.length && $cards.filter('.flipped').length === $cards.length;
             $cards.each(function () {
                 const $card = $(this);
@@ -140,7 +181,7 @@ Initialization
 
         // Create Controls
 
-    $container.append($controls);
+        $container.append($controls);
 
         // Init Cards
         initializeCards();
@@ -234,6 +275,7 @@ Initialization
             $cardStack.empty();
             $($cardsArr).each(function () { $cardStack.append(this); });
             initializeCards();
+            requestAnimationFrame(updateCounter);
         });
 
 
@@ -244,12 +286,12 @@ Initialization
         prevCardComplete = true;
 
         $cardStack.on("next", function () {
-            var $topCard = $(this).find(".top-card");
-            var $bottomCard = $(this).find(".bottom-card");
-            swapNextDuration = getAnimationDuration("swap-next");
             if (!animating && prevCardComplete) {
                 animating = true;
                 nextCardComplete = false;
+                var $topCard = $(this).find(".top-card");
+                var $bottomCard = $(this).find(".bottom-card");
+                swapNextDuration = getAnimationDuration("swap-next");
 
                 $topCard.addClass("swap-next");
                 $topCard.removeClass("top-card");
@@ -272,12 +314,12 @@ Initialization
         });
 
         $cardStack.on("prev", function () {
-            var $topCard = $(this).find(".top-card");
-            var $bottomCard = $(this).find(".bottom-card");
-            swapPrevDuration = getAnimationDuration("swap-prev");
             if (!animating && nextCardComplete) {
                 animating = true;
                 prevCardComplete = false;
+                var $topCard = $(this).find(".top-card");
+                var $bottomCard = $(this).find(".bottom-card");
+                swapPrevDuration = getAnimationDuration("swap-prev");
 
                 $bottomCard.addClass("swap-prev");
                 $bottomCard.removeClass("bottom-card");
@@ -295,6 +337,7 @@ Initialization
                     if (!animating) {
                         prevCardComplete = true;
                     }
+                    // No need to call updateCounter here, handled in applyTopClass
                     return;
                 }, swapPrevDuration);
             }
@@ -359,6 +402,8 @@ Initialization
                 var zIndex = parseInt($(this).css("z-index"));
                 if (zIndex === TOP_CARD) {
                     $(this).addClass("top-card");
+                    // Update counter immediately after top-card is set
+                    requestAnimationFrame(updateCounter);
                     return;
                 }
                 return;

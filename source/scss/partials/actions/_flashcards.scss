@@ -16,36 +16,8 @@
     padding-bottom: 100px; // Prevent controls from being covered
 }
 
-
-.container {
-    overflow: hidden;
-}
-
-
 // Card Content Styling:
-.card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    min-height: 200px;
-    max-height: 60vh;
-    width: 100%;
-
-    img {
-        display: block;
-        margin: 0 auto 10px auto;
-        height: auto;
-        // width: 33%;
-        max-width: 100%;
-        max-height: 55vh;
-        object-fit: contain;
-        flex-shrink: 0;
-        flex-grow: 0;
-        pointer-events: none;
-    }
-}
-
+// Remove global .card, move all rules under .flashcard-container
 .flashcard-container {
     @extend %custom-max-width;
     perspective: 1000px;
@@ -55,26 +27,129 @@
     clear: both;
     top: -350px;
     margin-bottom: -350px;
-    /* Remove static width and margin for dynamic sizing */
     width: auto;
     margin-left: 0;
     margin-right: 0;
 
+    .card {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+        min-height: 200px;
+        max-height: 60vh;
+        line-height: 1.5;
+        perspective: 1000px;
+        transform-style: preserve-3d;
+        backface-visibility: hidden;
+
+        img {
+            display: block;
+            margin: 0 auto 10px auto;
+            height: auto;
+            max-width: 100%;
+            max-height: 55vh;
+            object-fit: contain;
+            flex-shrink: 0;
+            flex-grow: 0;
+            pointer-events: none;
+        }
+
+        // Center content if only one child in .front or .back
+        >.center-content {
+            text-align: center !important;
+        }
+
+        .front,
+        .back {
+            perspective: 1000px;
+            transition: transform .5s;
+            box-shadow: 1px 2px 5px rgba(0, 0, 0, .3), inset 0 0 300px rgba(25, 28, 65, 0.05);
+            backface-visibility: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
+            min-height: 200px;
+            max-height: 60vh;
+            /* height will be set by JS */
+            width: 100%;
+            margin-right: -150px;
+            padding: 20px 15px 20px 15px;
+            background: #fafafa;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex: 1 1 auto;
+
+            img {
+                display: block;
+                margin: 0 auto 10px auto;
+                height: auto;
+                // width: 33%;
+                max-width: 100%;
+                max-height: 55vh;
+                object-fit: contain;
+                flex-shrink: 0;
+                flex-grow: 0;
+                pointer-events: none;
+            }
+
+            // Only the content below the image scrolls
+            &>*:not(img) {
+                // flex: 1 1 auto;
+                overflow-y: auto;
+                min-height: 0;
+            }
+        }
+        
+        .front {
+            z-index: 2;
+            transform: rotateY(0deg);
+        }
+
+        .back {
+            transform: rotateY(-180deg);
+        }
+
+        .front:before,
+        .back:before {
+            content: "";
+            display: inline-block;
+            height: 100%;
+            vertical-align: middle;
+        }
+
+        .centered {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+
+        &.top-card {
+            z-index: 1001;
+            transition: transform .5s ease; // messes up firefox
+            transform: none !important;
+        }
+
+
+        // Add example styles to visually differentiate front and back using data-side attributes.
+        .front[data-side="front"] {
+            border-top: 4px solid #1976d2; // Blue accent for front
+        }
+
+        .back[data-side="back"] {
+            border-top: 4px solid #f9a825; // Yellow accent for back
+        }
+    }
 
 
     .card-stack {
         @include cardStack;
-        /* Remove static width for dynamic sizing */
         width: 100%;
         max-width: 100%;
     }
 
-
-    .card-stack-mobile {
-        @include cardStack;
-        width: 100%;
-        max-width: 100%;
-    }
 
     // Allows the element following to sit against it
     +* {
@@ -97,102 +172,12 @@
             }
         }
     }
-}
 
-// CARD STYLING
-
-.flashcard-container .card {
-    perspective: 1000px;
-    transform-style: preserve-3d;
-    backface-visibility: hidden;
-    position: absolute;
-    width: 100%;
-    min-height: 200px;
-    max-height: 60vh;
-    /* height will be set by JS */
-    line-height: 1.5;
-    // text-align: center;
-    display: flex;
-    flex-direction: column;
-    /* Remove height: auto to allow JS to set height */
-
-
-    // Center content if only one child in .front or .back
-    >.center-content {
-        text-align: center !important;
-    }
-
-    .front,
-    .back {
-        perspective: 1000px;
-        transition: transform .5s;
-        box-shadow: 1px 2px 5px rgba(0, 0, 0, .3), inset 0 0 300px rgba(25, 28, 65, 0.05);
-        backface-visibility: hidden;
-        position: absolute;
-        top: 0;
-        left: 0;
-        min-height: 200px;
-        max-height: 60vh;
-        /* height will be set by JS */
-        width: 100%;
-        margin-right: -150px;
-        padding: 20px 15px 20px 15px;
-        background: #fafafa;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        /* overflow: hidden; */
-        flex: 1 1 auto;
-
-        img {
-            display: block;
-            margin: 0 auto 10px auto;
-            height: auto;
-            // width: 33%;
-            max-width: 100%;
-            max-height: 55vh;
-            object-fit: contain;
-            flex-shrink: 0;
-            flex-grow: 0;
-            pointer-events: none;
-        }
-
-        // Only the content below the image scrolls
-        &>*:not(img) {
-            // flex: 1 1 auto;
-            overflow-y: auto;
-            min-height: 0;
-        }
-    }
-
-    .front:before,
-    .back:before {
-        content: "";
-        display: inline-block;
-        height: 100%;
-        vertical-align: middle;
-    }
-
-    .centered {
-        display: inline-block;
-        vertical-align: middle;
-    }
-
-    .front {
-        z-index: 2;
-        transform: rotateY(0deg);
-    }
-
-    .back {
-        transform: rotateY(-180deg);
-    }
-
-    &.top-card {
-        z-index: 1001; // NEEDED????????????????
-        transition: transform .5s ease; // messes up firefox
-        transform: none !important;
+    &.no-number .card-counter {
+        display: none !important;
     }
 }
+
 
 // ANIMATIONS
 @keyframes swapNext {
@@ -485,18 +470,4 @@
         z-index: 1001;
     }
 
-}
-
-// Add example styles to visually differentiate front and back using data-side attributes.
-.card .front[data-side="front"] {
-    //   background: #ffffff;
-    //   color: #1a1a1a;
-    border-top: 4px solid #1976d2; // Blue accent for front
-}
-
-
-.card .back[data-side="back"] {
-    //   background: #f6f7d4;
-    //   color: #1a1a1a;
-    border-top: 4px solid #f9a825; // Yellow accent for back
 }
