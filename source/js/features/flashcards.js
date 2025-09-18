@@ -96,11 +96,15 @@ Initialization
             TOP_CARD = 1000;
             BOTTOM_CARD = TOP_CARD - $cards.length + 1;
             zVal = TOP_CARD;
-            $cards.each(function () {
+            // Neat stack: only five visible positions, repeating
+            const offsetStep = 4;
+            const baseLeft = -10; // shift all cards 10px to the left
+            $cards.each(function (i) {
+                let posIndex = i % 5;
                 $(this).css({
-                    transform: "rotate(" + getRandomFloat(-5, 5, 2) + "deg)",
-                    top: getRandomInt(-10, 10) + "px",
-                    left: getRandomInt(-20, 20) + "px",
+                    transform: "rotate(0deg)",
+                    top: (posIndex * offsetStep) + "px",
+                    left: (baseLeft + posIndex * offsetStep) + "px",
                     "z-index": zVal
                 });
                 zVal--;
