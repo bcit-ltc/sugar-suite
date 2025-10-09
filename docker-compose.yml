@@ -6,12 +6,13 @@ services:
     build:
       context: .
       target: builder
-      platforms:
-        - linux/amd64
-        - linux/arm64
-
-    command: npm run watch
-
+    command: sh -c "npm test && npm run preview"
+    working_dir: /app
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - "8080:9000"
     environment:
       - DEBUG=true
       - CI=false

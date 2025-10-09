@@ -1,0 +1,14 @@
+@use "sass:color";
+@use "../../../variables/colors" with (
+    $primary-color: #B5BD00,
+    $primary-color-light: color.mix(white, #B5BD00, 76%),
+    $primary-color-dark: color.mix(black, #B5BD00, 36%),
+    $secondary-color: #6FB000,
+    $secondary-color-light: color.mix(white, #6FB000, 76%),
+    $secondary-color-dark: color.mix(black, #6FB000, 29%),
+    $complement-color: #5A067F,
+    $complement-color-light: color.mix(white, #5A067F, 76%),
+    $complement-color-dark: color.mix(black, #5A067F, 29%)
+);
+
+@use "../../bcit";

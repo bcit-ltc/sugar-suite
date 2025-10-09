@@ -1,58 +1,49 @@
 (function ($) {
-	var $button = $("<button>");
+	const $button = $("<button>");
 	$button.addClass("__fullscreen-button");
-	$button.text("Toggle Full Screen");
-	$(".container").prepend($button);
+	$button.attr("title", "Toggle Full Screen");
+	$button.prependTo($("body"));
 
 	$button.on("click", function (e) {
+		e.preventDefault();
 		toggleFullScreen();
 	});
 
-	$(document).keypress(function (e) {
+	document.addEventListener("keydown", function (e) {
 		onKeyDown(e);
 	});
 
+	function onKeyDown(event) {
+		if ((event.altKey) || 
+			((event.key === "Backspace") && (event.target.type !== "text" && event.target.type !== "textarea" && event.target.type !== "password")) ||
+			((event.ctrlKey) && (event.key === "r")) ||
+			(event.key === "F11")) {
+			event.preventDefault();
+		}
+	}
+
 	function toggleFullScreen() {
-		var d = document;
-		var el = d.documentElement;
+		const doc = document;
+		const el = doc.documentElement;
 
-		// Cross-Browser test if fullscreen is active
-		var isFullScreen = (d.fullScreenElement &&
-				d.fullScreenElement !== null) ||
-			(!d.mozFullScreen &&
-				!d.webkitIsFullScreen);
+		// Check if currently in fullscreen
+		const isFullScreen = !!doc.fullscreenElement;
 
-		// Safari may need to be disabled...
-		// var isSafari = /Safari/.test(navigator.userAgent);
-
-		// Use appropriate request method
-		var requestMethod = el.requestFullScreen ||
-			el.webkitRequestFullScreen ||
-			el.mozRequestFullScreen ||
-			el.msRequestFullScreen;
-
-		// Use appropriate cancel method
-		var cancelMethod = d.cancelFullScreen ||
-			d.mozCancelFullScreen ||
-			d.webkitCancelFullScreen;
-
-		// Call appropriate method for toggle
-		if (isFullScreen) {
-			// The second option may need to be conditional
-			requestMethod.call(el, Element.ALLOW_KEYBOARD_INPUT);
+		if (!isFullScreen) {
+			// Enter fullscreen
+			if (el.requestFullscreen) {
+				el.requestFullscreen().catch(err => {
+					console.log(`Error attempting to enable fullscreen: ${err.message}`);
+				});
+			}
 		} else {
-			cancelMethod.call(d);
+			// Exit fullscreen
+			if (doc.exitFullscreen) {
+				doc.exitFullscreen().catch(err => {
+					console.log(`Error attempting to exit fullscreen: ${err.message}`);
+				});
+			}
 		}
 	}
 
 }(jQuery));
-
-function onKeyDown(event) {
-	evt = window.event ? window.event : arguments[0];
-	if ((evt.altKey) || ((evt.keyCode == 8) && (evt.srcElement.type != "text" && evt.srcElement.type != "textarea" && evt.srcElement.type != "password")) ||
-		((evt.ctrlKey) && ((evt.keyCode == 82))) ||
-		(evt.keyCode == 122)) {
-		evt.keyCode = 0;
-		evt.returnValue = false;
-	}
-}

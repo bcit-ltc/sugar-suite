@@ -3,8 +3,8 @@
 @use "../../partials/containers/base-container" as base-container;
 @use "../../partials/containers/custom-max-width";
 
-$assessment-assignment-icon: url(../assets/icons/newest/assignment.svg) !default;
-$assessment-quiz-icon: url(../assets/icons/newest/quiz.svg) !default;
+$assessment-assignment-icon: url(/assets/icons/newest/assignment.svg) !default;
+$assessment-quiz-icon: url(/assets/icons/newest/quiz.svg) !default;
 
 $assessment-background-color: $primary-color-dark !default;
 $assessment-foreground-color: $white !default;

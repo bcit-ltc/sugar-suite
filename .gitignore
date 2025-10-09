@@ -5,9 +5,15 @@ Thumbs.db
 *.swo
 *.bak
 *.tmp
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
 # IDE
 .vscode/
+!.vscode/extensions.json
 .idea/
 
 # Node.js
@@ -16,9 +22,11 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+lerna-debug.log*
 
 # Build outputs
 dist/
+dist-ssr/
 build/
 out/
 coverage/
@@ -26,6 +34,7 @@ coverage/
 # Local scratch / caches (scoped to repo root)
 tmp/
 .cache/
+*.local
 .dockerignore-local
 
 # Kubernetes
@@ -44,7 +53,3 @@ app-chart/**
 # Logs
 *.log
 logs/
-
-# App specific
-css/
-js/

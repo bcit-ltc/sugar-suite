@@ -53,11 +53,11 @@ figure.math figcaption:before {
 
 @font-face {
   font-family: 'Fake-MathJax';
-  src: url('../assets/MathJax_Math-Italic.woff') format('woff');
+  src: url('/css/vendor/MathJax_Math-Italic.woff') format('woff');
 }
 @font-face {
   font-family: 'Fake-MathJax-Numbers';
-  src: url('../assets/MathJax_Main-Regular.woff') format('woff');
+  src: url('/css/vendor/MathJax_Main-Regular.woff') format('woff');
 }
 
 figure.math {

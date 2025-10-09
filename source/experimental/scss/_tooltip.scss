@@ -1,0 +1,44 @@
+//==Tooltips
+//$tooltip-max-width: 200px !default;
+//$tooltip-color: #fff !default;
+//$tooltip-bg: #000 !default;
+//$tooltip-opacity: .9 !default;
+//$tooltip-arrow-width: 5px !default;
+//$tooltip-arrow-color: $tooltip-bg !default;
+
+//== Modals
+//$modal-inner-padding: 15px !default;
+//$modal-title-padding: 15px !default;
+//$modal-title-line-height: 1.4 !default;
+//$modal-content-bg: #fff !default;
+//$modal-content-border-color: rgba(0, 0, 0, .2) !default;
+//$modal-content-fallback-border-color: #999 !default;
+//$modal-backdrop-bg: #000 !default;
+//$modal-backdrop-opacity: .5 !default;
+//$modal-header-border-color: #e5e5e5 !default;
+//$modal-footer-border-color: $modal-header-border-color !default;
+//$modal-lg: 900px !default;
+//$modal-md: 600px !default;
+//$modal-sm: 300px !default;
+@use "sass:color";
+@use "../../scss/variables/colors" as *;
+@use "../../scss/variables/breakpoints" as *;
+@use "../../scss/variables/sizing" as *;
+
+.tooltip {
+	text-decoration-line: underline;
+	text-decoration-style: dotted;
+	text-decoration-color: $bcit-blue;
+	background-color: color.adjust($bcit-yellow, $lightness:  20%);
+	box-shadow: $bcit-yellow 1px 0 10px;
+	text-underline-position: under;
+	
+	cursor: pointer;
+	&::after {
+		content: "\00a0\00a0?\00a0\00a0";
+		color: white;
+		background-color: color.adjust($bcit-blue, $lightness:  7.5%);
+		border-radius: 7px;
+		margin-left: 1px;
+	}
+}

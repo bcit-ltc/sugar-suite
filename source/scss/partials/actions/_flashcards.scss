@@ -756,31 +756,27 @@
             }
 
             &.next:before {
-                content: "\f061"; // fa-arrow-right
+                content: url(/assets/fc-buttons/next.svg);
             }
 
             &.prev:before {
-                content: "\f060"; // fa-arrow-left
+                content: url(/assets/fc-buttons/prev.svg);
             }
 
             &.flip:before {
-                content: "\f021"; // fa-refresh
+                content: url(/assets/fc-buttons/flip.svg);
             }
 
             &.view-table:before {
-                content: "\f0ce"; // fa-table
+                content: url(/assets/fc-buttons/table.svg);
             }
 
             &.flip-all:before {
-                content: "\f07e"; // fa-arrows-h (horizontal arrows representing flip all)
-            }
-
-            &.reset:before {
-                content: "\f1da"; // fa-history (clock with arrow representing reset/restore)
+                content: url(/assets/fc-buttons/flipall.svg);
             }
 
             &.shuffle:before {
-                content: "\f074"; // fa-random
+                content: url(/assets/fc-buttons/shuffle.svg);
             }
 
             // Visually hidden text for accessibility (screen readers)
