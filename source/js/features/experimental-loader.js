@@ -6,7 +6,7 @@
 	function loadExperimentalFiles($) {
 		// var hostname = window.location.hostname;
 		// var serverPath = "https://ltc.bcit.ca/public/v1";
-		var cssPath = "../css/experimental/experimental.css";
+		var cssPath = "../css/experimental.css";
 		var jsPath = "../js/experimental.js";
 		// var isLocal = hostname === "localhost" || hostname === "127.0.0.1";
 

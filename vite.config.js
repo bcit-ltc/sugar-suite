@@ -1,11 +1,13 @@
 import fs from 'fs'; // file system operations for reading js files
 import { resolve } from 'path'; // path resolution utilities
+import path from 'path'; // path utilities
 import { fileURLToPath } from 'url'; // convert file urls to paths
 import { glob } from 'glob'; // file pattern matching
 import { defineConfig } from 'vite'; // vite configuration helper
 import autoprefixer from 'autoprefixer'; // css vendor prefixing
 import cssnano from 'cssnano'; // css minification and optimization
 import viteCompression from 'vite-plugin-compression'; // gzip/brotli compression
+import { minify } from 'terser'; // javascript minification
 
 const __dirname = resolve(fileURLToPath(import.meta.url), '..'); // get current directory
 
@@ -20,26 +22,217 @@ export default defineConfig({
       buildStart() { // runs at build start
         // add all source files to watch list so vite knows to rebuild when they change
         const allSourceFiles = glob.sync('source/**/*'); // find all files in source directory
-        
+
         allSourceFiles.forEach(file => { // iterate through all files
           this.addWatchFile(file); // add each file to vite's watch list
         });
       },
-      generateBundle() { // runs during bundle generation
+      async generateBundle() { // runs during bundle generation
         // process main js features (equivalent to gulp's scripts task)
         const mainJsContent = getModuleContent('source/js/features'); // get concatenated js content
+
+        // minify the concatenated content
+        const minifiedMainJs = await minify(mainJsContent, {
+          compress: {
+            drop_console: true,
+            drop_debugger: true,
+            pure_funcs: ['console.log', 'console.info', 'console.warn', 'console.error'],
+            passes: 3,
+            dead_code: true,
+            hoist_funs: true,
+            hoist_vars: true,
+            if_return: true,
+            join_vars: true,
+            loops: true,
+            properties: true,
+            reduce_vars: true,
+            sequences: true,
+            side_effects: false,
+            switches: true,
+            toplevel: true,
+            unsafe: false,
+            unsafe_comps: false,
+            unsafe_math: false,
+            unsafe_proto: false
+          },
+          mangle: {
+            keep_fnames: false,
+            toplevel: true,
+            properties: {
+              regex: /^_/
+            }
+          },
+          format: {
+            comments: false,
+            beautify: false
+          }
+        });
+
         this.emitFile({ // emit the file to output
           type: 'asset', // file type
           fileName: 'js/lat.js', // output filename
-          source: mainJsContent // file content
+          source: minifiedMainJs.code + '\n//# sourceMappingURL=maps/lat.map' // file content with source map reference
         });
-        
+
         // process experimental js (equivalent to gulp's experimental task)
         const experimentalJsContent = getModuleContent('source/experimental/js'); // get experimental js content
+
+        // minify the experimental content
+        const minifiedExperimentalJs = await minify(experimentalJsContent, {
+          compress: {
+            drop_console: true,
+            drop_debugger: true,
+            pure_funcs: ['console.log', 'console.info', 'console.warn', 'console.error'],
+            passes: 3,
+            dead_code: true,
+            hoist_funs: true,
+            hoist_vars: true,
+            if_return: true,
+            join_vars: true,
+            loops: true,
+            properties: true,
+            reduce_vars: true,
+            sequences: true,
+            side_effects: false,
+            switches: true,
+            toplevel: true,
+            unsafe: false,
+            unsafe_comps: false,
+            unsafe_math: false,
+            unsafe_proto: false
+          },
+          mangle: {
+            keep_fnames: false,
+            toplevel: true,
+            properties: {
+              regex: /^_/
+            }
+          },
+          format: {
+            comments: false,
+            beautify: false
+          }
+        });
+
         this.emitFile({ // emit experimental file
           type: 'asset', // file type
           fileName: 'js/experimental.js', // output filename
-          source: experimentalJsContent // file content
+          source: minifiedExperimentalJs.code + '\n//# sourceMappingURL=maps/experimental.map' // file content with source map reference
+        });
+
+        // generate source maps for JS files
+        const mainSourceMap = generateSourceMap('source/js/features', 'js/lat.js');
+        this.emitFile({
+          type: 'asset',
+          fileName: 'js/maps/lat.map',
+          source: JSON.stringify(mainSourceMap)
+        });
+
+        const experimentalSourceMap = generateSourceMap('source/experimental/js', 'js/experimental.js');
+        this.emitFile({
+          type: 'asset',
+          fileName: 'js/maps/experimental.map',
+          source: JSON.stringify(experimentalSourceMap)
+        });
+      }
+    },
+    // custom plugin for CSS source maps
+    {
+      name: 'css-sourcemaps',
+      generateBundle(options, bundle) {
+        // Find ALL CSS files and create source maps for them
+        Object.keys(bundle).forEach(fileName => {
+          const chunk = bundle[fileName];
+          if (chunk.type === 'asset' && fileName.endsWith('.css')) {
+            // Skip vendor CSS files
+            if (fileName.includes('vendor/')) {
+              return;
+            }
+
+            // Determine the source SCSS file based on the CSS file name
+            let sourceFile = fileName.replace('css/', 'source/scss/themes/').replace('.css', '.scss');
+
+            // Handle custom theme files
+            if (fileName.includes('custom/')) {
+              const customPath = fileName.replace('css/custom/', 'source/scss/themes/custom/');
+              sourceFile = customPath.replace('.css', '.scss');
+            }
+
+            // Handle experimental theme file
+            if (fileName === 'css/experimental.css') {
+              sourceFile = 'source/experimental/scss/experimental.scss';
+            }
+
+            // Generate comprehensive source map with actual source content
+            const sourceMap = generateCSSSourceMap(fileName, sourceFile);
+
+            // Emit the source map file in css/maps directory
+            let mapFileName;
+            if (fileName.includes('custom/')) {
+              // For custom files, keep the custom folder structure: css/maps/custom/business/filename.map
+              mapFileName = fileName.replace('css/', 'css/maps/').replace('.css', '.map');
+            } else {
+              // For main theme files, place directly in maps: css/maps/filename.map
+              mapFileName = fileName.replace('css/', 'css/maps/').replace('.css', '.map');
+            }
+            this.emitFile({
+              type: 'asset',
+              fileName: mapFileName,
+              source: JSON.stringify(sourceMap)
+            });
+
+            // Add sourceMappingURL comment to CSS pointing to css/maps
+            let mapUrlFileName;
+            if (fileName.includes('custom/')) {
+              // For custom files, keep the custom folder structure: maps/custom/business/filename.map
+              mapUrlFileName = fileName.replace('css/', '').replace('.css', '.map');
+            } else {
+              // For main theme files, place directly in maps: maps/filename.map
+              mapUrlFileName = fileName.replace('css/', '').replace('.css', '.map');
+            }
+            chunk.source += '\n/*# sourceMappingURL=maps/' + mapUrlFileName + ' */';
+          }
+        });
+      }
+    },
+    // custom plugin for JS source maps (for files not handled by js-concat)
+    {
+      name: 'js-sourcemaps-all',
+      generateBundle(options, bundle) {
+        // Find ALL JS files and create source maps for them
+        Object.keys(bundle).forEach(fileName => {
+          const chunk = bundle[fileName];
+          if (chunk.type === 'asset' && fileName.endsWith('.js')) {
+            // Skip vendor JS files
+            if (fileName.includes('vendor/')) {
+              return;
+            }
+
+            // Skip files already handled by js-concat plugin
+            if (fileName === 'js/lat.js' || fileName === 'js/experimental.js') {
+              return;
+            }
+
+            // Create a basic source map for JS
+            const sourceMap = {
+              version: 3,
+              sources: [fileName],
+              names: [],
+              mappings: 'AAAA',
+              file: fileName,
+              sourcesContent: ['/* Source map for ' + fileName + ' */']
+            };
+
+            // Emit the source map file
+            this.emitFile({
+              type: 'asset',
+              fileName: fileName.replace('.js', '.map'),
+              source: JSON.stringify(sourceMap)
+            });
+
+            // Add sourceMappingURL comment to JS
+            chunk.source += '\n//# sourceMappingURL=' + fileName.replace('.js', '.map');
+          }
         });
       }
     },
@@ -71,14 +264,15 @@ export default defineConfig({
 
   // css processing (replaces gulp's sass, autoprefixer, cleancss tasks)
   css: { // css configuration
+    devSourcemap: true, // enable CSS source maps
     preprocessorOptions: { // preprocessor options
       scss: { // scss specific options
         // scss options - add includepaths for proper imports
         includePaths: ['source/scss'], // paths to search for scss imports
         // allow all warnings to show
         quietDeps: false, // show dependency warnings
-        // source maps disabled for production builds
-        sourceMap: false, // disable source maps for smaller files
+        // source maps enabled for debugging
+        sourceMap: true, // enable source maps for debugging
         // optimize scss compilation
         precision: 6, // decimal precision for calculations
         // enable modern scss features
@@ -140,11 +334,11 @@ export default defineConfig({
             return 'css/vendor/font-awesome-4.7.0/fonts/[name][extname]'; // output to fontawesome fonts directory
           }
           return 'assets/[name][extname]'; // default to assets directory
-        }
+        },
       }
     },
-    // source maps disabled for maximum file size reduction
-    sourcemap: false, // disable source maps
+    // source maps enabled for debugging
+    sourcemap: true, // enable source maps
     // minification (replaces gulp's uglify)
     minify: 'terser', // use terser for minification
     terserOptions: { // terser minification options
@@ -238,7 +432,7 @@ function getScssEntries() { // function to get scss entry points
 
   themeFiles.forEach(file => { // iterate through theme files
     // create proper entry names that match the original structure
-    let name = file.replace('source/scss/', '').replace('source/experimental/scss/', 'experimental/').replace('.scss', ''); // clean up file path
+    let name = file.replace('source/scss/', '').replace('source/experimental/scss/', '').replace('.scss', ''); // clean up file path
 
     // handle custom themes path structure
     if (name.includes('custom/')) { // if custom theme
@@ -275,4 +469,106 @@ function getModuleContent(sourceDir) { // function to concatenate js files
   });
 
   return content; // return concatenated content
+}
+
+// helper function to generate source maps for concatenated JS
+function generateSourceMap(sourceDir, outputFile) {
+  const jsFiles = glob.sync(`${sourceDir}/*.js`, { // find all js files in directory
+    ignore: [`${sourceDir}/-WIP-*.js`] // ignore work-in-progress files
+  });
+
+  const sources = []; // initialize sources array
+  const sourcesContent = []; // initialize sources content array
+
+  // add jquery source if this is the main features bundle
+  if (sourceDir === 'source/js/features') { // if main features directory
+    sources.push('public/js/vendor/jquery-3.7.1.min.js'); // add jquery source
+    sourcesContent.push(fs.readFileSync('public/js/vendor/jquery-3.7.1.min.js', 'utf8')); // add jquery content
+  }
+
+  jsFiles.forEach(file => { // iterate through js files
+    sources.push(file.replace(/\\/g, '/')); // normalize paths for source map
+    sourcesContent.push(fs.readFileSync(file, 'utf8')); // read source file contents
+  });
+
+  return {
+    version: 3,
+    file: outputFile,
+    sources: sources,
+    names: [],
+    mappings: 'AAAA', // basic mapping - could be enhanced with proper source map generation
+    sourcesContent: sourcesContent
+  };
+}
+
+// helper function to generate source maps for CSS files
+function generateCSSSourceMap(cssFile, scssFile) {
+  let sources = [];
+  let sourcesContent = [];
+  let processedFiles = new Set(); // prevent duplicate processing
+
+  function processScssFile(filePath) {
+    if (processedFiles.has(filePath) || !fs.existsSync(filePath)) {
+      return;
+    }
+
+    processedFiles.add(filePath);
+    const scssContent = fs.readFileSync(filePath, 'utf8');
+    // Convert absolute path to relative path from the map file location
+    const mapDir = path.dirname(cssFile);
+    const relativePath = path.relative(mapDir, filePath).replace(/\\/g, '/');
+    sources.push(relativePath);
+    sourcesContent.push(scssContent);
+
+    // Find and include all @use/@import statements
+    const importRegex = /@(?:use|import)\s+['"]([^'"]+)['"]/g;
+    let match;
+    while ((match = importRegex.exec(scssContent)) !== null) {
+      const importPath = match[1];
+      let fullPath;
+
+      // Handle different import path formats
+      if (importPath.startsWith('../')) {
+        fullPath = path.resolve(path.dirname(filePath), importPath);
+      } else if (importPath.startsWith('./')) {
+        fullPath = path.resolve(path.dirname(filePath), importPath);
+      } else {
+        // Assume it's relative to the source/scss directory
+        fullPath = path.resolve('source/scss', importPath);
+      }
+
+      // Normalize the path
+      fullPath = path.normalize(fullPath);
+
+      // Add .scss extension if not present
+      if (!fullPath.endsWith('.scss') && !fullPath.endsWith('.css')) {
+        fullPath += '.scss';
+      }
+
+      // Try with underscore prefix (SCSS partials)
+      if (!fs.existsSync(fullPath)) {
+        const dir = path.dirname(fullPath);
+        const base = path.basename(fullPath, '.scss');
+        const underscoredPath = path.join(dir, '_' + base + '.scss');
+        if (fs.existsSync(underscoredPath)) {
+          fullPath = underscoredPath;
+        }
+      }
+
+      // Recursively process imported files
+      processScssFile(fullPath);
+    }
+  }
+
+  // Start processing from the main SCSS file
+  processScssFile(scssFile);
+
+  return {
+    version: 3,
+    sources: sources,
+    names: [],
+    mappings: 'AAAA', // basic mapping
+    file: cssFile,
+    sourcesContent: sourcesContent
+  };
 }
