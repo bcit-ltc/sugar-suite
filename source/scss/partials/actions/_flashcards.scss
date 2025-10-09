@@ -205,27 +205,27 @@
             }
 
             &.next:before {
-                content: url(../html/assets/next.svg);
+                content: url(/assets/fc-buttons/next.svg);
             }
 
             &.prev:before {
-                content: url(../html/assets/prev.svg);
+                content: url(/assets/fc-buttons/prev.svg);
             }
 
             &.flip:before {
-                content: url(../html/assets/flip.svg);
+                content: url(/assets/fc-buttons/flip.svg);
             }
 
             &.view-table:before {
-                content: url(../html/assets/table.svg);
+                content: url(/assets/fc-buttons/table.svg);
             }
 
             &.flip-all:before {
-                content: url(../html/assets/flipall.svg);
+                content: url(/assets/fc-buttons/flipall.svg);
             }
 
             &.shuffle:before {
-                content: url(../html/assets/shuffle.svg);
+                content: url(/assets/fc-buttons/shuffle.svg);
             }
 
             // Visually hidden text for accessibility (screen readers)

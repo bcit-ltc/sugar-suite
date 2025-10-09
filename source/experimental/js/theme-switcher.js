@@ -3,7 +3,14 @@
 		"bcit.css",
 		"business.css",
 		"energy.css",
-		"health.css"
+		"health.css",
+		"custom/business/business-administration.css",
+		"custom/business/retail-marketing-management.css",
+		"custom/health/bachelor-science-nursing.css",
+		"custom/health/specialty-nursing-perinatal.css",
+		"custom/computing/computing.css",
+		"custom/construction/construction.css",
+		"custom/transportation/transportation.css"
 	];
 	
 	var $stylesheet = $("head link[href*='/css/']").not("[href*='/experimental.css']");
@@ -15,9 +22,7 @@
 		prefs = JSON.parse(localStorage.getItem(storageKey)) || {};
 	}
 
-	var $form = $("<form id='theme-switcher'>");
-	var $select = $("<select>");
-	var $submit = $("<input type='submit'>");
+	var $select = $("<select id='theme-switcher' class='form-control' style='display: block; margin: 20px auto;'>");
 	
 	if(options.indexOf(primaryStylesheet) === -1) {
 		options.unshift(primaryStylesheet);
@@ -34,26 +39,19 @@
 		$select.append($option);
 	}
 
-	$form.append($select, $submit);
+	$(".container").prepend($select);
 
-	$(".container").prepend($form);
-
-	$select.on("input change", function () {
-		$form.submit();
-	});
-
-	$form.submit(function (e) {
-		e.preventDefault();
-		var stylesheet = $(this).find("select").val();
+	$select.on("change", function () {
+		var stylesheet = $(this).val();
 		setStylesheet(stylesheet);
-		updatePrefs("stylesheet",stylesheet);
+		updatePrefs("stylesheet", stylesheet);
 	});
 	
 
 	
 	if(prefs.stylesheet) {
 		$select.val(prefs.stylesheet);
-		$form.submit();
+		setStylesheet(prefs.stylesheet);
 	}
 
 	function parseStylesheetPath(href) {

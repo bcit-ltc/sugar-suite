@@ -3,15 +3,15 @@
 @use "../../partials/containers/base-container" as base-container;
 @use "../../partials/containers/custom-max-width";
 
-$activity-activity-icon: url(../assets/icons/newest/activity.svg) !default;
-$activity-case-icon: url(../assets/icons/newest/case.svg) !default;
-$activity-discussion-icon: url(../assets/icons/newest/discussion.svg) !default;
-$activity-group-icon-activity: url(../assets/icons/newest/group-activity.svg) !default;
-$activity-outcome-icon: url(../assets/icons/newest/outcome.svg) !default;
-$activity-reading-icon: url(../assets/icons/newest/reading.svg) !default;
-$activity-reflection-icon: url(../assets/icons/newest/reflection.svg) !default;
-$activity-review-icon: url(../assets/icons/newest/review.svg) !default;
-$activity-doing-icon: url(../assets/icons/newest/doing.svg) !default;
+$activity-activity-icon: url(/assets/icons/newest/activity.svg) !default;
+$activity-case-icon: url(/assets/icons/newest/case.svg) !default;
+$activity-discussion-icon: url(/assets/icons/newest/discussion.svg) !default;
+$activity-group-icon-activity: url(/assets/icons/newest/group-activity.svg) !default;
+$activity-outcome-icon: url(/assets/icons/newest/outcome.svg) !default;
+$activity-reading-icon: url(/assets/icons/newest/reading.svg) !default;
+$activity-reflection-icon: url(/assets/icons/newest/reflection.svg) !default;
+$activity-review-icon: url(/assets/icons/newest/review.svg) !default;
+$activity-doing-icon: url(/assets/icons/newest/doing.svg) !default;
 
 $activity-background-color: $secondary-color-light !default;
 $activity-foreground-color: $white !default;

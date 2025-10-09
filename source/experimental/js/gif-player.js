@@ -1,12 +1,24 @@
 (function ($) {
 	// libgif documentation: https://github.com/buzzfeed/libgif-js
-	var scriptLocation = "./js/vendor/libgif.js";
+	var scriptLocation = "../js/vendor/libgif.js";
 	var $gifs = $("img[src*='.gif'][controls]");
 
 	if ($gifs.length) {
-		$.getScript(scriptLocation, function () {
+		loadScript(scriptLocation, function () {
 			init();
 		});
+	}
+
+	function loadScript(src, callback) {
+		var script = document.createElement('script');
+		script.src = src;
+		script.onload = function() {
+			if (callback) callback();
+		};
+		script.onerror = function() {
+			console.log("Failed to load script:", src);
+		};
+		document.head.appendChild(script);
 	}
 
 	function init() {
@@ -67,7 +79,7 @@
 			});
 			$forward.on("click", function () {
 				pause();
-				if (gif.get_current_frame > gif.get_length()) {
+				if (gif.get_current_frame() > gif.get_length()) {
 					gif.move_to(0);
 				} else {
 					gif.move_relative(1);
@@ -87,7 +99,6 @@
 			function play() {
 				interval = setInterval(function() {
 					$forward.trigger("click");
-					play();
 				}, $slider.val());
 			}
 

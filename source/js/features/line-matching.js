@@ -227,7 +227,6 @@
     }
 
     function selectMatchingItem(event) {
-        console.log(event);
         if (event.type === "click" || event.keyCode === 13) {
             if (event.target === this && $(this).find(".selected").length) {
                 let $line = $(this).find(".selected");
