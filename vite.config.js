@@ -246,7 +246,9 @@ export default defineConfig({
       // optimize compression for css files
       filter: (fileName) => { // filter which files to compress
         return fileName.endsWith('.css') || fileName.endsWith('.js') || fileName.endsWith('.html'); // only css, js, html files
-      }
+      },
+      // Only compress in production builds, not in watch mode or preview
+      disable: process.env.NODE_ENV === 'development' || process.argv.includes('--watch')
     }),
     // brotli compression plugin (better compression than gzip)
     viteCompression({
@@ -258,7 +260,9 @@ export default defineConfig({
       // optimize compression for css files
       filter: (fileName) => { // filter which files to compress
         return fileName.endsWith('.css') || fileName.endsWith('.js') || fileName.endsWith('.html'); // only css, js, html files
-      }
+      },
+      // Only compress in production builds, not in watch mode or preview
+      disable: process.env.NODE_ENV === 'development' || process.argv.includes('--watch')
     })
   ],
 
