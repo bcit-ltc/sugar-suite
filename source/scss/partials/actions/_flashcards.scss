@@ -1,5 +1,6 @@
 @use "../../variables/breakpoints" as *;
 @use "../../variables/colors" as *;
+@use "../../variables/fonts" as *;
 @use "../../partials/actions/button";
 @use "../../partials/containers/custom-max-width";
 
@@ -199,33 +200,47 @@
             width: 30px;
             height: 30px;
             transition: background 0.2s, box-shadow 0.2s, border-color 0.2s;
+            position: relative; // For tooltip positioning
 
             &:before {
                 text-align: center;
+                font-family: FontAwesome;
+                font-weight: normal;
+                font-style: normal;
+                display: inline-block;
+                text-rendering: auto;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+                font-size: 16px; // Explicitly set font size for icons
+                line-height: 1;
             }
 
             &.next:before {
-                content: url(../html/assets/next.svg);
+                content: "\f061"; // fa-arrow-right
             }
 
             &.prev:before {
-                content: url(../html/assets/prev.svg);
+                content: "\f060"; // fa-arrow-left
             }
 
             &.flip:before {
-                content: url(../html/assets/flip.svg);
+                content: "\f021"; // fa-refresh
             }
 
             &.view-table:before {
-                content: url(../html/assets/table.svg);
+                content: "\f0ce"; // fa-table
             }
 
             &.flip-all:before {
-                content: url(../html/assets/flipall.svg);
+                content: "\f07e"; // fa-arrows-h (horizontal arrows representing flip all)
+            }
+
+            &.reset:before {
+                content: "\f1da"; // fa-history (clock with arrow representing reset/restore)
             }
 
             &.shuffle:before {
-                content: url(../html/assets/shuffle.svg);
+                content: "\f074"; // fa-random
             }
 
             // Visually hidden text for accessibility (screen readers)
@@ -254,6 +269,50 @@
                 background: $primary-color; // Dark blue background
                 box-shadow: 0 0 0 3px $primary-color-dark; // Darker blue shadow
                 border-color: $primary-color;
+            }
+
+            // Tooltip styles - only show when content exists
+            &:hover::after,
+            &:focus::after {
+                content: attr(data-tooltip);
+                position: absolute;
+                bottom: 100%;
+                left: 50%;
+                transform: translateX(-50%);
+                background: rgba(0, 0, 0, 0.9);
+                color: white;
+                padding: 6px 10px;
+                border-radius: 4px;
+                font-size: 12px;
+                font-family: $primary-font;
+                white-space: nowrap;
+                z-index: 1000;
+                pointer-events: none;
+                margin-bottom: 5px;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+                opacity: 0;
+                animation: tooltipFadeIn 0.2s ease-out 0.1s forwards;
+                
+                // Only show tooltip if it has content
+                &:not([data-tooltip=""]) {
+                    display: block;
+                }
+                
+                // Tooltip arrow
+                &::before {
+                    content: '';
+                    position: absolute;
+                    top: 100%;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    border: 4px solid transparent;
+                    border-top-color: rgba(0, 0, 0, 0.9);
+                }
+            }
+
+            // Hide tooltip when not hovering/focused
+            &:not(:hover):not(:focus)::after {
+                content: none;
             }
         }
     }
@@ -461,4 +520,27 @@
         z-index: 1001;
     }
 
+}
+
+// Tooltip animations
+@keyframes tooltipFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(5px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+@keyframes tooltipFadeOut {
+    0% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(5px);
+    }
 }

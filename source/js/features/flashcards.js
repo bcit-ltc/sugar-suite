@@ -169,13 +169,13 @@
 
             // Create controls/buttons in a loop for DRY
             const buttonConfigs = [
-                { class: "prev", text: "Previous", aria: "Previous card" },
-                { class: "flip", text: "Flip Card", aria: "Flip card" },
-                { class: "next", text: "Next", aria: "Next card" },
-                { class: "flip-all", text: "Flip All Cards", aria: "Flip all cards" },
-                { class: "shuffle", text: "Shuffle Card", aria: "Shuffle cards" },
-                { class: "reset", text: "Reset Cards", aria: "Reset cards" },
-                { class: "view-table", text: "View as Table", aria: "View as table" }
+                { class: "prev", text: "Previous", aria: "Previous card", tooltip: "Previous Card" },
+                { class: "flip", text: "Flip Card", aria: "Flip card", tooltip: "Flip Card" },
+                { class: "next", text: "Next", aria: "Next card", tooltip: "Next Card" },
+                { class: "flip-all", text: "Flip All Cards", aria: "Flip all cards", tooltip: "Flip All Cards" },
+                { class: "shuffle", text: "Shuffle Card", aria: "Shuffle cards", tooltip: "Shuffle Cards" },
+                { class: "reset", text: "Reset Cards", aria: "Reset cards", tooltip: "Reset Cards" },
+                { class: "view-table", text: "View as Table", aria: "View as table", tooltip: "View as Table" }
             ];
             const $controls = $("<nav>").addClass("card-controls");
             // Place counter below card stack, above controls
@@ -183,7 +183,7 @@
             const $buttons = {};
 
             buttonConfigs.forEach(cfg => {
-                const $btn = createButton(cfg.class, cfg.text).attr('aria-label', cfg.aria);
+                const $btn = createButton(cfg.class, cfg.text).attr('aria-label', cfg.aria).attr('data-tooltip', cfg.tooltip);
                 $controls.append($btn);
                 $buttons[cfg.class.replace(/-/g, "")] = $btn;
             });
