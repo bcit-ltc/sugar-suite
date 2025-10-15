@@ -6,7 +6,6 @@ services:
     build:
       target: builder
     command: npm run watch
-    # working_dir: /app
     volumes:
       - .:/app
       - /app/node_modules
