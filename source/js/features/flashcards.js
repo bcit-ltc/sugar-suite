@@ -28,24 +28,37 @@
         /**
          * Build a card DOM element from a table row's cells.
          * @param {jQuery} $cells - jQuery collection of <td> elements (front/back)
+         * @param {jQuery} $row - jQuery collection of the <tr> element
          * @returns {jQuery} - Card element with front and back sides
          */
-        const buildCard = ($cells) => {
+        const buildCard = ($cells, $row) => {
             const $card = $("<div>").addClass("card");
+            
+            // Transfer alignment classes from table row to card
+            const alignmentClasses = [
+                'top-left', 'top-center', 'top-right',
+                'middle-left', 'middle-center', 'middle-right',
+                'bottom-left', 'bottom-center', 'bottom-right'
+            ];
+            
+            alignmentClasses.forEach(className => {
+                if ($row.hasClass(className)) {
+                    $card.addClass(className);
+                }
+            });
+            
             const $front = $("<div>").addClass("front").attr({
                 "data-side": "front",
                 "role": "region",
                 "aria-label": "Flashcard Front",
                 "aria-hidden": "false"
             }).html($cells.first().html());
-            if ($front.children().length <= 1) $front.addClass("center-content");
             const $back = $("<div>").addClass("back").attr({
                 "data-side": "back",
                 "role": "region",
                 "aria-label": "Flashcard Back",
                 "aria-hidden": "true"
             }).html($cells.last().html());
-            if ($back.children().length <= 1) $back.addClass("center-content");
             $card.append($front, $back);
             return $card;
         };
@@ -56,7 +69,7 @@
         $table.before($container).hide();
         $table.find("tr").each(function () {
             const $cells = $(this).children("td");
-            if ($cells.length > 0) $cardStack.append(buildCard($cells));
+            if ($cells.length > 0) $cardStack.append(buildCard($cells, $(this)));
         });
 
         // Hide card counter if .no-number is present
@@ -66,6 +79,16 @@
         // Hide navigation controls if .no-nav is present
         if ($table.hasClass('no-nav')) {
             $container.addClass('no-nav');
+        }
+        // Add justify-content data attribute if data-justify-content is present
+        const justifyContent = $table.data('justify-content');
+        if (justifyContent) {
+            $container.attr('data-justify-content', justifyContent);
+        }
+        // Add align-items data attribute if data-align-items is present
+        const alignItems = $table.data('align-items');
+        if (alignItems) {
+            $container.attr('data-align-items', alignItems);
         }
 
         /**
@@ -82,14 +105,14 @@
             return $button;
         };
 
-        $(".flashcard-container").each(function () {
-            let $cards = $(this).find(".card");
-            // Helper functions must be declared before use
-            /**
-             * Get the animation duration (ms) for a given CSS animation class.
-             * @param {string} animationClass
-             * @returns {number} Duration in milliseconds
-             */
+        // Initialize this specific flashcard container
+        let $cards = $cardStack.find(".card");
+        // Helper functions must be declared before use
+        /**
+         * Get the animation duration (ms) for a given CSS animation class.
+         * @param {string} animationClass
+         * @returns {number} Duration in milliseconds
+         */
             const getAnimationDuration = (animationClass) => {
                 const $temp = $("<div>");
                 $("body").append($temp);
@@ -197,14 +220,23 @@
 
             /**
              * Update the card counter display and currentCardIndex.
+             * Uses a more reliable method to determine the current card index.
              */
             const updateCounter = () => {
                 const total = $cardStack.children('.card').length;
-                // Find the index of the card with class 'top-card'
+                
+                // Find the card with the highest z-index (which should be the top card)
                 let topIndex = 0;
+                let maxZIndex = -1;
+                
                 $cardStack.children('.card').each((i, el) => {
-                    if ($(el).hasClass('top-card')) topIndex = i;
+                    const zIndex = parseInt($(el).css("z-index")) || 0;
+                    if (zIndex > maxZIndex) {
+                        maxZIndex = zIndex;
+                        topIndex = i;
+                    }
                 });
+                
                 currentCardIndex = topIndex;
                 $counter.text(`${currentCardIndex + 1} of ${total}`);
             };
@@ -259,7 +291,6 @@
 
 
             $buttons.reset.on("click", () => {
-                requestAnimationFrame(updateCounter);
                 $cardStack.empty();
                 $originalCards.each((_, el) => {
                     $cardStack.append($(el).clone(true, true));
@@ -327,60 +358,56 @@
             // Modularized height/image logic
 
             /**
-             * Set the height of the card stack to fit the tallest card (including images).
-             * Handles async image loading.
+             * Set the height of the card stack using fixed height.
+             * Uses data-height attribute or defaults to 500px.
              */
             const setCardStackHeight = () => {
                 const $cards = $cardStack.children('.card');
-                const $imgs = $cards.find('img');
-                const setHeights = () => {
-                    let maxHeight = 0;
-                    $cards.css({ 'height': '', 'min-height': '' });
-                    $cards.find('.front, .back').css({ 'height': '', 'min-height': '', 'display': '' });
-                    $cards.each((_, el) => {
-                        const $front = $(el).find('.front');
-                        const $back = $(el).find('.back');
-                        const origFront = $front.css('display');
-                        const origBack = $back.css('display');
-                        $front.css('display', 'block');
-                        $back.css('display', 'block');
-                        const frontHeight = $front.outerHeight(true);
-                        const backHeight = $back.outerHeight(true);
-                        const h = Math.max(frontHeight, backHeight);
-                        if (h > maxHeight) maxHeight = h;
-                        $front.css('display', origFront);
-                        $back.css('display', origBack);
-                    });
-                    $cards.css('min-height', `${maxHeight}px`);
-                    $cards.find('.front, .back').css('min-height', `${maxHeight}px`);
-                    $cardStack.height(maxHeight);
-                };
-                if ($imgs.length === 0) {
-                    setHeights();
-                    return;
-                }
-                let loaded = 0;
-                const total = $imgs.length;
-                const checkAllLoaded = () => {
-                    loaded++;
-                    if (loaded === total) setHeights();
-                };
-                $imgs.each(function () {
-                    if (this.complete && this.naturalHeight !== 0) {
-                        loaded++;
-                    } else {
-                        $(this).one('load error', checkAllLoaded);
+                
+                // Check if a fixed height is specified, default to 500px if not
+                const fixedHeight = $table.data('height') || 500;
+                
+                // Set fixed height for cards and card sides
+                $cards.css({
+                    'min-height': `${fixedHeight}px`,
+                    'height': `${fixedHeight}px`
+                });
+                $cards.find('.front, .back').css({
+                    'min-height': `${fixedHeight}px`,
+                    'height': `${fixedHeight}px`
+                });
+                
+                // Constrain images to fit within the card height, leaving room for color stripes
+                const imageHeight = fixedHeight - 15;
+                $cards.find('img').each(function() {
+                    const $img = $(this);
+                    const $card = $img.closest('.card');
+                    
+                    // Don't override styles if the card has alignment classes
+                    const hasAlignmentClass = $card.hasClass('top-left') || 
+                                            $card.hasClass('top-center') || 
+                                            $card.hasClass('top-right') ||
+                                            $card.hasClass('middle-left') || 
+                                            $card.hasClass('middle-center') || 
+                                            $card.hasClass('middle-right') ||
+                                            $card.hasClass('bottom-left') || 
+                                            $card.hasClass('bottom-center') || 
+                                            $card.hasClass('bottom-right');
+                    
+                    if (!hasAlignmentClass) {
+                        // Only set inline styles for cards without alignment classes
+                        $img.css({
+                            'max-height': `${imageHeight}px`,
+                            'width': 'auto'
+                        });
                     }
                 });
-                if (loaded === total) setHeights();
+                
+                // Set cardStack height for navigation positioning
+                $cardStack.css('height', `${fixedHeight}px`);
             };
 
             setCardStackHeight();
-            // Update on window resize
-
-            $(window).on('resize', setCardStackHeight);
-            // Also update after shuffle, reset, or flip all
-            $cardStack.on('shuffle reset flipAll', setCardStackHeight);
 
             /*****
             Events
@@ -404,7 +431,7 @@
                 $controls.find("button").prop("disabled", true);
                 $(this).addClass('animation');
                 setTimeout(() => {
-                    $('.card-stack').removeClass('animation');
+                    $cardStack.removeClass('animation');
                     $controls.find("button").prop("disabled", false);
                 }, 1000);
 
@@ -417,10 +444,10 @@
                 $cardStack.empty();
                 $($cardsArr).each((_, el) => { $cardStack.append(el); });
                 initializeCards();
-                requestAnimationFrame(updateCounter);
             });
 
 
+            // Calculate animation durations once
             swapNextDuration = getAnimationDuration("flashcards-swap-next");
             swapPrevDuration = getAnimationDuration("flashcards-swap-prev");
             animating = false;
@@ -431,23 +458,47 @@
                 if (!animating && prevCardComplete) {
                     animating = true;
                     nextCardComplete = false;
+                    
+                    // Add class to hide horizontal scroll during animation
+                    $('body').addClass('flashcard-animating');
+                    
+                    // Safety timeout to ensure class is always removed
+                    setTimeout(() => {
+                        $('body').removeClass('flashcard-animating');
+                    }, swapNextDuration + 100);
+                    
+                    // Prevent D2L resize if fixed height is set
+                    const preventD2LResize = $(this).data('preventD2LResize');
+                    if (preventD2LResize) preventD2LResize();
+                    
                     var $topCard = $(this).find(".top-card");
                     var $bottomCard = $(this).find(".bottom-card");
-                    swapNextDuration = getAnimationDuration("flashcards-swap-next");
 
                     $topCard.addClass("flashcards-swap-next");
                     $topCard.removeClass("top-card");
 
                     setTimeout(function () {
                         zIncrement();
-                        applyZClass('top-card', TOP_CARD, () => { requestAnimationFrame(updateCounter); });
+                        applyZClass('top-card', TOP_CARD);
+                        updateCounter(); // Update counter immediately after z-index changes
                         animating = false;
+                        
+                        // Remove class when animation is complete
+                        $('body').removeClass('flashcard-animating');
                     }, (swapNextDuration / 2));
 
                     setTimeout(() => {
                         $bottomCard.removeClass("bottom-card");
                         applyZClass('bottom-card', BOTTOM_CARD);
                         $topCard.removeClass("flashcards-swap-next");
+                        
+                        // Remove class when animation is complete
+                        $('body').removeClass('flashcard-animating');
+                        
+                        // Allow D2L resize after animation
+                        const allowD2LResize = $(this).data('allowD2LResize');
+                        if (allowD2LResize) allowD2LResize();
+                        
                         if (!animating) {
                             nextCardComplete = true;
                         }
@@ -459,9 +510,16 @@
                 if (!animating && nextCardComplete) {
                     animating = true;
                     prevCardComplete = false;
+                    
+                    // Add class to hide horizontal scroll during animation
+                    $('body').addClass('flashcard-animating');
+                    
+                    // Safety timeout to ensure class is always removed
+                    setTimeout(() => {
+                        $('body').removeClass('flashcard-animating');
+                    }, swapPrevDuration + 100);
                     const $topCard = $(this).find(".top-card");
                     const $bottomCard = $(this).find(".bottom-card");
-                    swapPrevDuration = getAnimationDuration("flashcards-swap-prev");
 
                     $bottomCard.addClass("flashcards-swap-prev");
                     $bottomCard.removeClass("bottom-card");
@@ -470,16 +528,23 @@
                         zDecrement();
                         applyZClass('bottom-card', BOTTOM_CARD);
                         animating = false;
+                        
+                        // Remove class when animation is complete
+                        $('body').removeClass('flashcard-animating');
                         return;
                     }, (swapPrevDuration / 2));
 
                     setTimeout(() => {
-                        applyZClass('top-card', TOP_CARD, () => { requestAnimationFrame(updateCounter); });
+                        applyZClass('top-card', TOP_CARD);
+                        updateCounter(); // Update counter immediately after z-index changes
                         $bottomCard.removeClass("flashcards-swap-prev");
+                        
+                        // Remove class when animation is complete
+                        $('body').removeClass('flashcard-animating');
+                        
                         if (!animating) {
                             prevCardComplete = true;
                         }
-                        // No need to call updateCounter here, handled in applyTopClass
                         return;
                     }, swapPrevDuration);
                 }
@@ -487,9 +552,19 @@
 
             $cardStack.on("flip", function () {
                 if (nextCardComplete && prevCardComplete) {
+                    // Prevent D2L resize if fixed height is set
+                    const preventD2LResize = $(this).data('preventD2LResize');
+                    if (preventD2LResize) preventD2LResize();
+                    
                     const $topCard = $(this).find(".top-card");
                     $topCard.toggleClass("flipped");
                     setCardAria($topCard, $topCard.hasClass("flipped"));
+                    
+                    // Allow D2L resize after flip animation
+                    setTimeout(() => {
+                        const allowD2LResize = $(this).data('allowD2LResize');
+                        if (allowD2LResize) allowD2LResize();
+                    }, 500); // CSS transition duration
                 }
             });
 
@@ -523,8 +598,6 @@
                 }
                 return true;
             });
-
-        });
 
     });
 
