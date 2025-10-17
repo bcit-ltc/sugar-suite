@@ -1,8 +1,38 @@
 <!-- SPDX-License-Identifier: MPL-2.0 -->
 
-# sugar-suite
+# Sugar Suite
 
-Sugar Suite is a "Framework Factory" used to produce customized stylesheets designed for building online courses in HTML. It is built using Sass/Compass which provides an expressive and programmatic method for authoring the CSS. In order to produce the CSS, the Sass files (.scss) are "pre-processed".
+Sugar Suite is a "Framework Factory" used to produce customized stylesheets designed for building online courses in HTML. Built with Sass/SCSS and Vite, it provides an expressive and programmatic method for creating educational content with interactive components.
+
+## Installation
+
+```bash
+npm install
+```
+
+## Usage
+
+```bash
+# Development server
+npm run preview
+
+# Build for production
+npm run build
+
+# Run tests
+npm test
+
+# Docker development
+docker-compose up --build
+```
+
+## Features
+
+- Multiple themes (BCIT, Business, Health, Energy, Custom)
+- Interactive components (Flashcards, Knowledge Checks, Accordions, Tabs, etc.)
+- Sass/SCSS preprocessing with Vite
+- Source maps and hot module replacement
+- Docker support
 
 ## License
 

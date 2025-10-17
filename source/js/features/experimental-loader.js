@@ -16,7 +16,7 @@
 		// }
 
 		attachStylesheet($, cssPath);
-		getScript($, jsPath);
+		loadScript(jsPath);
 	}
 
 	function attachStylesheet($, cssPath) {
@@ -29,11 +29,16 @@
 		$stylesheet.appendTo($head);
 	}
 
-	function getScript($, jsPath) {
-		$.getScript(jsPath).fail(handleFail);
-
-		function handleFail() {
+	function loadScript(jsPath) {
+		// Use a more reliable method for loading scripts with file:// protocol
+		var script = document.createElement('script');
+		script.src = jsPath;
+		script.onload = function() {
+			console.log("Experimental script loaded successfully");
+		};
+		script.onerror = function() {
 			console.log("Failed to load experimental script from", jsPath);
-		}
+		};
+		document.head.appendChild(script);
 	}
 }(jQuery));
