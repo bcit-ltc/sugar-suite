@@ -1,6 +1,6 @@
 <!-- SPDX-License-Identifier: MPL-2.0 -->
 
-# sugar-suite
+# Sugar Suite v1
 
 Sugar Suite is a "Framework Factory" used to produce customized stylesheets designed for building online courses in HTML. It is built using Sass/Compass which provides an expressive and programmatic method for authoring the CSS. In order to produce the CSS, the Sass files (.scss) are "pre-processed".
 
