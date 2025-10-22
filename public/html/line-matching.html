@@ -1,24 +1,116 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=yes">
     <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
-    <title>Line Matching</title>
+    <title>Line Matching - Sugar Suite Documentation</title>
     <link rel="stylesheet" href="../css/bcit.css">
 </head>
-
 <body>
     <div class="container">
         <h1>Line Matching</h1>
-        <p>Collaboratively administrate empowered markets via plug-and-play networks. Dynamically procrastinate B2C
-            users after installed base benefits. Dramatically visualize customer directed convergence without
-            revolutionary ROI.</p>
-
-
+        
+        <div class="note">
+            <h2>Description</h2>
+            <p>Creates interactive matching exercises where users connect questions to answers by drawing lines. Supports one-to-one and one-to-many matching with visual feedback and automatic shuffling.</p>
+        </div>
+        
+        <div class="note">
+            <h2>Usage</h2>
+            <p>Wrap a table with class <code>.line-matching</code> containing a <code>figure.table</code> element. Each row represents a question-answer pair. The table is automatically converted into an interactive matching interface.</p>
+            
+            <h3>Available Options</h3>
+            <ul>
+                <li><strong>CSS Classes:</strong>
+                    <ul>
+                        <li><code>.line-matching</code> - Main container (required)</li>
+                        <li><code>.left-order</code> - Keeps questions in original order, shuffles answers</li>
+                    </ul>
+                </li>
+                <li><strong>Structure:</strong>
+                    <ul>
+                        <li><code>&lt;figure class="table"&gt;</code> - Required wrapper for the data table</li>
+                        <li><code>&lt;thead&gt;</code> - Optional headers for questions and answers</li>
+                        <li><code>&lt;tbody&gt;</code> - Contains the question-answer pairs</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        
+        <h2>Examples</h2>
+        
+        <h3>Basic Line Matching</h3>
         <div class="line-matching">
+            <figure class="table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Programming Language</th>
+                            <th>Primary Use</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>JavaScript</td>
+                        <td>Web Development</td>
+                    </tr>
+                    <tr>
+                        <td>Python</td>
+                        <td>Data Science</td>
+                    </tr>
+                    <tr>
+                        <td>Java</td>
+                        <td>Enterprise Applications</td>
+                    </tr>
+                    <tr>
+                        <td>C++</td>
+                        <td>System Programming</td>
+                    </tr>
+                </tbody>
+            </table>
+        </figure>
+    </div>
+        
+        <h3>One-to-Many Matching</h3>
+        <div class="line-matching">
+            <figure class="table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Examples</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Web Technologies</td>
+                        <td>HTML</td>
+                    </tr>
+                    <tr>
+                        <td>Web Technologies</td>
+                        <td>CSS</td>
+                    </tr>
+                    <tr>
+                        <td>Web Technologies</td>
+                        <td>JavaScript</td>
+                    </tr>
+                    <tr>
+                        <td>Programming Languages</td>
+                        <td>Python</td>
+                    </tr>
+                    <tr>
+                        <td>Programming Languages</td>
+                        <td>Java</td>
+                    </tr>
+                </tbody>
+            </table>
+        </figure>
+    </div>
+        
+        <h3>Line Matching with Left Order</h3>
+        <div class="line-matching left-order">
             <figure class="table">
                 <table>
                     <thead>
@@ -28,386 +120,115 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>
-                                <h2>Heading 2</h2>(Q1)such design. go swag. many text. so text, much text! go sit, want
-                                elit! much design, wow. plz swag! many amet, go sit, much text! rate me. Such design. go
-                                swag. many text. so text, much text! go sit, want elit! much design, wow. plz swag! many
-                                amet, go sit, much text! rate me. Such design. go swag. many text. so text, much text!
-                                go sit, want elit! much design, wow. plz swag! many amet, go sit, much text! rate me.
-                            </td>
-                            <td>(A1)</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <h3>Heading 3</h3>(Q2)such design. go swag. many text. so text, much text! go sit, want
-                                elit! much design, wow. plz swag! many amet, go sit, much text! rate me.
-                            </td>
-                            <td>(A2)</td>
-                        </tr>
-                        <tr>
-                            <td>(Q3)<figure class="img"><img src="../assets/woods/cutter.jpg">
-                                    <figcaption>This is a figcaption</figcaption>
-                                </figure>
-                            </td>
-                            <td>(A3)</td>
-                        </tr>
-                        <tr>
-                            <td>(Q4)<figure class="video">
-                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/fpJdq12ddgk"
-                                        frameborder="0" allowfullscreen=""></iframe>
-                                </figure>
-                            </td>
-                            <td>(A4)</td>
-                        </tr>
-                        <tr>
-                            <td>(Q5 text in learning block does not appear)<div class="quiz">such design. go swag. many
-                                    text. so text, much text! go sit, want elit! much design, wow. plz swag! many amet,
-                                    go sit, much text! rate me.</div>
-                            </td>
-                            <td>(A5)</td>
-                        </tr>
-                        <tr>
-                            <td>(Q6)such design. go swag. many text. so text, much text! go sit, want elit! much design,
-                                wow. plz swag! many amet, go sit, much text! rate me.</td>
-                            <td>(A6)</td>
-                        </tr>
-                        <tr>
-                            <td>Hello</td>
-                            <td>Answer 1 for Hello</td>
-                        </tr>
-                        <tr>
-                            <td>Hello</td>
-                            <td>Answer 2 for Hello</td>
-                        </tr>
-                        <tr>
-                            <td>Hello</td>
-                            <td>Answer 3 for Hello</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </figure>
-        </div>
-
-
-        <div class="activity">
-            <h1>Inside Learning block</h1>
-            <p>this is line match</p>
-
-            <div class="line-matching">
-                <figure class="table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Question</th>
-                                <th>Answer</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <h2>Heading 2</h2>(Q1)such design. go swag. many text. so text, much text! go sit,
-                                    want elit! much design, wow. plz swag! many amet, go sit, much text! rate me. Such
-                                    design. go swag. many text. so text, much text! go sit, want elit! much design, wow.
-                                    plz swag! many amet, go sit, much text! rate me. Such design. go swag. many text. so
-                                    text, much text! go sit, want elit! much design, wow. plz swag! many amet, go sit,
-                                    much text! rate me.
-                                </td>
-                                <td>(A1)</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <h3>Heading 3</h3>(Q2)such design. go swag. many text. so text, much text! go sit,
-                                    want elit! much design, wow. plz swag! many amet, go sit, much text! rate me.
-                                </td>
-                                <td>(A2)</td>
-                            </tr>
-                            <tr>
-                                <td>(Q3)<figure class="img"><img src="../assets/woods/cutter.jpg">
-                                        <figcaption>This is a figcaption</figcaption>
-                                    </figure>
-                                </td>
-                                <td>(A3)</td>
-                            </tr>
-                            <tr>
-                                <td>(Q4)<figure class="video">
-                                        <iframe width="560" height="315" src="https://www.youtube.com/embed/fpJdq12ddgk"
-                                            frameborder="0" allowfullscreen=""></iframe>
-                                    </figure>
-                                </td>
-                                <td>(A4)</td>
-                            </tr>
-                            <tr>
-                                <td>(Q5 text in learning block does not appear)<div class="quiz">such design. go swag.
-                                        many text. so text, much text! go sit, want elit! much design, wow. plz swag!
-                                        many amet, go sit, much text! rate me.</div>
-                                </td>
-                                <td>(A5)</td>
-                            </tr>
-                            <tr>
-                                <td>(Q6)such design. go swag. many text. so text, much text! go sit, want elit! much
-                                    design, wow. plz swag! many amet, go sit, much text! rate me.</td>
-                                <td>(A6)</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </figure>
-            </div>
-        </div>
-
-
-        <div class="accordion">
-            <h2>Line Match</h2>
-            <p>this is inside an accordion</p>
-
-            <div class="line-matching">
-                <figure class="table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Question</th>
-                                <th>Answer</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <h2>Heading 2</h2>(Q1)such design. go swag. many text. so text, much text! go sit,
-                                    want elit! much design, wow. plz swag! many amet, go sit, much text! rate me. Such
-                                    design. go swag. many text. so text, much text! go sit, want elit! much design, wow.
-                                    plz swag! many amet, go sit, much text! rate me. Such design. go swag. many text. so
-                                    text, much text! go sit, want elit! much design, wow. plz swag! many amet, go sit,
-                                    much text! rate me.
-                                </td>
-                                <td>(A1)</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <h3>Heading 3</h3>(Q2)such design. go swag. many text. so text, much text! go sit,
-                                    want elit! much design, wow. plz swag! many amet, go sit, much text! rate me.
-                                </td>
-                                <td>(A2)</td>
-                            </tr>
-                            <tr>
-                                <td>(Q3)<figure class="img"><img src="../assets/woods/cutter.jpg">
-                                        <figcaption>This is a figcaption</figcaption>
-                                    </figure>
-                                </td>
-                                <td>(A3)</td>
-                            </tr>
-                            <tr>
-                                <td>(Q4)<figure class="video">
-                                        <iframe width="560" height="315" src="https://www.youtube.com/embed/fpJdq12ddgk"
-                                            frameborder="0" allowfullscreen=""></iframe>
-                                    </figure>
-                                </td>
-                                <td>(A4)</td>
-                            </tr>
-                            <tr>
-                                <td>(Q5 text in learning block does not appear)<div class="quiz">such design. go swag.
-                                        many text. so text, much text! go sit, want elit! much design, wow. plz swag!
-                                        many amet, go sit, much text! rate me.</div>
-                                </td>
-                                <td>(A5)</td>
-                            </tr>
-                            <tr>
-                                <td>(Q6)such design. go swag. many text. so text, much text! go sit, want elit! much
-                                    design, wow. plz swag! many amet, go sit, much text! rate me.</td>
-                                <td>(A6)</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </figure>
-            </div>
-        </div>
-
-        <div class="activity">
-            <div class="reveal" data-button="Line match">
-                <h2>Line match inside a reveal</h2>
-                <p>This is what it looks like</p>
-                <div class="line-matching">
-                    <figure class="table">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Question</th>
-                                    <th>Answer</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <h2>Heading 2</h2>(Q1)such design. go swag. many text. so text, much text! go
-                                        sit, want elit! much design, wow. plz swag! many amet, go sit, much text! rate
-                                        me. Such design. go swag. many text. so text, much text! go sit, want elit! much
-                                        design, wow. plz swag! many amet, go sit, much text! rate me. Such design. go
-                                        swag. many text. so text, much text! go sit, want elit! much design, wow. plz
-                                        swag! many amet, go sit, much text! rate me.
-                                    </td>
-                                    <td>(A1)</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <h3>Heading 3</h3>(Q2)such design. go swag. many text. so text, much text! go
-                                        sit, want elit! much design, wow. plz swag! many amet, go sit, much text! rate
-                                        me.
-                                    </td>
-                                    <td>(A2)</td>
-                                </tr>
-                                <tr>
-                                    <td>(Q3)<figure class="img"><img src="../assets/woods/cutter.jpg">
-                                            <figcaption>This is a figcaption</figcaption>
-                                        </figure>
-                                    </td>
-                                    <td>(A3)</td>
-                                </tr>
-                                <tr>
-                                    <td>(Q4)<figure class="video">
-                                            <iframe width="560" height="315"
-                                                src="https://www.youtube.com/embed/fpJdq12ddgk" frameborder="0"
-                                                allowfullscreen=""></iframe>
-                                        </figure>
-                                    </td>
-                                    <td>(A4)</td>
-                                </tr>
-                                <tr>
-                                    <td>(Q5 text in learning block does not appear)<div class="quiz">such design. go
-                                            swag. many text. so text, much text! go sit, want elit! much design, wow.
-                                            plz swag! many amet, go sit, much text! rate me.</div>
-                                    </td>
-                                    <td>(A5)</td>
-                                </tr>
-                                <tr>
-                                    <td>(Q6)such design. go swag. many text. so text, much text! go sit, want elit! much
-                                        design, wow. plz swag! many amet, go sit, much text! rate me.</td>
-                                    <td>(A6)</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </figure>
-                </div>
-            </div>
-        </div>
-
-        <div class="swapper">
-            <div class="quiz">
-                <h2>Line Match in swapper</h2>
-                How will line match look in swapper? Hopefully good, because the IDC's will 100% use it for this.
-            </div>
-            <div class="line-matching">
-                <figure class="table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Question</th>
-                                <th>Answer</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <h2>Heading 2</h2>(Q1)such design. go swag. many text. so text, much text! go sit,
-                                    want elit! much design, wow. plz swag! many amet, go sit, much text! rate me. Such
-                                    design. go swag. many text. so text, much text! go sit, want elit! much design, wow.
-                                    plz swag! many amet, go sit, much text! rate me. Such design. go swag. many text. so
-                                    text, much text! go sit, want elit! much design, wow. plz swag! many amet, go sit,
-                                    much text! rate me.
-                                </td>
-                                <td>(A1)</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <h3>Heading 3</h3>(Q2)such design. go swag. many text. so text, much text! go sit,
-                                    want elit! much design, wow. plz swag! many amet, go sit, much text! rate me.
-                                </td>
-                                <td>(A2)</td>
-                            </tr>
-                            <tr>
-                                <td>(Q3)<figure class="img"><img src="../assets/woods/cutter.jpg">
-                                        <figcaption>This is a figcaption</figcaption>
-                                    </figure>
-                                </td>
-                                <td>(A3)</td>
-                            </tr>
-                            <tr>
-                                <td>(Q4)<figure class="video">
-                                        <iframe width="560" height="315" src="https://www.youtube.com/embed/fpJdq12ddgk"
-                                            frameborder="0" allowfullscreen=""></iframe>
-                                    </figure>
-                                </td>
-                                <td>(A4)</td>
-                            </tr>
-                            <tr>
-                                <td>(Q5 text in learning block does not appear)<div class="quiz">such design. go swag.
-                                        many text. so text, much text! go sit, want elit! much design, wow. plz swag!
-                                        many amet, go sit, much text! rate me.</div>
-                                </td>
-                                <td>(A5)</td>
-                            </tr>
-                            <tr>
-                                <td>(Q6)such design. go swag. many text. so text, much text! go sit, want elit! much
-                                    design, wow. plz swag! many amet, go sit, much text! rate me.</td>
-                                <td>(A6)</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </figure>
-            </div>
-        </div>
+                    <tr>
+                        <td>What is HTML?</td>
+                        <td>HyperText Markup Language</td>
+                    </tr>
+                    <tr>
+                        <td>What is CSS?</td>
+                        <td>Cascading Style Sheets</td>
+                    </tr>
+                    <tr>
+                        <td>What is JavaScript?</td>
+                        <td>A programming language for web development</td>
+                    </tr>
+                </tbody>
+            </table>
+        </figure>
+    </div>
+        
+        <h3>Line Matching with Images</h3>
         <div class="line-matching">
-            <p>Line Matching with image only on one side</p>
             <figure class="table">
                 <table>
                     <thead>
                         <tr>
-                            <th>Challenges</th>
-                            <th>Example</th>
+                            <th>Image</th>
+                            <th>Description</th>
                         </tr>
                     </thead>
                     <tbody>
+                    <tr>
+                        <td><img src="../assets/woods/Damaged_Log.jpg" alt="Damaged Log" style="width: 100px;"></td>
+                        <td>Damaged Log</td>
+                    </tr>
+                    <tr>
+                        <td><img src="../assets/woods/mill_machine.jpg" alt="Mill Machine" style="width: 100px;"></td>
+                        <td>Mill Machine</td>
+                    </tr>
+                    <tr>
+                        <td><img src="../assets/woods/signpost.jpg" alt="Signpost" style="width: 100px;"></td>
+                        <td>Warning Signpost</td>
+                    </tr>
+                </tbody>
+            </table>
+        </figure>
+    </div>
+        
+        <h3>Complex Line Matching</h3>
+        <div class="line-matching">
+            <figure class="table">
+                <table>
+                    <thead>
                         <tr>
-                            <td>
-                                <figure class="img"><img src="../assets/icons/newest/activity.svg" />
-                                </figure>
-                            </td>
-                            <td>activity</td>
+                            <th>Software Development Phase</th>
+                            <th>Activities</th>
                         </tr>
-                        <tr>
-                            <td>
-                                <figure class="img"><img src="../assets/icons/newest/assignment.svg" />
-                                </figure>
-                            </td>
-                            <td>assignment</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <figure class="img"><img src="../assets/icons/newest/audio.svg" />
-                                </figure>
-                            </td>
-                            <td>audio</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <figure class="img"><img src="../assets/icons/newest/case.svg" />
-                                </figure>
-                            </td>
-                            <td>case</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <figure class="img"><img src="../assets/icons/newest/definition.svg" />
-                                </figure>
-                            </td>
-                            <td>definition</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </figure>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Planning</td>
+                        <td>Requirements gathering</td>
+                    </tr>
+                    <tr>
+                        <td>Planning</td>
+                        <td>Project scope definition</td>
+                    </tr>
+                    <tr>
+                        <td>Design</td>
+                        <td>System architecture</td>
+                    </tr>
+                    <tr>
+                        <td>Design</td>
+                        <td>Database design</td>
+                    </tr>
+                    <tr>
+                        <td>Implementation</td>
+                        <td>Code development</td>
+                    </tr>
+                    <tr>
+                        <td>Testing</td>
+                        <td>Unit testing</td>
+                    </tr>
+                    <tr>
+                        <td>Testing</td>
+                        <td>Integration testing</td>
+                    </tr>
+                    <tr>
+                        <td>Deployment</td>
+                        <td>Production release</td>
+                    </tr>
+                </tbody>
+            </table>
+        </figure>
+    </div>
+        
+        <div class="note">
+            <h2>Notes</h2>
+            <ul>
+                <li>Click on a question to start drawing a line, then click on the corresponding answer</li>
+                <li>Lines are drawn dynamically as you move the mouse</li>
+                <li>Correct matches create permanent lines, incorrect matches reset the selection</li>
+                <li>One-to-many matching is supported by repeating the same question with different answers</li>
+                <li>Use <code>.left-order</code> to keep questions in original order while shuffling answers</li>
+                <li>The Reset button clears all matches and allows starting over</li>
+                <li>On mobile devices, lines are hidden during interaction for better usability</li>
+                <li>Supports keyboard navigation (Enter key to select items)</li>
+                <li>Items are automatically shuffled unless using <code>.left-order</code></li>
+                <li>Can include images, text, or mixed content in matching items</li>
+            </ul>
         </div>
-
-
     </div>
     <script src="../js/lat.js"></script>
 </body>
-
 </html>
