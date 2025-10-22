@@ -395,14 +395,6 @@
                                             $card.hasClass('bottom-left') || 
                                             $card.hasClass('bottom-center') || 
                                             $card.hasClass('bottom-right');
-                    
-                    if (!hasAlignmentClass) {
-                        // Only set inline styles for cards without alignment classes
-                        $img.css({
-                            'max-height': `${imageHeight}px`,
-                            'width': 'auto'
-                        });
-                    }
                 });
                 
                 // Set cardStack height for navigation positioning

@@ -198,6 +198,10 @@ $mono-color: #b3e0cc;
         box-sizing: border-box;
         padding: 0.25em 0.35em;
 
+        .no-title {
+            display: none;
+        }
+
         .tab-title {
             margin-top: 0.25em;
             margin-bottom: 0.25em;

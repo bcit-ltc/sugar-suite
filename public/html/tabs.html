@@ -1,662 +1,146 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr" class="no-js">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta http-equiv="x-ua-compatible" content="ie=edge" />
-        <title>Sugar-Suite | Tabs</title>
-        <link rel="stylesheet" href="../css/bcit.css" />
-    </head>
-
+<html lang="en" class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=yes">
+    <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+    <title>Tabs - Sugar Suite Documentation</title>
+    <link rel="stylesheet" href="../css/bcit.css">
+</head>
+<body>
     <div class="container">
         <h1>Tabs</h1>
-        <h2>&lt;div class="tabs"&gt;</h2>
+        
+        <div class="note">
+            <h2>Description</h2>
+            <p>Creates a tabbed interface where content is organized into clickable tabs. Each tab contains related content that can be accessed by clicking the tab headers.</p>
+        </div>
+        
+        <div class="note">
+            <h2>Usage</h2>
+            <p>Wrap content in a container with class <code>.tabs</code>. Use headings (h2, h3) as tab titles. Content following each heading becomes tab content.</p>
+            
+            <h3>Available Options</h3>
+            <ul>
+                <li><strong>CSS Classes:</strong>
+                    <ul>
+                        <li><code>.tabs</code> - Main container for tabbed interface</li>
+                        <li><code>.nav-left</code> - Places navigation on the left side (default)</li>
+                        <li><code>.nav-top</code> - Places navigation at the top</li>
+                        <li><code>.nav-bottom</code> - Places navigation at the bottom</li>
+                        <li><code>.mono-color</code> - Uses single color scheme instead of pastel colors</li>
+                        <li><code>.no-title</code> - Hides the heading text in tab content (heading still used for tab button)</li>
+                    </ul>
+                </li>
+                <li><strong>Data Attributes:</strong>
+                    <ul>
+                        <li><code>data-color="color"</code> - Custom background color for individual tabs</li>
+                        <li><code>data-font-color="color"</code> - Custom text color for individual tabs</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        
+        <h2>Examples</h2>
+        
+        <h3>Basic Tabs</h3>
         <div class="tabs">
-            <h2 data-color="black" data-font-color="white">Tab 1</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
-            <h2 data-color="white">Tab 2</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
-            <h2>Tab 3</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
-            <h2>Tab 4</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
-            <h2>Tab 5</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
-            <h2>Tab 6</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
-            <h2>Tab 7</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
-            <h2>Tab 8</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
-            <h2>Tab 9</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
-            <h2>Tab 10</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
-            <h2>Tab 11</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
-            <h2>Tab 12</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
-            <h2>Tab 13</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
-            <h2>Tab 14</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
-            <h2>Tab 15</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
-            <h2>Tab 16</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
-            <h2>Tab 17</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
-            <h2>Tab 18</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
-            <h2>Tab 19</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
-            <h2>Tab 20</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
-        </div>
-        <br /><br />
-        <h2>&lt;div class="tabs large"&gt;</h2>
-        <div class="tabs large">
             <h2>Tab 1</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
+            <p>This is the content for the first tab.</p>
+            <p>You can include multiple paragraphs and other elements.</p>
+            
             <h2>Tab 2</h2>
+            <p>This is the content for the second tab.</p>
             <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
+                <li>Lists work fine in tabs</li>
+                <li>As do other HTML elements</li>
             </ul>
+            
             <h2>Tab 3</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
-            <h2>Tab 4</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
-            <h2>Tab 5</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
-        </div>
-        <br /><br />
-        <h2>&lt;div class="tabs nav-top large"&gt;</h2>
-        <div class="tabs nav-top large">
-            <h2>Tab 1</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
-            <h2>Tab 2</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
-            <h2>Tab 3</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
-            <h2>Tab 4</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
-            <h2>Tab 5</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
-        </div>
-        <br /><br />
-        <h2>&lt;div class="tabs nav-left large"&gt;</h2>
-        <div class="tabs nav-left large">
-            <h2>Tab 1</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
-            <h2>Tab 2</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
-            <h2>Tab 3</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
-            <h2>Tab 4</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
-            <h2>Tab 5</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
-        </div>
-        <br /><br />
-        <h2>&lt;div class="tabs mono-color large"&gt;</h2>
-        <div class="tabs mono-color large">
-            <h2>Tab 1</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
-            <h2>Tab 2</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
-            <h2>Tab 3</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
-            <h2>Tab 4</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
-            <h2>Tab 5</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
-        </div>
-        <br /><br />
-        <h2>&lt;div class="tabs larger"&gt;</h2>
-        <div class="tabs larger">
-            <h2>Tab 1</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
-            <h2>Tab 2</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
-            <h2>Tab 3</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
-            <h2>Tab 4</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
-            <h2>Tab 5</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
-        </div>
-        <br /><br />
-        <h2>&lt;div class="tabs largest"&gt;</h2>
-        <div class="tabs largest">
-            <h2>Tab 1</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
-            <h2>Tab 2</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
-            <h2>Tab 3</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
-            <h2>Tab 4</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
-            <h2>Tab 5</h2>
-            <ul>
-                <li>Link 1</li>
-                <li>Link 2</li>
-                <li>Link 3</li>
-                <li>Link 4</li>
-                <li>Link 5</li>
-            </ul>
-        </div>
-
-        <div class="accordion">
-            <h2>Accordion</h2>
-            <div class="case">
-                <h2>Case</h2>
-                <p>Something</p>
-                <div class="tabs">
-                    <h2>Tab 1</h2>
-                    <ul>
-                        <li>Link 1</li>
-                        <li>Link 2</li>
-                        <li>Link 3</li>
-                        <li>Link 4</li>
-                        <li>Link 5</li>
-                    </ul>
-                    <h2>Tab 2</h2>
-                    <ul>
-                        <li>Link 1</li>
-                        <li>Link 2</li>
-                        <li>Link 3</li>
-                        <li>Link 4</li>
-                        <li>Link 5</li>
-                    </ul>
-                    <h2>Tab 3</h2>
-                    <ul>
-                        <li>Link 1</li>
-                        <li>Link 2</li>
-                        <li>Link 3</li>
-                        <li>Link 4</li>
-                        <li>Link 5</li>
-                    </ul>
-                    <h2>Tab 4</h2>
-                    <ul>
-                        <li>Link 1</li>
-                        <li>Link 2</li>
-                        <li>Link 3</li>
-                        <li>Link 4</li>
-                        <li>Link 5</li>
-                    </ul>
-                    <h2>Tab 5</h2>
-                    <ul>
-                        <li>Link 1</li>
-                        <li>Link 2</li>
-                        <li>Link 3</li>
-                        <li>Link 4</li>
-                        <li>Link 5</li>
-                    </ul>
-                </div>
+            <p>This is the content for the third tab.</p>
+            <div class="example">
+                <h3>Example Box</h3>
+                <p>Even containers work within tabs.</p>
             </div>
         </div>
-        <div class="swapper">
-            <div class="tabs">
-                <h2>Tab 1</h2>
-                <ul>
-                    <li>Link 1</li>
-                    <li>Link 2</li>
-                    <li>Link 3</li>
-                    <li>Link 4</li>
-                    <li>Link 5</li>
-                </ul>
-                <h2>Tab 2</h2>
-                <ul>
-                    <li>Link 1</li>
-                    <li>Link 2</li>
-                    <li>Link 3</li>
-                    <li>Link 4</li>
-                    <li>Link 5</li>
-                </ul>
-                <h2>Tab 3</h2>
-                <ul>
-                    <li>Link 1</li>
-                    <li>Link 2</li>
-                    <li>Link 3</li>
-                    <li>Link 4</li>
-                    <li>Link 5</li>
-                </ul>
-                <h2>Tab 4</h2>
-                <ul>
-                    <li>Link 1</li>
-                    <li>Link 2</li>
-                    <li>Link 3</li>
-                    <li>Link 4</li>
-                    <li>Link 5</li>
-                </ul>
-                <h2>Tab 5</h2>
-                <ul>
-                    <li>Link 1</li>
-                    <li>Link 2</li>
-                    <li>Link 3</li>
-                    <li>Link 4</li>
-                    <li>Link 5</li>
-                </ul>
-            </div>
-            <div class="tabs nav-bottom">
-                <h2>Tab 1</h2>
-                <ul>
-                    <li>Link 1</li>
-                    <li>Link 2</li>
-                    <li>Link 3</li>
-                    <li>Link 4</li>
-                    <li>Link 5</li>
-                </ul>
-                <h2>Tab 2</h2>
-                <ul>
-                    <li>Link 1</li>
-                    <li>Link 2</li>
-                    <li>Link 3</li>
-                    <li>Link 4</li>
-                    <li>Link 5</li>
-                </ul>
-                <h2>Tab 3</h2>
-                <ul>
-                    <li>Link 1</li>
-                    <li>Link 2</li>
-                    <li>Link 3</li>
-                    <li>Link 4</li>
-                    <li>Link 5</li>
-                </ul>
-                <h2>Tab 4</h2>
-                <ul>
-                    <li>Link 1</li>
-                    <li>Link 2</li>
-                    <li>Link 3</li>
-                    <li>Link 4</li>
-                    <li>Link 5</li>
-                </ul>
-                <h2>Tab 5</h2>
-                <ul>
-                    <li>Link 1</li>
-                    <li>Link 2</li>
-                    <li>Link 3</li>
-                    <li>Link 4</li>
-                    <li>Link 5</li>
-                </ul>
-            </div>
-            <div class="tabs nav-left">
-                <h2>Tab 1</h2>
-                <ul>
-                    <li>Link 1</li>
-                    <li>Link 2</li>
-                    <li>Link 3</li>
-                    <li>Link 4</li>
-                    <li>Link 5</li>
-                </ul>
-                <h2>Tab 2</h2>
-                <ul>
-                    <li>Link 1</li>
-                    <li>Link 2</li>
-                    <li>Link 3</li>
-                    <li>Link 4</li>
-                    <li>Link 5</li>
-                </ul>
-                <h2>Tab 3</h2>
-                <ul>
-                    <li>Link 1</li>
-                    <li>Link 2</li>
-                    <li>Link 3</li>
-                    <li>Link 4</li>
-                    <li>Link 5</li>
-                </ul>
-                <h2>Tab 4</h2>
-                <ul>
-                    <li>Link 1</li>
-                    <li>Link 2</li>
-                    <li>Link 3</li>
-                    <li>Link 4</li>
-                    <li>Link 5</li>
-                </ul>
-                <h2>Tab 5</h2>
-                <ul>
-                    <li>Link 1</li>
-                    <li>Link 2</li>
-                    <li>Link 3</li>
-                    <li>Link 4</li>
-                    <li>Link 5</li>
-                </ul>
-            </div>
-            <div class="tabs nav-top">
-                <h2>Tab 1</h2>
-                <ul>
-                    <li>Link 1</li>
-                    <li>Link 2</li>
-                    <li>Link 3</li>
-                    <li>Link 4</li>
-                    <li>Link 5</li>
-                </ul>
-                <h2>Tab 2</h2>
-                <ul>
-                    <li>Link 1</li>
-                    <li>Link 2</li>
-                    <li>Link 3</li>
-                    <li>Link 4</li>
-                    <li>Link 5</li>
-                </ul>
-                <h2>Tab 3</h2>
-                <ul>
-                    <li>Link 1</li>
-                    <li>Link 2</li>
-                    <li>Link 3</li>
-                    <li>Link 4</li>
-                    <li>Link 5</li>
-                </ul>
-                <h2>Tab 4</h2>
-                <ul>
-                    <li>Link 1</li>
-                    <li>Link 2</li>
-                    <li>Link 3</li>
-                    <li>Link 4</li>
-                    <li>Link 5</li>
-                </ul>
-                <h2>Tab 5</h2>
-                <ul>
-                    <li>Link 1</li>
-                    <li>Link 2</li>
-                    <li>Link 3</li>
-                    <li>Link 4</li>
-                    <li>Link 5</li>
-                </ul>
-            </div>
+        
+        <h3>Tabs with Custom Colors</h3>
+        <div class="tabs">
+            <h2 data-color="#ff6b6b" data-font-color="#ffffff">Red Tab</h2>
+            <p>This tab has a custom red background color.</p>
+            
+            <h2 data-color="#4ecdc4" data-font-color="#ffffff">Teal Tab</h2>
+            <p>This tab has a custom teal background color.</p>
+            
+            <h2 data-color="#45b7d1" data-font-color="#ffffff">Blue Tab</h2>
+            <p>This tab has a custom blue background color.</p>
+        </div>
+        
+        <h3>Tabs with Custom Tab Text</h3>
+        <div class="tabs">
+            <h2>Introduction</h2>
+            <p>Tabs text: Welcome to our course</p>
+            <p>This uses the text after "Tabs text:" as the tab label instead of the heading text.</p>
+            
+            <h2>Main Content</h2>
+            <p>Tabs text: Core Learning Material</p>
+            <p>The heading says "Main Content" but the tab shows "Core Learning Material".</p>
+            
+            <h2>Conclusion</h2>
+            <p>Tabs text: Summary and Next Steps</p>
+            <p>This allows for shorter tab labels while keeping descriptive headings.</p>
+        </div>
+        
+        <h3>Tabs with Mono Color</h3>
+        <div class="tabs mono-color">
+            <h2>Single Color Tab 1</h2>
+            <p>This tab set uses a single color scheme instead of the default pastel colors.</p>
+            
+            <h2>Single Color Tab 2</h2>
+            <p>The mono-color class creates a more uniform appearance.</p>
+            
+            <h2>Single Color Tab 3</h2>
+            <p>All tabs use the same background color with white borders for the selected tab.</p>
+        </div>
+        
+        <h3>Tabs with Hidden Titles</h3>
+        <div class="tabs">
+            <h2 class="no-title">Tab 1</h2>
+            <p>This tab has a hidden title. The heading "Tab 1" won't be visible in the content area, but the tab button will still show "Tab 1".</p>
+            <p>This is useful when you want clean content without visible headings.</p>
+            
+            <h2>Tab 2</h2>
+            <p>This tab has a visible title. The heading "Tab 2" will be shown in the content area.</p>
+            
+            <h2 class="no-title">Tab 3</h2>
+            <p>Another tab with hidden title. Notice how the content flows without the heading being visible.</p>
+        </div>
+        
+        <h3>Tabs with Mixed Title Visibility</h3>
+        <div class="tabs">
+            <h2>Visible Title</h2>
+            <p>This tab shows the heading "Visible Title" in the content area.</p>
+            
+            <h2 class="no-title">Hidden Title</h2>
+            <p>This tab hides the heading "Hidden Title" but still creates a tab button with that text.</p>
+            
+            <h2>Another Visible Title</h2>
+            <p>This tab shows the heading "Another Visible Title" in the content area.</p>
+        </div>
+        
+        <div class="note">
+            <h2>Notes</h2>
+            <ul>
+                <li>Tab navigation is automatically generated from headings</li>
+                <li>Use "Tabs text: [custom text]" after headings to override tab labels</li>
+                <li>Tab colors can be customized per tab using data attributes</li>
+                <li>Tabs work well with other interactive elements</li>
+                <li>Use <code>.nav-top</code> or <code>.nav-bottom</code> to control tab placement</li>
+                <li>Add <code>class="no-title"</code> to headings to hide them in content while keeping tab buttons</li>
+            </ul>
         </div>
     </div>
     <script src="../js/lat.js"></script>
+</body>
 </html>

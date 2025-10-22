@@ -11,11 +11,28 @@
 
                 $(".tooltip").each(function () {
                     let $tooltip = $(this);
-                    let tooltipContent = $tooltip.next(".tooltip-content")[0] || $tooltip.parent().next(".tooltip-content")[0] || $tooltip.data("tooltip-content");
+                    let tooltipContent = null;
 
+                    // First check for data-content-id
                     let contentId = $tooltip.data("content-id");
                     if (contentId) {
                         tooltipContent = $("#" + contentId)[0];
+                    }
+                    
+                    // If no content ID, check for data-tooltip-content
+                    if (!tooltipContent) {
+                        tooltipContent = $tooltip.data("tooltip-content");
+                    }
+                    
+                    // If still no content, look for adjacent .tooltip-content elements
+                    if (!tooltipContent) {
+                        // Look for next sibling
+                        tooltipContent = $tooltip.next(".tooltip-content")[0];
+                        
+                        // If not found, look for parent's next sibling
+                        if (!tooltipContent) {
+                            tooltipContent = $tooltip.parent().next(".tooltip-content")[0];
+                        }
                     }
 
                     if (tooltipContent) {
@@ -31,15 +48,12 @@
                             content: tooltipContent,
                             allowHTML: true,
                             trigger: "click",
-                            //hideOnClick: false,
-                            appendTo: $("body>.container")[0],
                             interactive: true,
                             placement: 'auto',
                             onCreate(instance) {
-                                instance.props.content.style.display = "";
-                                //console.log(" ", instance.props);
-
-
+                                if (instance.props.content && instance.props.content.style) {
+                                    instance.props.content.style.display = "";
+                                }
                             }
                         };
 
@@ -48,7 +62,6 @@
                             addProps = JSON.parse(addProps);
                             if (addProps) {
                                 tippyProps = Object.assign(tippyProps, addProps);
-
                             }
                         }
 

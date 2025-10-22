@@ -1,44 +1,82 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=yes">
     <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
-    <title>Checklist</title>
+    <title>Checklist - Sugar Suite Documentation</title>
     <link rel="stylesheet" href="../css/bcit.css">
-    
 </head>
-
 <body>
     <div class="container">
-        <h1>COMP 7081 - Technical Issues in Software Development</h1>
-        <!-- add class strikethrough if you want to strikethrough a text when the checkbox is checked -->
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas vero porro, officia debitis culpa magni
-            illo cum laudantium asperiores labore voluptatum aliquam consectetur voluptates harum ut natus repudiandae
-            sequi quod?</p>
+        <h1>Checklist</h1>
+        
+        <div class="note">
+            <h2>Description</h2>
+            <p>Creates interactive checklists with persistent storage, hierarchical checking, and optional strikethrough effects. Perfect for task lists, course progress tracking, and interactive learning activities.</p>
+        </div>
+        
+        <div class="note">
+            <h2>Usage</h2>
+            <p>Wrap a list (ul or ol) in a container with class <code>.checklist</code>. Each list item becomes a checkable item. Use special syntax for conditional content display.</p>
+            
+            <h3>Available Options</h3>
+            <ul>
+                <li><strong>CSS Classes:</strong>
+                    <ul>
+                        <li><code>.checklist</code> - Main container</li>
+                        <li><code>.strikethrough</code> - Adds strikethrough effect to checked items</li>
+                        <li><code>.hide-after</code> - Hides content after checking (on list items)</li>
+                        <li><code>.show-after</code> - Shows content after checking (on list items)</li>
+                    </ul>
+                </li>
+                <li><strong>Special Syntax:</strong>
+                    <ul>
+                        <li><code>@</code> - Prefix for conditional content that shows after checking</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        
+        <h2>Examples</h2>
+        
+        <h3>Basic Checklist</h3>
+        <div class="checklist">
+            <ul>
+                <li>Complete Week 1 readings</li>
+                <li>Submit Assignment 1</li>
+                <li>Participate in discussion forum</li>
+                <li>Take Week 1 quiz</li>
+            </ul>
+        </div>
+        
+        <h3>Checklist with Strikethrough</h3>
+        <div class="checklist strikethrough">
+            <ul>
+                <li>Review course syllabus</li>
+                <li>Set up development environment</li>
+                <li>Complete first coding exercise</li>
+                <li>Submit initial project proposal</li>
+            </ul>
+        </div>
+        
+        <h3>Hierarchical Checklist</h3>
         <div class="checklist">
             <ul>
                 <li>Week 1
                     <ul>
                         <li>Software Process Models</li>
+                        <li>Software Design Process</li>
                     </ul>
                 </li>
                 <li>Week 2
                     <ul>
-                        <li>Software Design Process</li>
-                        <li>Reference Architectures
+                        <li>Reference Architectures</li>
+                        <li>Object Oriented Design
                             <ul>
-                                <li>
-                                    <p>Assignment 1</p>
-                                    <p>@</p>
-                                    <p>Due date: 15 May 2018</p>
-                                    <div class="activity">
-                                        <h2>Market Activity</h2>
-                                        <p>Craft a message about your product that...</p>
-                                    </div>
-                                </li>
+                                <li>Assignment 1</li>
+                                <li>Due date: 15 May 2018</li>
                             </ul>
                         </li>
                     </ul>
@@ -46,68 +84,110 @@
                 <li>Week 4
                     <ul>
                         <li>Software Design Process</li>
-                        <li>Object Oriented Design
-                            <p>@</p>
-                            <div class="line-matching">
-                                <figure class="table">
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Question</th>
-                                                <th>Answer</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>verb</td>
-                                                <td>Describes the activity a learner must do to show achievement of
-                                                    learning
-                                                    &ndash; from cognitive, psychomotor or affective domain</td>
-                                            </tr>
-                                            <tr>
-                                                <td>criteria</td>
-                                                <td>Describes the degree of precision expected from the learner</td>
-                                            </tr>
-                                            <tr>
-                                                <td>condition</td>
-                                                <td>Describes the constraint or the context in which a learner is
-                                                    expected
-                                                    to
-                                                    demonstrate achievement of their learning</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </figure>
-                            </div>
-                        </li>
+                        <li>Object Oriented Design</li>
                     </ul>
                 </li>
             </ul>
         </div>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas vero porro, officia debitis culpa magni
-            illo cum laudantium asperiores labore voluptatum aliquam consectetur voluptates harum ut natus repudiandae
-            sequi quod?</p>
-        <ol>
-            <li>First</li>
-            <li>Second</li>
-        </ol>
-        <ol>
-            <li>First</li>
-            <li>Second</li>
-        </ol>
-        <ol>
-            <li>First</li>
-            <li>Second</li>
-        </ol>
-        <ol>
-            <li>First</li>
-            <li>Second</li>
-        </ol>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas vero porro, officia debitis culpa magni
-            illo cum laudantium asperiores labore voluptatum aliquam consectetur voluptates harum ut natus repudiandae
-            sequi quod?</p>
+        
+        <h3>Checklist with Conditional Content (@ symbol)</h3>
+        <div class="checklist">
+            <ul>
+                <li>Read Chapter 1
+                    <p>@ This chapter covers the fundamental concepts you'll need for the rest of the course.</p>
+                </li>
+                <li>Complete Exercise 1
+                    <p>@ The solution is available in the resources folder.</p>
+                </li>
+                <li>Submit Assignment 1
+                    <p>@ Remember to include your name and student ID in the header.</p>
+                </li>
+            </ul>
+        </div>
+        
+        <h3>Checklist with Hide-After Content</h3>
+        <div class="checklist">
+            <ul>
+                <li class="hide-after">Initial Setup Instructions
+                    <ul>
+                        <li>Download required software</li>
+                        <li>Configure development environment</li>
+                        <li>Test installation</li>
+                    </ul>
+                </li>
+                <li class="hide-after">Advanced Configuration
+                    <ul>
+                        <li>Set up version control</li>
+                        <li>Configure IDE settings</li>
+                        <li>Test advanced features</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        
+        <h3>Checklist with Show-After Content</h3>
+        <div class="checklist">
+            <ul>
+                <li class="show-after">Complete Prerequisites
+                    <ul>
+                        <li>Basic programming knowledge</li>
+                        <li>Understanding of data structures</li>
+                        <li>Familiarity with algorithms</li>
+                    </ul>
+                </li>
+                <li class="show-after">Pass Initial Assessment
+                    <ul>
+                        <li>Take placement test</li>
+                        <li>Submit coding sample</li>
+                        <li>Complete interview</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        
+        <h3>Complex Checklist Example</h3>
+        <div class="checklist strikethrough">
+            <ul>
+                <li>Course Introduction
+                    <p>@ Welcome! This course will cover advanced programming concepts.</p>
+                    <ul>
+                        <li>Review syllabus</li>
+                        <li>Set up development environment</li>
+                        <li>Join class discussion forum</li>
+                    </ul>
+                </li>
+                <li class="show-after">Module 1: Fundamentals
+                    <ul>
+                        <li>Read Chapter 1</li>
+                        <li>Complete exercises 1-5</li>
+                        <li>Submit first assignment</li>
+                    </ul>
+                </li>
+                <li class="hide-after">Module 2: Advanced Topics
+                    <ul>
+                        <li>Read Chapters 2-3</li>
+                        <li>Complete project proposal</li>
+                        <li>Present to class</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="note">
+            <h2>Notes</h2>
+            <ul>
+                <li>Checklist state is automatically saved to browser's localStorage</li>
+                <li>Parent items are automatically checked when all children are checked</li>
+                <li>Use <code>@</code> at the beginning of text to create conditional content</li>
+                <li><code>.hide-after</code> hides content when item is checked</li>
+                <li><code>.show-after</code> shows content when item is checked</li>
+                <li><code>.strikethrough</code> adds strikethrough effect to checked items</li>
+                <li>Supports nested lists with automatic hierarchical checking</li>
+                <li>Each checklist gets a unique ID based on the page URL</li>
+                <li>Content is preserved across browser sessions</li>
+            </ul>
+        </div>
     </div>
     <script src="../js/lat.js"></script>
 </body>
-
 </html>
