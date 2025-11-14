@@ -51,6 +51,9 @@ if command -v direnv >/dev/null 2>&1; then
   esac
 fi
 
+# Ensure scripts are executable
+chmod +x "$SCRIPT_DIR/"*.sh
+
 # Replace Codespaces banner (platform reads this path)
 NOTICE_WS="/workspaces/.codespaces/shared/first-run-notice.txt"
 cat > "$NOTICE_WS" <<'EOF'
