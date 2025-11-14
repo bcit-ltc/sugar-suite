@@ -37,3 +37,6 @@ LABEL org.opencontainers.image.description="Sugar-Suite is a \"Framework Factory
 WORKDIR /usr/share/nginx/html
 
 COPY --from=cleaner /usr/share/nginx/html/ ./
+
+COPY favicon.ico /usr/share/nginx/html/
+COPY conf.d/default.conf /etc/nginx/conf.d/default.conf

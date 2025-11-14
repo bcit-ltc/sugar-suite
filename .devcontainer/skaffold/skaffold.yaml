@@ -19,8 +19,6 @@ deploy:
         setValues:
           frontend.image.registry: registry.localhost:5000
           frontend.image.repository: app
-          github.ociTokenSecretName: gh-private-oci-token
-          github.ociTokenKey: GITHUB_TOKEN
         setValueTemplates:
           # frontend.image.registry: "{{.IMAGE_DOMAIN_app}}"
           # frontend.image.repository: "{{.IMAGE_REPO_NO_DOMAIN_app}}"
