@@ -6,11 +6,25 @@ Printing
 	function beforePrinting() {
 		$("._bellow").show();
 		$(".reveal-button").next().show();
+		
+		// Track print initiated
+		if (window.plausible) {
+			window.plausible('Feature Used', {
+				props: { feature: 'printing', action: 'initiated' }
+			});
+		}
 	}
 
 	function afterPrinting() {
 		$("_bellow").hide();
 		$(".reveal-button").next().hide();
+		
+		// Track print completed
+		if (window.plausible) {
+			window.plausible('Feature Used', {
+				props: { feature: 'printing', action: 'completed' }
+			});
+		}
 	}
 	
 	

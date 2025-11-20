@@ -17,9 +17,10 @@
 	
 	// Transform Accordion
     $(".accordion").each(function (index) {
-        var toggleTag = $(this).children().first().prop("tagName");
+        var $accordion = $(this);
+        var toggleTag = $accordion.children().first().prop("tagName");
 
-        $(this).children(toggleTag).each(function () {
+        $accordion.children(toggleTag).each(function () {
             $(this).addClass("accordion-button");
             $(this).attr("tabindex", 0).attr("role", "button");
             //Wraps content sections that will be toggled 
@@ -29,8 +30,16 @@
                 .wrapAll("<div class='_bellow'></div>");
         });
 		
-		if(!$(this).hasClass("no-toggle")) {
-			$(this).prepend("<button class='accordion-toggle' title='toggle'></button>");
+		if(!$accordion.hasClass("no-toggle")) {
+			$accordion.prepend("<button class='accordion-toggle' title='toggle'></button>");
+		}
+		
+		// Track accordion loaded
+		if (window.plausible) {
+			var buttonCount = $accordion.find(".accordion-button").length;
+			window.plausible('Feature Used', {
+				props: { feature: 'accordion', action: 'loaded', sections: buttonCount }
+			});
 		}
 		
 	});
@@ -81,9 +90,17 @@
         if($(this).hasClass("_hidden")){
             $(this).hide();
         }
-		$(this).stop().removeClass("_hidden").addClass("open").slideDown().promise().done(function(){
+		var $bellow = $(this);
+		$bellow.stop().removeClass("_hidden").addClass("open").slideDown().promise().done(function(){
 			if($(this).find(".line-matching")){
 				$(window).trigger('resize');
+			}
+			
+			// Track accordion opened
+			if (window.plausible) {
+				window.plausible('Feature Used', {
+					props: { feature: 'accordion', action: 'opened' }
+				});
 			}
 		});
 		
@@ -93,6 +110,13 @@
 	$("._bellow").on("close",function(e) {
         $(this).stop().removeClass("open").slideUp();
         e.stopPropagation();
+		
+		// Track accordion closed
+		if (window.plausible) {
+			window.plausible('Feature Used', {
+				props: { feature: 'accordion', action: 'closed' }
+			});
+		}
 	});
     
     $("._bellow").each(function () {

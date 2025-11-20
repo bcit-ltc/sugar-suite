@@ -22,6 +22,14 @@
             
         $figureImage.not(":first").hide(); // Show first Figure
 
+        // Track slider loaded
+        if (window.plausible) {
+            var slideCount = $figureImage.length;
+            window.plausible('Feature Used', {
+                props: { feature: 'slider', action: 'loaded', slideCount: slideCount }
+            });
+        }
+
         $slider.prepend($prevButton);
         $slider.append($nextButton);
         $prevButton.css({ "height": $slider.height()-50, "width": $prevButton.children(".prev-style").width() + 5});
@@ -74,6 +82,13 @@
             $figureImage.css({ "display": "none", "left": "0px" });
             $figureImage.eq([index.getIndex()]).css({ "opacity": "1", "display": "block" });
             toggleFullScreen();
+            
+            // Track fullscreen closed
+            if (window.plausible) {
+                window.plausible('Feature Used', {
+                    props: { feature: 'slider', action: 'fullscreen-closed' }
+                });
+            }
         });
         
         // Show and hide slider caption
@@ -88,6 +103,14 @@
                 $toggleButton.html("Hide caption &#9660;");
                  $(this).css({"backgroundColor":"$gray-base"});
             }
+            
+            // Track caption toggled
+            if (window.plausible) {
+                var action = isOpened ? "caption-hidden" : "caption-shown";
+                window.plausible('Feature Used', {
+                    props: { feature: 'slider', action: action }
+                });
+            }
         });
 
         // Show slider in fullscreen mode
@@ -99,6 +122,13 @@
             $modalImages.eq(index.getIndex()).show().css("opacity", "1");
             $sliderModal.children("button").show();
             $("body").css("overflow", "hidden");
+            
+            // Track fullscreen opened
+            if (window.plausible) {
+                window.plausible('Feature Used', {
+                    props: { feature: 'slider', action: 'fullscreen-opened' }
+                });
+            }
         });
 
         // Change the current image to the prev/next image + animation

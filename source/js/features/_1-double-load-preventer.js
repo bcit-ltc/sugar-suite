@@ -7,4 +7,13 @@
 	} else {
 		window.latFileLoaded = true;
 	}
+	
+	// Load Plausible Analytics if not already loaded
+	if (!window.plausible && !document.querySelector('script[data-domain]')) {
+		var script = document.createElement('script');
+		script.defer = true;
+		script.setAttribute('data-domain', 'ltc.bcit.ca');
+		script.src = 'https://common.ltc.bcit.ca/js/utils.js'; // Hosted on your own domain
+		document.head.appendChild(script);
+	}
 }());

@@ -142,6 +142,14 @@
         // put all these together into the dom
         $matchingContainer.append(wrapperDiv);
         $matchingContainer.insertAfter($matching.find(".table"));
+        
+        // Track line matching loaded
+        if (window.plausible) {
+            var matchCount = matchingObj.questionObj.length;
+            window.plausible('Feature Used', {
+                props: { feature: 'line-matching', action: 'loaded', matchCount: matchCount }
+            });
+        }
 
         if (matchingObj.$title.length && matchingObj.$answers.length) {
             // Get table header
@@ -560,6 +568,20 @@
                         // finalize the line
                         isClicked = false;
                         $matchingDiv.find(".connector-line.selected").removeClass("selected").addClass("done");
+                        
+                        // Track all matches completed (check after line is marked as done)
+                        if (window.plausible) {
+                            var $allConnectorLines = $matchingDiv.find(".connector-line");
+                            var totalMatches = $allConnectorLines.length;
+                            var completedMatches = $matchingDiv.find(".connector-line.done").length;
+                            var allCompleted = completedMatches >= totalMatches;
+                            
+                            if (allCompleted) {
+                                window.plausible('Feature Used', {
+                                    props: { feature: 'line-matching', action: 'all-completed', totalMatches: totalMatches }
+                                });
+                            }
+                        }
 
                         // use the question tally to determine if this question is done, or still has more answers.
                         if (answerSequence[0].find(".matching-item-contents").data("remainingAnswers")) {

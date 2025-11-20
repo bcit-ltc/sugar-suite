@@ -55,6 +55,13 @@
         $tabContents.not(".active").hide();
         $tabNav.children("li:first").addClass("selected");
 
+        // Track tabs loaded
+        if (window.plausible) {
+            var tabCount = tabTexts.length;
+            window.plausible('Feature Used', {
+                props: { feature: 'tabs', action: 'loaded', tabCount: tabCount }
+            });
+        }
 
         $tabNav.children("li").click(function (e) {
             e.preventDefault();
@@ -69,6 +76,13 @@
             var selectedTabColor = $tabNav.children("li").eq(selectedTabIndex).css("border-bottom-color");
             $tabNav.css("border-bottom-color", selectedTabColor);
             $tabBody.css("border-color", selectedTabColor);
+            
+            // Track nav button clicked
+            if (window.plausible) {
+                window.plausible('Feature Used', {
+                    props: { feature: 'tabs', action: 'nav-clicked', navButton: selectedTabIndex + 1 }
+                });
+            }
         });
         $tabBody.css("border-color", $tabNav.children("li.selected").css("border-color"));
     });

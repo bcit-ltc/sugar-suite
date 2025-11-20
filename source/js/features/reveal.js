@@ -1,6 +1,22 @@
 // SHOW/HIDE CONTENT (#REVEAL)
 
 $(document).ready(function () {
+    // Track legacy usage: .reveal with data-min-text
+    if (window.plausible) {
+        var $revealWithMinText = $(".reveal[data-min-text]");
+        
+        if ($revealWithMinText.length > 0) {
+            window.plausible('Legacy Class Used', {
+                props: { 
+                    feature: 'active-reveal', 
+                    action: 'loaded',
+                    url: window.location.href,
+                    count: $revealWithMinText.length
+                }
+            });
+        }
+    }
+    
     $(".reveal, .active-reveal").each(function () {
         // Reveal button text
         var buttonText = $(this).data("button") || "Reveal";
@@ -45,12 +61,22 @@ $(document).ready(function () {
 
         $(this).before($button);
         $(this).hide();
+        
+        // Track reveal loaded
+        if (window.plausible) {
+            var revealType = inputLength ? "active-reveal" : "reveal";
+            window.plausible('Feature Used', {
+                props: { feature: 'reveal', action: 'loaded', revealType: revealType }
+            });
+        }
 
     });
 
 
     $(".reveal-button").click(function () {
-        $(this).next().slideToggle("fast").promise().done(function () {
+        var $revealContent = $(this).next();
+        
+        $revealContent.slideToggle("fast").promise().done(function () {
             if ($(this).find(".line-matching")) {
                 $(window).trigger('resize');
             }
