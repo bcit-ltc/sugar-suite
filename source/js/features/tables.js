@@ -17,9 +17,12 @@
 		if (plausibleFn) {
 			var tableCount = $("table").length;
 			if (tableCount > 0) {
-				plausibleFn('Feature Used', {
+				var eventData = {
 					props: { feature: 'tables', action: 'loaded', tableCount: tableCount }
-				});
+				};
+				console.log('Sending Plausible event:', 'Feature Used', eventData);
+				plausibleFn('Feature Used', eventData);
+				console.log('Plausible event sent successfully');
 				return true;
 			}
 		}
