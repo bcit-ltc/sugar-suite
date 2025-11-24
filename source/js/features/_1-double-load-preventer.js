@@ -13,7 +13,7 @@
 		var script = document.createElement('script');
 		script.defer = true;
 		script.setAttribute('data-domain', 'ltc.bcit.ca');
-		script.src = 'https://common.ltc.bcit.ca/js/utils.js'; // Hosted on your own domain
+		script.src = 'https://common.latest.ltc.bcit.ca/js/utils.js'; // Hosted on your own domain
 		document.head.appendChild(script);
 	}
 }());
