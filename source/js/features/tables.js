@@ -14,15 +14,24 @@
 			plausibleFn = window.plausible.init;
 		}
 		
-		if (plausibleFn) {
+		if (plausibleFn || window.plausibleWithHost) {
 			var tableCount = $("table").length;
 			if (tableCount > 0) {
 				var eventData = {
 					props: { feature: 'tables', action: 'loaded', tableCount: tableCount }
 				};
 				console.log('Sending Plausible event:', 'Feature Used', eventData);
-				plausibleFn('Feature Used', eventData);
-				console.log('Plausible event sent successfully');
+				
+				// Use helper function that automatically adds host property
+				if (window.plausibleWithHost) {
+					window.plausibleWithHost('Feature Used', eventData);
+					console.log('Plausible event sent successfully');
+				} else if (plausibleFn) {
+					// Fallback if helper not available yet
+					eventData.props.host = window.location.hostname;
+					plausibleFn('Feature Used', eventData);
+					console.log('Plausible event sent successfully');
+				}
 				return true;
 			}
 		}
