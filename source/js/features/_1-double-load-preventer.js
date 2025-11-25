@@ -8,8 +8,18 @@
 		window.latFileLoaded = true;
 	}
 	
+	// Track network errors to suppress repeated failures
+	var plausibleErrorCount = 0;
+	var plausibleErrorThreshold = 3;
+	var plausibleDisabled = false;
+	
 	// Helper function to add host property to Plausible events
 	window.plausibleWithHost = function(eventName, options) {
+		// Skip if Plausible is disabled due to repeated errors
+		if (plausibleDisabled) {
+			return;
+		}
+		
 		if (!options) options = {};
 		if (!options.props) options.props = {};
 		// Add host as custom property to track which website the event came from
@@ -24,15 +34,50 @@
 		}
 		
 		if (plausibleFn) {
-			console.log('Calling Plausible with:', eventName, options);
+			// Extract feature name from props if available for better logging
+			var featureInfo = '';
+			if (options && options.props) {
+				if (options.props.feature) {
+					featureInfo = ' (feature: ' + options.props.feature;
+					if (options.props.action) {
+						featureInfo += ', action: ' + options.props.action;
+					}
+					featureInfo += ')';
+				}
+			}
+			console.log('Sending Plausible event:', eventName + featureInfo, options);
 			try {
+				// Wrap the callback to catch network errors
+				var originalCallback = options.callback;
+				options.callback = function(result) {
+					if (result && result.error) {
+						plausibleErrorCount++;
+						// Suppress console errors after threshold to reduce noise
+						if (plausibleErrorCount <= plausibleErrorThreshold) {
+							console.warn('Plausible event failed:', eventName + featureInfo, result.error.message || result.error);
+						}
+						// Disable Plausible after repeated failures (likely CORS/network issue)
+						if (plausibleErrorCount >= plausibleErrorThreshold) {
+							plausibleDisabled = true;
+							console.warn('Plausible disabled due to repeated network errors. This is normal in development or when CORS is not configured.');
+						}
+					} else {
+						// Reset error count on success
+						plausibleErrorCount = 0;
+						plausibleDisabled = false;
+						console.log('Plausible event sent successfully:', eventName + featureInfo);
+					}
+					// Call original callback if provided
+					if (originalCallback && typeof originalCallback === 'function') {
+						originalCallback(result);
+					}
+				};
 				plausibleFn(eventName, options);
-				console.log('Plausible function called successfully');
 			} catch (error) {
-				console.error('Error calling Plausible function:', error);
+				console.error('Error calling Plausible function for event:', eventName + featureInfo, error);
 			}
 		} else {
-			console.warn('Plausible function not available');
+			console.warn('Plausible function not available for event:', eventName);
 		}
 	};
 	
@@ -44,10 +89,13 @@
 		};
 		
 		// Configure: allow localhost tracking for testing
+		// Set endpoint explicitly to avoid CORS issues
+		var isCommonDomain = location.hostname === 'common.ltc.bcit.ca';
 		window.plausible.o = { 
 			captureOnLocalhost: true,
 			autoCapturePageviews: true,
 			logging: true,
+			endpoint: isCommonDomain ? '/api/event' : 'https://common.ltc.bcit.ca/api/event'
 		};
 		
 		var script = document.createElement('script');

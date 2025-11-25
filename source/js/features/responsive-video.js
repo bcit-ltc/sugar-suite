@@ -23,7 +23,7 @@
 		// Track video loaded - website/platform
 		if (window.plausible) {
 			// Helper function to extract website from URL
-			function getWebsite(src) {
+			var getWebsite = function(src) {
 				if (!src) {
 					return "unknown";
 				}
