@@ -81,6 +81,7 @@
 				// Add error handling to the callback
 				var originalCallback = options.callback;
 				options.callback = handleEventCallback(eventName, options, originalCallback);
+				console.log('Callback attached for:', eventName, 'Has callback:', !!options.callback);
 				// Call the original plausible function
 				return originalPlausibleFn(eventName, options);
 			} catch (error) {
