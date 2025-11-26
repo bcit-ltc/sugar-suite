@@ -4,52 +4,13 @@
 	var stripedRowTolerance = 5; // Number of columns required for striped tables
 
 	// Track tables loaded
-	function trackTables() {
-		// Check if plausible is a function (standard) or an object with init method (custom wrapper)
-		var plausibleFn = null;
-		if (typeof window.plausible === 'function') {
-			plausibleFn = window.plausible;
-		} else if (window.plausible && typeof window.plausible.init === 'function') {
-			// Custom wrapper - use the init method
-			plausibleFn = window.plausible.init;
+	if (window.plausible) {
+		var tableCount = $("table").length;
+		if (tableCount > 0) {
+			window.plausible('Feature Used', {
+				props: { feature: 'tables', action: 'loaded', tableCount: tableCount }
+			});
 		}
-		
-		if (plausibleFn || window.plausibleWithHost) {
-			var tableCount = $("table").length;
-			if (tableCount > 0) {
-				var eventData = {
-					props: { feature: 'tables', action: 'loaded', tableCount: tableCount }
-				};
-				console.log('Sending Plausible event:', 'Feature Used', eventData);
-				
-				// Use helper function that automatically adds host property
-				if (window.plausibleWithHost) {
-					window.plausibleWithHost('Feature Used', eventData);
-					console.log('Plausible event sent successfully');
-				} else if (plausibleFn) {
-					// Fallback if helper not available yet
-					eventData.props.host = window.location.hostname;
-					plausibleFn('Feature Used', eventData);
-					console.log('Plausible event sent successfully');
-				}
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	// Try to track immediately
-	if (!trackTables()) {
-		// Retry after Plausible loads
-		var checkPlausible = setInterval(function() {
-			if (trackTables()) {
-				clearInterval(checkPlausible);
-			}
-		}, 100);
-		// Stop retrying after 5 seconds
-		setTimeout(function() {
-			clearInterval(checkPlausible);
-		}, 5000);
 	}
 
 	// 
