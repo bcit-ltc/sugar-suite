@@ -1,6 +1,6 @@
 <!-- SPDX-License-Identifier: MPL-2.0 -->
 
-# Sugar Suite v1
+# Sugar Suite
 
 Sugar Suite is a framework used to design and style online courses. It is built using Sass/Compass which provides an expressive and programmatic method for authoring the CSS. In order to produce the CSS, the Sass files (.scss) are "pre-processed".
 
@@ -13,7 +13,7 @@ Sugar Suite is a framework used to design and style online courses. It is built 
 ### Developing
 
 ```bash
-docker compose up --watch
+docker compose up --build
 
 # open http://localhost:8080
 ```

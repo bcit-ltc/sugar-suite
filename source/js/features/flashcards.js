@@ -318,7 +318,9 @@
             // Create Controls
 
             $container.append($controls);
-
+            
+            // Add the original table at the end, after navigation controls
+            $container.append($table);
 
             // Init Cards
             initializeCards();
@@ -393,14 +395,6 @@
                                             $card.hasClass('bottom-left') || 
                                             $card.hasClass('bottom-center') || 
                                             $card.hasClass('bottom-right');
-                    
-                    if (!hasAlignmentClass) {
-                        // Only set inline styles for cards without alignment classes
-                        $img.css({
-                            'max-height': `${imageHeight}px`,
-                            'width': 'auto'
-                        });
-                    }
                 });
                 
                 // Set cardStack height for navigation positioning
@@ -448,8 +442,8 @@
 
 
             // Calculate animation durations once
-            swapNextDuration = getAnimationDuration("flashcards-swap-next");
-            swapPrevDuration = getAnimationDuration("flashcards-swap-prev");
+            swapNextDuration = getAnimationDuration("flashcard-swap-next");
+            swapPrevDuration = getAnimationDuration("flashcard-swap-prev");
             animating = false;
             nextCardComplete = true;
             prevCardComplete = true;
@@ -474,7 +468,7 @@
                     var $topCard = $(this).find(".top-card");
                     var $bottomCard = $(this).find(".bottom-card");
 
-                    $topCard.addClass("flashcards-swap-next");
+                    $topCard.addClass("flashcard-swap-next");
                     $topCard.removeClass("top-card");
 
                     setTimeout(function () {
@@ -490,7 +484,7 @@
                     setTimeout(() => {
                         $bottomCard.removeClass("bottom-card");
                         applyZClass('bottom-card', BOTTOM_CARD);
-                        $topCard.removeClass("flashcards-swap-next");
+                        $topCard.removeClass("flashcard-swap-next");
                         
                         // Remove class when animation is complete
                         $('body').removeClass('flashcard-animating');
@@ -521,7 +515,7 @@
                     const $topCard = $(this).find(".top-card");
                     const $bottomCard = $(this).find(".bottom-card");
 
-                    $bottomCard.addClass("flashcards-swap-prev");
+                    $bottomCard.addClass("flashcard-swap-prev");
                     $bottomCard.removeClass("bottom-card");
 
                     setTimeout(() => {
@@ -537,7 +531,7 @@
                     setTimeout(() => {
                         applyZClass('top-card', TOP_CARD);
                         updateCounter(); // Update counter immediately after z-index changes
-                        $bottomCard.removeClass("flashcards-swap-prev");
+                        $bottomCard.removeClass("flashcard-swap-prev");
                         
                         // Remove class when animation is complete
                         $('body').removeClass('flashcard-animating');

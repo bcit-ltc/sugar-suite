@@ -15,7 +15,8 @@
 	// Allows tables to scroll when the content is too large for the screen width
 	$("table").each(function () {
         if($(this).hasClass("flashcards")){
-            $(this).wrap("<div>");
+            // Don't wrap flashcards tables - they get replaced by flashcard-container
+            return;
         } else {
             $(this).wrap("<div class='overflow-x'>");
         }

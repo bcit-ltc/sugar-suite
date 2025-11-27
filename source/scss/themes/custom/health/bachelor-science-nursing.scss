@@ -4,6 +4,6 @@
 .admit-ticket {
 	@extend .note;
 	&:before {
-		background-image: url("assets/icons/temp/ticket.svg");
+		background-image: url("/assets/icons/temp/ticket.svg");
 	}
 }

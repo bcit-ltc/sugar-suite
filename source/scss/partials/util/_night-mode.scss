@@ -3,19 +3,35 @@ button#night-mode {
 	position: fixed;
 	top: 20px;
 	right: 10px;
-	background: transparent;
-	border: none;
+	background: rgba(0, 0, 0, 0.1);
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	border-radius: 4px;
 	outline: none;
-		z-index: 99999;
+	z-index: 99999;
+	padding: 8px;
 	&:before {
 		font-size: 20px;
 		font-family: FontAwesome;
 		content: "\f186";
-		color: rgba(0, 0, 0, 0.075);
+		color: #333;
 	}
 	&.active:before {
 		content: "\f185";
 	}
+}
+
+// Night mode mask styling
+._night-mode-mask {
+	pointer-events: none;
+	display: none;
+	z-index: 9999;
+	transition: background 1s ease;
+	background: rgba(44, 0, 0, 0.27);
+	height: 100%;
+	width: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
 }
 
 // TODO: Add to new class

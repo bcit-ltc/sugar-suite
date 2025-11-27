@@ -56,6 +56,6 @@
 .video-activity {
 	@extend .activity;
 	&:before {
-		background-image: url("assets/icons/temp/play-video.svg");
+		background-image: url("/assets/icons/temp/play-video.svg");
 	}
 }

@@ -12,21 +12,6 @@ COPY . /app
 RUN npm run build
 
 
-## Clean
-FROM nginx:alpine AS cleaner
-
-WORKDIR /usr/share/nginx/html
-
-RUN rm -rf ./*
-
-COPY favicon.ico /usr/share/nginx/html/
-COPY --from=builder /app/css ./css/
-COPY --from=builder /app/js ./js/
-COPY --from=builder /app/assets ./assets/
-COPY --from=builder /app/html ./html/
-COPY --from=builder /app/index.html ./
-COPY --from=builder /app/favicon.ico ./
-
 ## Release/production
 FROM nginxinc/nginx-unprivileged:alpine3.22-perl
 
@@ -36,4 +21,6 @@ LABEL org.opencontainers.image.description="Sugar-Suite is a \"Framework Factory
 
 COPY conf.d/default.conf /etc/nginx/conf.d/default.conf
 
-COPY --from=cleaner /usr/share/nginx/html/ /usr/share/nginx/html
+WORKDIR /usr/share/nginx/html
+
+COPY --from=builder /app/dist/ ./
