@@ -1,8 +1,7 @@
-name: sugar-suite
+name: ${APP_NAME:-sugar-suite}
 
 services:
   app:
-    image: sugar-suite
     build:
       context: .
       target: builder
