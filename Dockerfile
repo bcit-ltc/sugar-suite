@@ -19,6 +19,8 @@ LABEL maintainer=courseproduction@bcit.ca
 LABEL org.opencontainers.image.source="https://github.com/bcit-ltc/sugar-suite"
 LABEL org.opencontainers.image.description="Sugar-Suite is a \"Framework Factory\" used to produce customized stylesheets designed for building online courses in HTML."
 
+COPY conf.d/default.conf /etc/nginx/conf.d/default.conf
+
 WORKDIR /usr/share/nginx/html
 
 COPY --from=builder /app/dist/ ./

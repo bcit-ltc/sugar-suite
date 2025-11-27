@@ -1,18 +1,16 @@
-name: sugar-suite
+name: ${APP_NAME:-sugar-suite}
 
 services:
   app:
-    image: sugar-suite
     build:
       context: .
       target: builder
-    command: sh -c "npm test && npm run preview"
-    working_dir: /app
-    volumes:
-      - .:/app
-      - /app/node_modules
-    ports:
-      - "8080:9000"
+      platforms:
+        - linux/amd64
+        - linux/arm64
+
+    command: npm run preview
+
     environment:
       - DEBUG=true
       - CI=false
@@ -34,4 +32,4 @@ services:
       - ./:/app
 
     ports:
-      - "8080:8080"
+      - "9000:9000"
