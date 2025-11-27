@@ -81,7 +81,6 @@
 				// Add error handling to the callback
 				var originalCallback = options.callback;
 				options.callback = handleEventCallback(eventName, options, originalCallback);
-				console.log('Callback attached for:', eventName, 'Has callback:', !!options.callback);
 				// Call the original plausible function
 				return originalPlausibleFn(eventName, options);
 			} catch (error) {
@@ -143,7 +142,11 @@
 			setTimeout(function() {
 				if (window.plausible && typeof window.plausible === 'function') {
 					console.log('Sending pageview...');
-					window.plausible('pageview', {});
+					window.plausible('pageview', {
+						callback: function(result) {
+							console.log('Pageview callback result:', result);
+						}
+					});
 				}
 			}, 500);
 		};
