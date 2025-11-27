@@ -23,6 +23,14 @@
 
 		$slides.not(":first-child").hide();
 		enableYoutubeJSAPI($youtube);
+		
+		// Track swapper loaded
+		if (window.plausible) {
+			var slideCount = $slides.length;
+			window.plausible('Feature Used', {
+				props: { feature: 'swapper', action: 'loaded', slideCount: slideCount }
+			});
+		}
 
 		function handleButtonPress() {
 			var isNext = $(this).is(".next");
@@ -92,7 +100,7 @@
 					position: "relative",
 					display: "inline-block",
 					width: "auto"
-				});				
+				});
 			});
 		}
 	}

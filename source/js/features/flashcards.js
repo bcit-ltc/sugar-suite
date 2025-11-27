@@ -297,6 +297,13 @@
                 });
                 initializeCards();
                 setCardStackHeight();
+                
+                // Track button clicked
+                if (window.plausible) {
+                    window.plausible('Feature Used', {
+                        props: { feature: 'flashcards', action: 'button-clicked', button: 'reset' }
+                    });
+                }
             });
 
 
@@ -313,6 +320,13 @@
                         setCardAria($card, true);
                     }
                 });
+                
+                // Track button clicked
+                if (window.plausible) {
+                    window.plausible('Feature Used', {
+                        props: { feature: 'flashcards', action: 'button-clicked', button: 'flip-all' }
+                    });
+                }
             });
 
             // Create Controls
@@ -322,6 +336,14 @@
 
             // Init Cards
             initializeCards();
+            
+            // Track flashcards loaded
+            if (window.plausible) {
+                var cardCount = $cardStack.children('.card').length;
+                window.plausible('Feature Used', {
+                    props: { feature: 'flashcards', action: 'loaded', cardCount: cardCount }
+                });
+            }
 
             // --- Swipe gesture support for mobile/tablet when .no-nav is present ---
             if ($container.hasClass('no-nav')) {
@@ -444,6 +466,13 @@
                 $cardStack.empty();
                 $($cardsArr).each((_, el) => { $cardStack.append(el); });
                 initializeCards();
+                
+                // Track button clicked
+                if (window.plausible) {
+                    window.plausible('Feature Used', {
+                        props: { feature: 'flashcards', action: 'button-clicked', button: 'shuffle' }
+                    });
+                }
             });
 
 
@@ -482,6 +511,13 @@
                         applyZClass('top-card', TOP_CARD);
                         updateCounter(); // Update counter immediately after z-index changes
                         animating = false;
+                        
+                        // Track button clicked
+                        if (window.plausible) {
+                            window.plausible('Feature Used', {
+                                props: { feature: 'flashcards', action: 'button-clicked', button: 'next' }
+                            });
+                        }
                         
                         // Remove class when animation is complete
                         $('body').removeClass('flashcard-animating');
@@ -529,6 +565,13 @@
                         applyZClass('bottom-card', BOTTOM_CARD);
                         animating = false;
                         
+                        // Track button clicked
+                        if (window.plausible) {
+                            window.plausible('Feature Used', {
+                                props: { feature: 'flashcards', action: 'button-clicked', button: 'prev' }
+                            });
+                        }
+                        
                         // Remove class when animation is complete
                         $('body').removeClass('flashcard-animating');
                         return;
@@ -559,6 +602,13 @@
                     const $topCard = $(this).find(".top-card");
                     $topCard.toggleClass("flipped");
                     setCardAria($topCard, $topCard.hasClass("flipped"));
+                    
+                    // Track button clicked
+                    if (window.plausible) {
+                        window.plausible('Feature Used', {
+                            props: { feature: 'flashcards', action: 'button-clicked', button: 'flip' }
+                        });
+                    }
                     
                     // Allow D2L resize after flip animation
                     setTimeout(() => {

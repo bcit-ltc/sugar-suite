@@ -1,7 +1,16 @@
 (function ($) {
+	var hasMath = false;
 	$("figure.math > p").each(function () {
 		scanContents($(this));
+		hasMath = true;
 	});
+	
+	// Track math content loaded
+	if (window.plausible && hasMath) {
+		window.plausible('Feature Used', {
+			props: { feature: 'math-styler', action: 'loaded' }
+		});
+	}
 
 	function scanContents($parent) {
 		var $children = $parent.children();

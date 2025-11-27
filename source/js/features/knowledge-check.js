@@ -110,6 +110,37 @@
         if (!isDevelopment && isInit) {
             $form.find("input, select").not("[type='checkbox']").prop("required", true);
         }
+        
+        // Track knowledge check loaded
+        if (window.plausible && isInit) {
+            var $knowledgeCheck = $form.closest(".knowledge-check, .self-test");
+            var isSelfTest = $knowledgeCheck.hasClass("self-test");
+            
+            // Track self-test usage separately with URL
+            if (isSelfTest) {
+                window.plausible('Legacy Class Used', {
+                    props: { 
+                        feature: 'self-test', 
+                        action: 'loaded',
+                        url: window.location.href
+                    }
+                });
+            }
+            
+            window.plausible('Feature Used', {
+                props: { 
+                    feature: 'knowledge-check', 
+                    action: 'loaded', 
+                    questionCount: questionCount,
+                    matching: $form.find(".matchContainer").length,
+                    ordering: $form.find(".ordering").length,
+                    "fib-open-ended": $form.find(".blank-open-ended").length,
+                    "fib-dropdown": $form.find(".blank-dropdown").length,
+                    "multiple-choice": $form.find(".kc-multiple-choice").length,
+                    "multiple-select": $form.find(".kc-multiple-select").length
+                }
+            });
+        }
 
 
         function checkResults(e) {
@@ -133,11 +164,21 @@
             function showScore() {
                 var numCorrect = $form.find(".correct").length;
                 var numIncorrect = $form.find(".incorrect").length;
-                var $score = $("<div class='score'><p>Score: " + numCorrect + "/" + (numCorrect + numIncorrect) + "</p></div>");
+                var total = numCorrect + numIncorrect;
+                var $score = $("<div class='score'><p>Score: " + numCorrect + "/" + total + "</p></div>");
                 $score.hide();
                 $form.prepend($score);
                 $score.slideDown();
                 $score.focus();
+                
+                // Track knowledge check completed
+                if (window.plausible && total > 0) {
+                    var isFullScore = numCorrect === total;
+                    
+                    window.plausible('Feature Used', {
+                        props: { feature: 'knowledge-check', action: 'completed', fullScore: isFullScore }
+                    });
+                }
             }
 
             function addResetButton() {
@@ -215,6 +256,11 @@
         $fieldset.append($legend);
 
         if (type === "SINGLE" || type === "MULTI") {
+            if (type === "SINGLE") {
+                $fieldset.addClass("kc-multiple-choice");
+            } else if (type === "MULTI") {
+                $fieldset.addClass("kc-multiple-select");
+            }
             $fieldset.append(question.text);
             $fieldset.append(buildQuestionOptions(question));
         }
@@ -519,7 +565,7 @@
             }
 
             function buildDropdown() {
-                var $select = $("<select>");
+                var $select = $("<select>").addClass("blank-dropdown");
                 var combined = correct.concat(incorrect);
                 $thisBlank.replaceWith($select);
 

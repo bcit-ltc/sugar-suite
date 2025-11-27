@@ -69,4 +69,43 @@
 
 	// Set title of anchors with download attribute
 	$("a[download]").attr("title", "Download");
+
+	// Track hyperlink clicks
+	$("a").on("click", function() {
+		if (window.plausible) {
+			var $link = $(this);
+			var href = $link.attr("href");
+			var linkType = "internal";
+			var props = { feature: 'hyperlink' };
+
+			// Check if download link
+			if ($link.attr("download")) {
+				linkType = "download";
+				props.action = "download";
+				// Get file extension if available
+				if (href) {
+					var ext = href.split('.').pop().toLowerCase();
+					props.fileType = ext;
+				}
+			}
+			// Check if external link
+			else if ($link.is(":external")) {
+				linkType = "external";
+				props.action = "external";
+			}
+			// Check if mailto link
+			else if (href && href.indexOf("mailto:") === 0) {
+				linkType = "email";
+				props.action = "email";
+			}
+			// Internal link
+			else {
+				props.action = "internal";
+			}
+
+			window.plausible('Feature Used', {
+				props: props
+			});
+		}
+	});
 }(jQuery));

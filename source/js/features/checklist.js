@@ -27,6 +27,14 @@
             $checkbox.each(checkSiblings);
             $checkbox.change(checkboxChecker);
             $li.find("label").click(handleLabel);
+            
+            // Track checklist loaded
+            if (window.plausible) {
+                var itemCount = $checkbox.length;
+                window.plausible('Feature Used', {
+                    props: { feature: 'checklist', action: 'loaded', itemCount: itemCount }
+                });
+            }
         });
         //addResetButton($checklist);
 
@@ -137,11 +145,22 @@
             var hasParentChecklist = $parentListInput.length;
             var $liSiblings = $li.siblings("li");
             var isAllLiSiblingsChecked = $liSiblings.children("input:checked").length === $liSiblings.children("input").length;
-
             if (isCheckboxChecked) {
                 showHideChecker($li, true);
             } else {
                 showHideChecker($li, false);
+            }
+            
+            // Track checklist completed if all items are checked
+            if (window.plausible) {
+                var $allCheckboxes = $li.closest(".checklist").find("input[type=checkbox]");
+                var totalItems = $allCheckboxes.length;
+                var allCompleted = totalItems > 0 && $allCheckboxes.filter(":checked").length === totalItems;
+                if (allCompleted) {
+                    window.plausible('Feature Used', {
+                        props: { feature: 'checklist', action: 'completed', totalItems: totalItems }
+                    });
+                }
             }
 
             if (hasParentChecklist) {

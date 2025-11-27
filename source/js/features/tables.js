@@ -3,6 +3,16 @@
 	var stripedColumnTolerance = 5; // Number of columns required for striped tables
 	var stripedRowTolerance = 5; // Number of columns required for striped tables
 
+	// Track tables loaded
+	if (window.plausible) {
+		var tableCount = $("table").length;
+		if (tableCount > 0) {
+			window.plausible('Feature Used', {
+				props: { feature: 'tables', action: 'loaded', tableCount: tableCount }
+			});
+		}
+	}
+
 	// 
 	$("table:not(.unstyled):not(.unstriped)").each(function () {
 		var columns = $(this).find("tbody tr:first-child").children().length;
