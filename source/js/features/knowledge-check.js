@@ -195,7 +195,7 @@
         var type = question.type;
 
         if (type === "UNKNOWN") {
-            var $warning = $("<p class='error-warning'>").html("Something's not quite right with this question. Check the <a href='https://ltc.bcit.ca/web-apps/conversion-guide/pages/knowledge-check.html'>Conversion Guide - Knowledge Checks</a> section for formatting details.");
+            var $warning = $("<p class='error-warning'>").html("Something's not quite right with this question. Check the <a href='https://conversion-guide.ltc.bcit.ca/pages/knowledge-check.html'>Conversion Guide - Knowledge Checks</a> section for formatting details.");
             $fieldset.append($legend, $warning);
             return $fieldset;
         }

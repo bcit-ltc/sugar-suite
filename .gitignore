@@ -41,7 +41,3 @@ app-chart/**
 # Logs
 *.log
 logs/
-
-# App specific
-css/
-js/

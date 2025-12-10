@@ -59,7 +59,7 @@
 	function stimulateResize() {
 		var debounce;
 		var debounceTime = 200;
-		
+
 		_$(window).on("resize", function () {
 			clearTimeout(debounce);
 			debounce = setTimeout(adjustIframe, debounceTime);
@@ -95,8 +95,15 @@
 			var animationTime = 200;
 			var scrollTop = _$("body").scrollTop();
 			var windowHeight = window.parent.innerHeight;
-			var pageTop = _$(".d2l-page-main").offset().top;
-			var pageHeight = _$(".d2l-page-main").height();
+
+			// Check if d2l-page-main element exists
+			var pageMain = _$(".d2l-page-main");
+			if (pageMain.length === 0) {
+				return; // Exit early if element doesn't exist
+			}
+
+			var pageTop = pageMain.offset().top;
+			var pageHeight = pageMain.height();
 			var pageBottom = pageTop + pageHeight - windowHeight;
 
 			if (scrollTop > pageBottom) {

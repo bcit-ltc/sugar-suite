@@ -3,14 +3,14 @@
 .brain {
 	@extend .activity;
 	&:before {
-		background-image: url("assets/icons/temp/retail-marketing-management-brain.png");
+		background-image: url("/assets/icons/temp/retail-marketing-management-brain.png");
 	}
 }
 
 .exclaim {
 	@extend .activity;
 	&:before {
-		background-image: url("assets/icons/temp/retail-marketing-management-exclaimation.png");
+		background-image: url("/assets/icons/temp/retail-marketing-management-exclaimation.png");
 	}
 }
 

@@ -7,7 +7,7 @@ DEVELOPMENT-DEBUGGING
 	var $body = $("body");
 
 	if ($body.hasClass("under-construction")) {
-		$body.prepend("<button id='debug'>Scan for Errors</button>");
+		$(".container").prepend("<div><button id='debug'>Scan for Errors</button></div>");
 	}
 
 	$("button#debug").on("click", function () {
@@ -17,22 +17,15 @@ DEVELOPMENT-DEBUGGING
 			activate();
 		}
 	});
-	
-	$(document).bind('DOMSubtreeModified', function () {
-		if ($("body").hasClass("debug")) {
-			deactivate();
-			activate();
-		} 			
-		if (!$("body").hasClass("debug")) {
-			deactivate();
-		}
-	});
 
 	function activate() {
 		$body.addClass("debug");
 		showBreaks();
 		showWrongHeadings();
 		showEmptyTags();
+		
+		// Ensure debug button stays clean
+		$(".debug-button-container, #debug").removeClass("_empty-tag").removeAttr("data-tag");
 	}
 
 	function deactivate() {
@@ -73,7 +66,7 @@ DEVELOPMENT-DEBUGGING
 	}
 
 	function showEmptyTags() {
-		$("*:not(a,img,td,th,tr,br,hr,.night-mode,#night-mode,.night-mask)").each(function () {
+		$("*:not(a,img,td,th,tr,br,hr,.night-mode,#night-mode,.night-mask,._night-mode-mask,.__fullscreen-button,div.debug-button-container,#debug)").each(function () {
 			var contents = $(this).html();
 			if (contents === "" || contents === " ") {
 				$(this).attr("data-tag", $(this).prop("tagName").toLowerCase());

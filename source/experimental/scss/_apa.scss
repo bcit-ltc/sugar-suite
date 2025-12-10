@@ -1,12 +1,126 @@
-/* Reference style */
+/* APA Formatting Styles */
 @use "../../scss/variables/sizing" as *;
-ol,
-ul {
-	&.apa {
-		list-style-type: none;
-		text-indent: -$space-double;
-		> li {
-			margin-bottom: $space;
+@use "../../scss/variables/fonts" as *;
+@use "../../scss/variables/colors" as *;
+
+/* APA Container */
+.apa {
+	/* Typography */
+	font-family: $secondary-font;
+	line-height: 1.5;
+	
+	/* Headings */
+	h1, h2, h3, h4, h5, h6 {
+		font-family: $primary-font;
+		font-weight: bold;
+		margin-top: $space-double;
+		margin-bottom: $space;
+		
+		&:first-child {
+			margin-top: 0;
 		}
+	}
+	
+	h1 {
+		font-size: 1.5em;
+		text-align: center;
+	}
+	
+	h2 {
+		font-size: 1.3em;
+	}
+	
+	h3 {
+		font-size: 1.1em;
+	}
+	
+	/* Paragraphs */
+	p {
+		text-align: justify;
+		margin-bottom: $space;
+		text-indent: 0.5in; /* APA standard paragraph indentation */
+		
+		&:first-child {
+			text-indent: 0; /* Don't indent first paragraph */
+		}
+	}
+	
+	/* References section styling */
+	h3:last-of-type,
+	h2:last-of-type {
+		margin-top: $space-double;
+		font-style: italic;
+	}
+	
+	/* Lists */
+	ul, ol {
+		&.apa {
+			list-style-type: none;
+			text-indent: -$space-double;
+			margin-left: $space-double;
+			
+			> li {
+				margin-bottom: $space-half;
+				text-indent: 0;
+			}
+		}
+	}
+	
+	/* Reference list items - hanging indent */
+	.apa p:not(:first-child) {
+		padding-left: $space-double;
+		text-indent: -$space-double;
+		margin-bottom: $space-half;
+	}
+	
+	/* Emphasis */
+	em {
+		font-style: italic;
+	}
+	
+	/* Tables */
+	table {
+		border-collapse: collapse;
+		margin: $space auto;
+		
+		th, td {
+			border: 1px solid $primary-text-color;
+			padding: $space-half;
+			text-align: left;
+		}
+		
+		th {
+			background-color: $gray-lighter;
+			font-weight: bold;
+		}
+	}
+	
+	/* Figures */
+	figure {
+		margin: $space-double auto;
+		text-align: center;
+		
+		figcaption {
+			font-style: italic;
+			margin-top: $space-half;
+		}
+	}
+	
+	/* Blockquotes */
+	blockquote {
+		margin-left: $space-double;
+		margin-right: $space-double;
+		font-style: italic;
+		border-left: 3px solid $primary-text-color;
+		padding-left: $space;
+	}
+	
+	/* Special formatting for reference sections */
+	.apa .references p,
+	.apa h3 + p {
+		text-indent: 0;
+		padding-left: $space-double;
+		margin-left: -$space-double;
+		margin-bottom: $space-half;
 	}
 }

@@ -3,13 +3,13 @@
 @use "../../variables/colors" as *;
 @use "../../partials/containers/custom-max-width";
 
-$note-definition-icon: url(../assets/icons/newest/definition.svg) !default;
-$note-example-icon: url(../assets/icons/newest/example.svg) !default;
-$note-key-point-icon: url(../assets/icons/newest/key-point.svg) !default;
-$note-link-icon: url(../assets/icons/newest/link.svg) !default;
-$note-note-icon: url(../assets/icons/newest/note.svg) !default;
-$note-warning-icon: url(../assets/icons/newest/warning.svg) !default;
-$note-knowing-icon: url(../assets/icons/newest/knowing.svg) !default;
+$note-definition-icon: url(/assets/icons/newest/definition.svg) !default;
+$note-example-icon: url(/assets/icons/newest/example.svg) !default;
+$note-key-point-icon: url(/assets/icons/newest/key-point.svg) !default;
+$note-link-icon: url(/assets/icons/newest/link.svg) !default;
+$note-note-icon: url(/assets/icons/newest/note.svg) !default;
+$note-warning-icon: url(/assets/icons/newest/warning.svg) !default;
+$note-knowing-icon: url(/assets/icons/newest/knowing.svg) !default;
 
 $note-background-color: $secondary-color-lightest !default;
 $note-border-color: $secondary-color-lighter;

@@ -9,13 +9,9 @@
     perspective: 1000px;
     position: relative;
     pointer-events: none;
-    padding-top: 350px;
     clear: both;
-    top: -350px;
-    margin-bottom: 2em;
     width: auto;
-    margin-left: 0;
-    margin-right: 0;
+    margin: 1.5em 0;
     min-height: 500px;
 
     .card-stack {
@@ -130,10 +126,18 @@
                 vertical-align: middle;
             }
 
+            // Reduce padding for smaller screens
+            @media (max-width: $bp-med) {
+                .front,
+                .back {
+                    padding: 5px 10px;
+                }
+            }
+
 
             &.top-card {
                 z-index: 1001;
-                transition: transform .5s ease; // messes up firefox
+                transition: transform .5s ease;
                 transform: none !important;
 
                 &.flipped {
@@ -702,10 +706,6 @@
         }
     }
 
-    // Allows the element following to sit against it
-    +* {
-        margin-top: -350px;
-    }
 
 
     // hide card counter if .no-number is present on container
@@ -890,23 +890,23 @@
 }
 
 // Next Card Animation
-.flashcards-swap-next {
+.flashcard-swap-next {
     transform-origin: 165% 158%;
-    animation: flashcardsSwapNext .9s;
+    animation: flashcardSwapNext .9s;
     animation-timing-function: ease-in-out;
     transition-property: none;
 }
 
 // Prev Card Animation
-.flashcards-swap-prev {
+.flashcard-swap-prev {
     transform-origin: 165% 158%;
-    animation: flashcardsSwapPrev .9s;
+    animation: flashcardSwapPrev .9s;
     animation-timing-function: ease-in-out;
     transition-property: none;
 }
 
 // ANIMATIONS
-@keyframes flashcardsSwapNext {
+@keyframes flashcardSwapNext {
     0% {
         transform: rotateZ(0deg);
     }
@@ -924,7 +924,7 @@
     }
 }
 
-@keyframes flashcardsSwapPrev {
+@keyframes flashcardSwapPrev {
     0% {
         transform: rotateZ(0deg) translateX(0%);
     }

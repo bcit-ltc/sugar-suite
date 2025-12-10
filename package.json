@@ -1,44 +1,32 @@
 {
-  "type": "module",
   "name": "sugar-suite",
+  "private": true,
   "version": "1.0.0",
-  "description": "Sugar-Suite is a \"Framework Factory\" used to produce customized stylesheets designed for building online courses in HTML.",
-  "author": "BCIT Course Production: courseproduction@bcit.ca",
-  "license": "MPL-2.0",
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:bcit-ltc/sugar-suite.git"
-  },
+  "type": "module",
   "scripts": {
-    "watch": "gulp watch",
-    "build": "gulp build && node snappy.js",
-    "test": "mocha --reporter spec"
-  },
-  "dependencies": {
-  "@babel/core": "^7.28.4",
-  "@babel/preset-env": "^7.28.3",
-  "@floating-ui/core": "^1.7.3",
-  "browser-sync": "^3.0.4",
-  "gulp": "^5.0.1",
-  "gulp-autoprefixer": "9.0.0",
-  "gulp-clean-css": "^4.3.0",
-  "gulp-concat": "^2.6.1",
-  "gulp-sass": "^6.0.1",
-  "gulp-sourcemaps": "^3.0.0",
-  "gulp-uglify": "^3.0.2",
-  "jshint": "^2.13.6",
-  "sass": "^1.92.0"
+    "build": "vite build",
+    "quick": "vite build && vite preview --port 9000",
+    "preview": "concurrently \"vite build --watch\" \"vite preview --port 9000\"",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "devDependencies": {
-    "fs-extra": "^11.3.1",
-    "gulp-babel": "^8.0.0",
-    "gulp-if": "^3.0.0",
-    "gulp-jshint": "^2.1.0",
-    "gulp-replace": "^1.1.4",
-    "snappyjs": "^0.7.0",
-    "mocha": "^11.7.2",
-    "chai": "^6.0.1",
-    "jsdom": "^26.1.0",
-    "jquery": "^3.7.1"
+    "vite": "^7.1.11",
+    "sass": "^1.93.2",
+    "postcss": "^8.5.6",
+    "autoprefixer": "^10.4.21",
+    "cssnano": "^7.1.1",
+    "postcss-preset-env": "^10.4.0",
+    "terser": "^5.44.0",
+    "vite-plugin-compression": "^0.5.1",
+    "vite-plugin-static-copy": "^3.1.4",
+    "glob": "^11.0.3",
+    "concurrently": "^9.2.1",
+    "jquery": "^3.7.1",
+    "jest": "^30.2.0",
+    "jest-environment-jsdom": "^30.2.0",
+    "jsdom": "^27.0.1",
+    "@testing-library/jest-dom": "^6.9.1"
   }
 }

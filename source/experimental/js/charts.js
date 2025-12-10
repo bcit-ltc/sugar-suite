@@ -49,13 +49,20 @@
 
 
 	if (tablesExist) {
-		$.getScript("https://cdn.plot.ly/plotly-latest.min.js", function () {
-			buildCharts();
-		}).fail(function() {
-			$.getScript("./js/vendor/plotly-1.js", function() {
+		// Load Plotly from local file
+		if (typeof Plotly === 'undefined') {
+			const script = document.createElement('script');
+			script.src = '/js/vendor/plotly-3.1.1.min.js';
+			script.onload = function() {
 				buildCharts();
-			});
-		});
+			};
+			script.onerror = function() {
+				console.error('Failed to load Plotly from local file');
+			};
+			document.head.appendChild(script);
+		} else {
+			buildCharts();
+		}
 	}
 
 	function buildCharts() {
