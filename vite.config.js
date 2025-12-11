@@ -2,7 +2,7 @@ import fs from 'fs'; // file system operations for reading js files
 import { resolve } from 'path'; // path resolution utilities
 import path from 'path'; // path utilities
 import { fileURLToPath } from 'url'; // convert file urls to paths
-import { glob } from 'glob'; // file pattern matching
+import { globSync } from 'glob'; // file pattern matching
 import { defineConfig } from 'vite'; // vite configuration helper
 import autoprefixer from 'autoprefixer'; // css vendor prefixing
 import cssnano from 'cssnano'; // css minification and optimization
@@ -21,7 +21,7 @@ export default defineConfig({
       name: 'js-concat', // plugin name for vite
       buildStart() { // runs at build start
         // add all source files to watch list so vite knows to rebuild when they change
-        const allSourceFiles = glob.sync('source/**/*'); // find all files in source directory
+        const allSourceFiles = globSync('source/**/*'); // find all files in source directory
 
         allSourceFiles.forEach(file => { // iterate through all files
           this.addWatchFile(file); // add each file to vite's watch list
@@ -71,7 +71,7 @@ export default defineConfig({
         this.emitFile({ // emit the file to output
           type: 'asset', // file type
           fileName: 'js/lat.js', // output filename
-          source: minifiedMainJs.code + '\n//# sourceMappingURL=maps/lat.map' // file content with source map reference
+          source: minifiedMainJs.code + '\n//# sourceMappingURL=maps/lat.js.map' // file content with source map reference
         });
 
         // process experimental js (equivalent to gulp's experimental task)
@@ -117,21 +117,21 @@ export default defineConfig({
         this.emitFile({ // emit experimental file
           type: 'asset', // file type
           fileName: 'js/experimental.js', // output filename
-          source: minifiedExperimentalJs.code + '\n//# sourceMappingURL=maps/experimental.map' // file content with source map reference
+          source: minifiedExperimentalJs.code + '\n//# sourceMappingURL=maps/experimental.js.map' // file content with source map reference
         });
 
         // generate source maps for JS files
         const mainSourceMap = generateSourceMap('source/js/features', 'js/lat.js');
         this.emitFile({
           type: 'asset',
-          fileName: 'js/maps/lat.map',
+          fileName: 'js/maps/lat.js.map',
           source: JSON.stringify(mainSourceMap)
         });
 
         const experimentalSourceMap = generateSourceMap('source/experimental/js', 'js/experimental.js');
         this.emitFile({
           type: 'asset',
-          fileName: 'js/maps/experimental.map',
+          fileName: 'js/maps/experimental.js.map',
           source: JSON.stringify(experimentalSourceMap)
         });
       }
@@ -169,11 +169,11 @@ export default defineConfig({
             // Emit the source map file in css/maps directory
             let mapFileName;
             if (fileName.includes('custom/')) {
-              // For custom files, keep the custom folder structure: css/maps/custom/business/filename.map
-              mapFileName = fileName.replace('css/', 'css/maps/').replace('.css', '.map');
+              // For custom files, keep the custom folder structure: css/maps/custom/business/filename.css.map
+              mapFileName = fileName.replace('css/', 'css/maps/') + '.map';
             } else {
-              // For main theme files, place directly in maps: css/maps/filename.map
-              mapFileName = fileName.replace('css/', 'css/maps/').replace('.css', '.map');
+              // For main theme files, place directly in maps: css/maps/filename.css.map
+              mapFileName = fileName.replace('css/', 'css/maps/') + '.map';
             }
             this.emitFile({
               type: 'asset',
@@ -184,11 +184,11 @@ export default defineConfig({
             // Add sourceMappingURL comment to CSS pointing to css/maps
             let mapUrlFileName;
             if (fileName.includes('custom/')) {
-              // For custom files, keep the custom folder structure: maps/custom/business/filename.map
-              mapUrlFileName = fileName.replace('css/', '').replace('.css', '.map');
+              // For custom files, keep the custom folder structure: maps/custom/business/filename.css.map
+              mapUrlFileName = fileName.replace('css/', '') + '.map';
             } else {
-              // For main theme files, place directly in maps: maps/filename.map
-              mapUrlFileName = fileName.replace('css/', '').replace('.css', '.map');
+              // For main theme files, place directly in maps: maps/filename.css.map
+              mapUrlFileName = fileName.replace('css/', '') + '.map';
             }
             chunk.source += '\n/*# sourceMappingURL=maps/' + mapUrlFileName + ' */';
           }
@@ -226,12 +226,12 @@ export default defineConfig({
             // Emit the source map file
             this.emitFile({
               type: 'asset',
-              fileName: fileName.replace('.js', '.map'),
+              fileName: fileName + '.map',
               source: JSON.stringify(sourceMap)
             });
 
             // Add sourceMappingURL comment to JS
-            chunk.source += '\n//# sourceMappingURL=' + fileName.replace('.js', '.map');
+            chunk.source += '\n//# sourceMappingURL=' + fileName + '.map';
           }
         });
       }
@@ -453,7 +453,7 @@ function getScssEntries() { // function to get scss entry points
 
 // helper function to get module content for js concatenation
 function getModuleContent(sourceDir) { // function to concatenate js files
-  const jsFiles = glob.sync(`${sourceDir}/*.js`, { // find all js files in directory
+  const jsFiles = globSync(`${sourceDir}/*.js`, { // find all js files in directory
     ignore: [`${sourceDir}/-WIP-*.js`] // ignore work-in-progress files
   });
 
@@ -477,7 +477,7 @@ function getModuleContent(sourceDir) { // function to concatenate js files
 
 // helper function to generate source maps for concatenated JS
 function generateSourceMap(sourceDir, outputFile) {
-  const jsFiles = glob.sync(`${sourceDir}/*.js`, { // find all js files in directory
+  const jsFiles = globSync(`${sourceDir}/*.js`, { // find all js files in directory
     ignore: [`${sourceDir}/-WIP-*.js`] // ignore work-in-progress files
   });
 

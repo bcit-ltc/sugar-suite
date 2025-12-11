@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=yes">
+    <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+    <title>Timer - Sugar Suite Documentation</title>
+    <link rel="stylesheet" href="../css/bcit.css">
+</head>
+<body class="experimental">
+    <div class="container">
+        <h1>Timer</h1>
+        
+        <div class="note">
+            <h2>Description</h2>
+            <p>Provides countdown timers with visual feedback for timed activities and assessments. Timers automatically change colors based on remaining time and perform dramatic exit animations when time expires.</p>
+        </div>
+        
+        <div class="note">
+            <h2>Usage</h2>
+            <p>Add <code>data-timer="minutes"</code> attribute to any container element. The timer will automatically start when clicked and provide visual feedback throughout the countdown.</p>
+            
+            <h3>Available Options</h3>
+            <ul>
+                <li><strong>Data Attributes:</strong>
+                    <ul>
+                        <li><code>data-timer="minutes"</code> - Sets timer duration in minutes</li>
+                    </ul>
+                </li>
+                <li><strong>Visual Feedback:</strong>
+                    <ul>
+                        <li><strong>Green:</strong> More than 60% time remaining</li>
+                        <li><strong>Orange:</strong> 30-60% time remaining</li>
+                        <li><strong>Red:</strong> Less than 30% time remaining</li>
+                        <li><strong>Black:</strong> Time expired</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        
+        <h2>Examples</h2>
+        
+        <h3>Basic Timer</h3>
+        <div class="activity">
+            <h2>Timed Activity</h2>
+            <p>Complete this activity within the allocated time:</p>
+            
+            <div data-timer="5">
+                <h3>Activity Instructions</h3>
+                <p>Click on the timer above to start the countdown. You have 5 minutes to complete this activity.</p>
+                <ol>
+                    <li>Read the instructions carefully</li>
+                    <li>Complete the required tasks</li>
+                    <li>Submit your work before time expires</li>
+                </ol>
+            </div>
+        </div>
+        
+        <h3>Multiple Timers</h3>
+        <div class="side-by-side">
+            <div>
+                <h4>Short Activity (2 minutes)</h4>
+                <div data-timer="2">
+                    <p>Quick activity with 2-minute timer</p>
+                    <p>This timer will show green initially, then orange, then red as time runs out.</p>
+                </div>
+            </div>
+            <div>
+                <h4>Long Activity (10 minutes)</h4>
+                <div data-timer="10">
+                    <p>Extended activity with 10-minute timer</p>
+                    <p>This timer provides more time for complex tasks and detailed work.</p>
+                </div>
+            </div>
+        </div>
+        
+        <h3>Timed Assessment</h3>
+        <div class="assessment">
+            <h2>Timed Assessment</h2>
+            <p>This assessment has a time limit:</p>
+            
+            <div data-timer="15">
+                <h3>Assessment Questions</h3>
+                <div class="knowledge-check">
+                    <ol>
+                        <li>
+                            <p>What is the primary purpose of a log yard?</p>
+                            <ul>
+                                <li>*Storage of raw materials</li>
+                                <li>Processing equipment</li>
+                                <li>Quality control</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <p>Which safety equipment is required in a lumber mill?</p>
+                            <ul>
+                                <li>*Hard hat</li>
+                                <li>*Safety glasses</li>
+                                <li>*Steel-toed boots</li>
+                                <li>Regular shoes</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <p>What does the acronym OSHA stand for?</p>
+                            <p>@ Occupational Safety and Health Administration</p>
+                            <ul>
+                                <li>*Occupational Safety and Health Administration</li>
+                                <li>Office of Safety and Health Affairs</li>
+                                <li>Organization for Safety and Health Administration</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        
+        <h3>Timer with Complex Content</h3>
+        <div data-timer="8">
+            <h2>Comprehensive Learning Activity</h2>
+            <p>Complete the following tasks within the time limit:</p>
+            <ol>
+                <li>Review the material below</li>
+                <li>Answer the questions</li>
+                <li>Complete the practical exercise</li>
+                <li>Submit your work</li>
+            </ol>
+            
+            <div class="side-by-side">
+                <div>
+                    <h3>Learning Material</h3>
+                    <figure class="image">
+                        <img src="../assets/woods/mill_machine.jpg" alt="Mill Machine" style="width: 100%;">
+                        <figcaption>Modern lumber mill machine</figcaption>
+                    </figure>
+                </div>
+                <div>
+                    <h3>Key Points</h3>
+                    <ul>
+                        <li>Safety protocols must be followed</li>
+                        <li>Equipment maintenance is critical</li>
+                        <li>Quality control ensures standards</li>
+                        <li>Efficiency improves productivity</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="knowledge-check">
+                <ol>
+                    <li>
+                        <p>What is the most important safety rule in a lumber mill?</p>
+                        <ul>
+                            <li>*Always wear protective equipment</li>
+                            <li>Work as fast as possible</li>
+                            <li>Ignore warning signs</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+        </div>
+        
+        <h3>Timer Visual States</h3>
+        <div class="note">
+            <h2>Timer Color States</h2>
+            <p>The timer provides visual feedback through color changes:</p>
+            <ul>
+                <li><strong>Green:</strong> More than 60% time remaining</li>
+                <li><strong>Orange:</strong> 30-60% time remaining</li>
+                <li><strong>Red:</strong> Less than 30% time remaining</li>
+                <li><strong>Black:</strong> Time expired</li>
+            </ul>
+            <p>When time expires, the timer performs a dramatic exit animation.</p>
+        </div>
+        
+        <h3>Timer in Different Contexts</h3>
+        <div class="side-by-side">
+            <div>
+                <h4>Individual Work</h4>
+                <div data-timer="3">
+                    <div class="activity">
+                        <h2>Individual Activity</h2>
+                        <p>Work independently on this task.</p>
+                        <p>Focus on quality over speed.</p>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h4>Group Work</h4>
+                <div data-timer="7">
+                    <div class="group-activity">
+                        <h2>Group Activity</h2>
+                        <p>Collaborate with your team.</p>
+                        <p>Share ideas and work together.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="note">
+            <h2>Notes</h2>
+            <ul>
+                <li>Timers require <code>data-timer</code> attribute with duration in minutes</li>
+                <li>Timer starts when clicked by the user</li>
+                <li>Visual feedback changes color based on remaining time percentage</li>
+                <li>Dramatic exit animation plays when time expires</li>
+                <li>Timers work within any container including activities and assessments</li>
+                <li>Multiple timers can be used on the same page</li>
+                <li>Timer duration should be appropriate for the task complexity</li>
+                <li>Consider providing clear instructions before starting the timer</li>
+                <li>Use timers to create urgency and focus for timed activities</li>
+                <li>Timers enhance the learning experience by providing structure</li>
+                <li>Visual feedback helps users manage their time effectively</li>
+            </ul>
+        </div>
+    </div>
+    <script src="../js/lat.js"></script>
+</body>
+</html>

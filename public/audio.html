@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=yes">
+    <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+    <title>Audio - Sugar Suite Documentation</title>
+    <link rel="stylesheet" href="css/bcit.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Audio</h1>
+        
+        <div class="note">
+            <h2>Description</h2>
+            <p>Provides responsive styling for HTML5 audio elements with automatic figure integration and speaker icon indicators. Audio elements are automatically styled to be responsive and work well within figure containers.</p>
+        </div>
+        
+        <div class="note">
+            <h2>Usage</h2>
+            <p>Use standard HTML5 <code>&lt;audio&gt;</code> elements. For enhanced styling, wrap them in <code>&lt;figure class="audio"&gt;</code> containers with optional captions.</p>
+            
+            <h3>Available Options</h3>
+            <ul>
+                <li><strong>CSS Classes:</strong>
+                    <ul>
+                        <li><code>figure.audio</code> - Container for audio with speaker icon</li>
+                    </ul>
+                </li>
+                <li><strong>Automatic Features:</strong>
+                    <ul>
+                        <li>Responsive width (100% of container)</li>
+                        <li>Proper margins and spacing</li>
+                        <li>Speaker icon in captions (FontAwesome)</li>
+                        <li>Block-level display</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        
+        <h2>Examples</h2>
+        
+        <h3>Basic Audio Element</h3>
+        <audio controls>
+            <source src="assets/ochs-intro.mp4" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        <p>This is a basic HTML5 audio element with responsive styling.</p>
+        
+        <h3>Audio with Figure Container</h3>
+        <figure class="audio">
+            <audio controls>
+                <source src="assets/ochs-intro.mp4" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+            <figcaption>Introduction to Occupational Health and Safety</figcaption>
+        </figure>
+        
+        <h3>Multiple Audio Sources</h3>
+        <figure class="audio">
+            <audio controls>
+                <source src="assets/ochs-intro.mp4" type="audio/mpeg">
+                <source src="assets/ochs-intro.mp4" type="audio/ogg">
+                <source src="assets/ochs-intro.mp4" type="audio/wav">
+                Your browser does not support the audio element.
+            </audio>
+            <figcaption>Audio with multiple format support for better browser compatibility</figcaption>
+        </figure>
+        
+        <h3>Audio with Additional Content</h3>
+        <figure class="audio">
+            <audio controls>
+                <source src="assets/ochs-intro.mp4" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+            <figcaption>
+                <h4>Safety Training Audio</h4>
+                <p>This audio covers the fundamental principles of workplace safety.</p>
+                <ul>
+                    <li>Duration: 5 minutes</li>
+                    <li>Format: MP3</li>
+                    <li>Quality: High</li>
+                </ul>
+            </figcaption>
+        </figure>
+        
+        <div class="note">
+            <h2>Notes</h2>
+            <ul>
+                <li>Audio elements automatically get responsive styling (100% width)</li>
+                <li>Use <code>figure.audio</code> for enhanced styling with speaker icon</li>
+                <li>Captions can contain any HTML content including headings and lists</li>
+                <li>Provide multiple source formats for better browser compatibility</li>
+                <li>Always include fallback text for browsers that don't support audio</li>
+                <li>Audio elements work well in side-by-side layouts</li>
+                <li>Consider file size and loading times for audio content</li>
+                <li>Use descriptive captions for accessibility</li>
+            </ul>
+        </div>
+    </div>
+    <script src="js/lat.js"></script>
+</body>
+</html>

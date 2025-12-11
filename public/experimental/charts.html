@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=yes">
+    <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+    <title>Charts - Sugar Suite Documentation</title>
+    <link rel="stylesheet" href="../css/bcit.css">
+</head>
+<body class="experimental">
+    <div class="container">
+        <h1>Charts</h1>
+        
+        <div class="note">
+            <h2>Description</h2>
+            <p>Creates interactive charts from HTML tables using Plotly.js. Supports grouped bar charts and pie charts with automatic color theming and toggle functionality to show/hide source data.</p>
+        </div>
+        
+        <div class="note">
+            <h2>Usage</h2>
+            <p>Create HTML tables with specific classes to generate charts. The tables are automatically converted to interactive charts with toggle buttons to view the original data.</p>
+            
+            <h3>Available Options</h3>
+            <ul>
+                <li><strong>CSS Classes:</strong>
+                    <ul>
+                        <li><code>.bar-grouped</code> - Creates grouped bar chart</li>
+                        <li><code>.pie</code> - Creates pie chart</li>
+                        <li><code>.flip</code> - Flips data orientation</li>
+                        <li><code>.static</code> - Creates static (non-interactive) chart</li>
+                    </ul>
+                </li>
+                <li><strong>Features:</strong>
+                    <ul>
+                        <li>Interactive charts with hover effects</li>
+                        <li>Automatic color theming</li>
+                        <li>Toggle buttons to show/hide source data</li>
+                        <li>Responsive design</li>
+                        <li>Legend and axis labels</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        
+        <h2>Examples</h2>
+        
+        <h3>Grouped Bar Chart</h3>
+        <table class="bar-grouped">
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Q1</th>
+                    <th>Q2</th>
+                    <th>Q3</th>
+                    <th>Q4</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>Sales</th>
+                    <td>120</td>
+                    <td>135</td>
+                    <td>150</td>
+                    <td>165</td>
+                </tr>
+                <tr>
+                    <th>Marketing</th>
+                    <td>80</td>
+                    <td>95</td>
+                    <td>110</td>
+                    <td>125</td>
+                </tr>
+                <tr>
+                    <th>Support</th>
+                    <td>60</td>
+                    <td>70</td>
+                    <td>75</td>
+                    <td>80</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>Pie Chart</h3>
+        <table class="pie">
+            <thead>
+                <tr>
+                    <th>Department</th>
+                    <th>Percentage</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Engineering</td>
+                    <td>35</td>
+                </tr>
+                <tr>
+                    <td>Marketing</td>
+                    <td>25</td>
+                </tr>
+                <tr>
+                    <td>Sales</td>
+                    <td>20</td>
+                </tr>
+                <tr>
+                    <td>Support</td>
+                    <td>15</td>
+                </tr>
+                <tr>
+                    <td>HR</td>
+                    <td>5</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>Flipped Bar Chart</h3>
+        <table class="bar-grouped flip">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>2022</th>
+                    <th>2023</th>
+                    <th>2024</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>Laptops</th>
+                    <td>500</td>
+                    <td>600</td>
+                    <td>750</td>
+                </tr>
+                <tr>
+                    <th>Desktops</th>
+                    <td>300</td>
+                    <td>350</td>
+                    <td>400</td>
+                </tr>
+                <tr>
+                    <th>Tablets</th>
+                    <td>200</td>
+                    <td>250</td>
+                    <td>300</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>Static Pie Chart</h3>
+        <table class="pie static">
+            <thead>
+                <tr>
+                    <th>Market Share</th>
+                    <th>Percentage</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Company A</td>
+                    <td>40</td>
+                </tr>
+                <tr>
+                    <td>Company B</td>
+                    <td>30</td>
+                </tr>
+                <tr>
+                    <td>Company C</td>
+                    <td>20</td>
+                </tr>
+                <tr>
+                    <td>Others</td>
+                    <td>10</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>Charts in Activity Context</h3>
+        <div class="activity">
+            <h2>Data Analysis Activity</h2>
+            <p>Analyze the following data and answer the questions below:</p>
+            
+            <table class="bar-grouped">
+                <thead>
+                    <tr>
+                        <th>Region</th>
+                        <th>Jan</th>
+                        <th>Feb</th>
+                        <th>Mar</th>
+                        <th>Apr</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>North</th>
+                        <td>100</td>
+                        <td>120</td>
+                        <td>140</td>
+                        <td>160</td>
+                    </tr>
+                    <tr>
+                        <th>South</th>
+                        <td>80</td>
+                        <td>90</td>
+                        <td>110</td>
+                        <td>130</td>
+                    </tr>
+                    <tr>
+                        <th>East</th>
+                        <td>60</td>
+                        <td>70</td>
+                        <td>80</td>
+                        <td>90</td>
+                    </tr>
+                    <tr>
+                        <th>West</th>
+                        <td>40</td>
+                        <td>50</td>
+                        <td>60</td>
+                        <td>70</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <ol>
+                <li>Which region shows the highest growth?</li>
+                <li>What is the trend across all regions?</li>
+                <li>Which month shows the most consistent performance?</li>
+            </ol>
+        </div>
+        
+        <h3>Multiple Charts Side by Side</h3>
+        <div class="side-by-side">
+            <div>
+                <h4>Revenue by Quarter</h4>
+                <table class="bar-grouped">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Q1</th>
+                            <th>Q2</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>Product A</th>
+                            <td>1000</td>
+                            <td>1200</td>
+                        </tr>
+                        <tr>
+                            <th>Product B</th>
+                            <td>800</td>
+                            <td>900</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <h4>Market Distribution</h4>
+                <table class="pie">
+                    <thead>
+                        <tr>
+                            <th>Segment</th>
+                            <th>Share</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Enterprise</td>
+                            <td>60</td>
+                        </tr>
+                        <tr>
+                            <td>SMB</td>
+                            <td>30</td>
+                        </tr>
+                        <tr>
+                            <td>Consumer</td>
+                            <td>10</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <h3>Complex Bar Chart with Multiple Categories</h3>
+        <table class="bar-grouped">
+            <thead>
+                <tr>
+                    <th>Metric</th>
+                    <th>2019</th>
+                    <th>2020</th>
+                    <th>2021</th>
+                    <th>2022</th>
+                    <th>2023</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>Website Visitors</th>
+                    <td>10000</td>
+                    <td>15000</td>
+                    <td>20000</td>
+                    <td>25000</td>
+                    <td>30000</td>
+                </tr>
+                <tr>
+                    <th>Email Subscribers</th>
+                    <td>5000</td>
+                    <td>8000</td>
+                    <td>12000</td>
+                    <td>18000</td>
+                    <td>25000</td>
+                </tr>
+                <tr>
+                    <th>Social Media Followers</th>
+                    <td>2000</td>
+                    <td>5000</td>
+                    <td>10000</td>
+                    <td>15000</td>
+                    <td>20000</td>
+                </tr>
+                <tr>
+                    <th>Mobile App Users</th>
+                    <td>1000</td>
+                    <td>3000</td>
+                    <td>8000</td>
+                    <td>15000</td>
+                    <td>25000</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="note">
+            <h2>Notes</h2>
+            <ul>
+                <li>Charts are automatically generated from HTML tables</li>
+                <li>Use <code>.bar-grouped</code> for grouped bar charts</li>
+                <li>Use <code>.pie</code> for pie charts</li>
+                <li>Use <code>.flip</code> to transpose data orientation</li>
+                <li>Use <code>.static</code> for non-interactive charts</li>
+                <li>Toggle buttons allow viewing original table data</li>
+                <li>Charts use automatic color theming from CSS variables</li>
+                <li>Plotly.js library is loaded automatically when needed</li>
+                <li>Charts are responsive and work on all screen sizes</li>
+                <li>Interactive features include hover effects and legend toggling</li>
+                <li>Source tables are hidden by default but can be toggled</li>
+            </ul>
+        </div>
+    </div>
+    <script src="../js/lat.js"></script>
+</body>
+</html>

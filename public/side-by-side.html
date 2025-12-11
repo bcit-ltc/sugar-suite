@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=yes">
+    <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+    <title>Side-by-Side Layout - Sugar Suite Documentation</title>
+    <link rel="stylesheet" href="css/bcit.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Side-by-Side Layout</h1>
+        
+        <div class="note">
+            <h2>Description</h2>
+            <p>Creates responsive two-column layouts that automatically stack on mobile devices. Perfect for comparing content, showing before/after examples, or organizing related information.</p>
+        </div>
+        
+        <div class="note">
+            <h2>Usage</h2>
+            <p>Wrap content in a container with class <code>.side-by-side</code>. Each direct child becomes a column. Content automatically stacks vertically on mobile devices.</p>
+            
+            <h3>Available Options</h3>
+            <ul>
+                <li><strong>CSS Classes:</strong>
+                    <ul>
+                        <li><code>.side-by-side</code> - Main container for two-column layout</li>
+                        <li><code>.align-top</code> - Aligns columns to the top</li>
+                        <li><code>.align-bottom</code> - Aligns columns to the bottom</li>
+                    </ul>
+                </li>
+                <li><strong>Responsive Behavior:</strong>
+                    <ul>
+                        <li>Desktop: Two equal-width columns</li>
+                        <li>Mobile: Stacked vertically</li>
+                        <li>Automatic spacing and alignment</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        
+        <h2>Examples</h2>
+        
+        <h3>Basic Side-by-Side Layout</h3>
+        <div class="side-by-side">
+            <div>
+                <h4>Left Column</h4>
+                <p>This is the left column content. It can contain any HTML elements including text, images, lists, and other components.</p>
+                <ul>
+                    <li>List item 1</li>
+                    <li>List item 2</li>
+                    <li>List item 3</li>
+                </ul>
+            </div>
+            <div>
+                <h4>Right Column</h4>
+                <p>This is the right column content. Both columns have equal width on desktop and stack vertically on mobile.</p>
+                <p>You can include multiple paragraphs, images, or any other content in each column.</p>
+            </div>
+        </div>
+        
+        <h3>Side-by-Side with Images</h3>
+        <div class="side-by-side">
+            <div>
+                <figure class="image">
+                    <img src="assets/woods/Damaged_Log.jpg" alt="Damaged Log" style="width: 100%;">
+                    <figcaption>Left side image with caption</figcaption>
+                </figure>
+            </div>
+            <div>
+                <figure class="image">
+                    <img src="assets/woods/mill_machine.jpg" alt="Mill Machine" style="width: 100%;">
+                    <figcaption>Right side image with caption</figcaption>
+                </figure>
+            </div>
+        </div>
+        
+        <h3>Before and After Comparison</h3>
+        <div class="side-by-side">
+            <div>
+                <h4>Before</h4>
+                <figure class="image">
+                    <img src="assets/woods/Cut_Mark.jpg" alt="Before Processing" style="width: 100%;">
+                    <figcaption>Log before processing</figcaption>
+                </figure>
+            </div>
+            <div>
+                <h4>After</h4>
+                <figure class="image">
+                    <img src="assets/woods/lumber_yard.jpg" alt="After Processing" style="width: 100%;">
+                    <figcaption>Processed lumber in yard</figcaption>
+                </figure>
+            </div>
+        </div>
+        
+        <h3>Side-by-Side with Top Alignment</h3>
+        <div class="side-by-side align-top">
+            <div>
+                <h4>Short Content</h4>
+                <p>This is short content.</p>
+            </div>
+            <div>
+                <h4>Longer Content</h4>
+                <p>This is longer content that extends beyond the short content.</p>
+                <p>It includes additional paragraphs to demonstrate how the top alignment works when content heights differ.</p>
+                <ul>
+                    <li>Additional list item</li>
+                    <li>Another list item</li>
+                </ul>
+            </div>
+        </div>
+        
+        <h3>Side-by-Side with Bottom Alignment</h3>
+        <div class="side-by-side align-bottom">
+            <div>
+                <h4>Short Content</h4>
+                <p>This is short content.</p>
+            </div>
+            <div>
+                <h4>Longer Content</h4>
+                <p>This is longer content that extends beyond the short content.</p>
+                <p>It includes additional paragraphs to demonstrate how the bottom alignment works when content heights differ.</p>
+                <ul>
+                    <li>Additional list item</li>
+                    <li>Another list item</li>
+                </ul>
+            </div>
+        </div>
+        
+        <h3>Side-by-Side with Mixed Content</h3>
+        <div class="side-by-side">
+            <div>
+                <h4>Process Overview</h4>
+                <figure class="image">
+                    <img src="assets/woods/yard-wide.jpg" alt="Wide Yard View" style="width: 100%;">
+                    <figcaption>Overview of the lumber processing yard</figcaption>
+                </figure>
+                <p>This image shows the complete lumber processing facility from a wide angle view.</p>
+            </div>
+            <div>
+                <h4>Key Components</h4>
+                <ul>
+                    <li>Raw material storage area</li>
+                    <li>Processing equipment</li>
+                    <li>Quality control station</li>
+                    <li>Finished product storage</li>
+                </ul>
+                <div class="note">
+                    <p>Each component plays a crucial role in the overall process.</p>
+                </div>
+            </div>
+        </div>
+        
+        <h3>Nested Side-by-Side Layouts</h3>
+        <div class="side-by-side">
+            <div>
+                <h4>Left Section</h4>
+                <div class="side-by-side">
+                    <div>
+                        <h5>Sub-section A</h5>
+                        <p>Content for sub-section A</p>
+                    </div>
+                    <div>
+                        <h5>Sub-section B</h5>
+                        <p>Content for sub-section B</p>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h4>Right Section</h4>
+                <p>This is the right section with its own content.</p>
+                <figure class="image">
+                    <img src="assets/woods/cutter.jpg" alt="Cutter Machine" style="width: 100%;">
+                    <figcaption>Cutter machine in operation</figcaption>
+                </figure>
+            </div>
+        </div>
+        
+        <h3>Side-by-Side with Interactive Elements</h3>
+        <div class="side-by-side">
+            <div>
+                <h4>Learning Content</h4>
+                <div class="activity">
+                    <h2>Activity</h2>
+                    <p>Complete the following steps:</p>
+                    <ol>
+                        <li>Read the instructions carefully</li>
+                        <li>Complete the activity</li>
+                        <li>Submit your work</li>
+                    </ol>
+                </div>
+            </div>
+            <div>
+                <h4>Assessment</h4>
+                <div class="knowledge-check">
+                    <ol>
+                        <li>
+                            <p>What is the primary purpose of a log yard?</p>
+                            <ul>
+                                <li>*Storage of raw materials</li>
+                                <li>Processing equipment</li>
+                                <li>Quality control</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        
+        <div class="note">
+            <h2>Notes</h2>
+            <ul>
+                <li>Each direct child of <code>.side-by-side</code> becomes a column</li>
+                <li>Columns have equal width on desktop screens</li>
+                <li>Content automatically stacks vertically on mobile devices</li>
+                <li>Use <code>.align-top</code> to align columns to the top</li>
+                <li>Use <code>.align-bottom</code> to align columns to the bottom</li>
+                <li>Default alignment centers columns vertically</li>
+                <li>Side-by-side layouts can be nested within other layouts</li>
+                <li>Works well with figures, activities, and other content types</li>
+                <li>Responsive design ensures good mobile experience</li>
+                <li>Perfect for comparing content, showing processes, or organizing information</li>
+                <li>Maintains consistent spacing and visual hierarchy</li>
+            </ul>
+        </div>
+    </div>
+    <script src="js/lat.js"></script>
+</body>
+</html>

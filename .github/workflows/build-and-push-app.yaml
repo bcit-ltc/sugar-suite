@@ -18,6 +18,7 @@ jobs:
       issues: write
     with:
       cdn_enabled: true
-      # Optional override
-      # cdn_asset_exts: jpg,png,js,css,ico
+      # Override asset extensions: add eot, remove unused (jpeg,webp,webm,mp3,ogg)
+      # Includes compressed files (.br, .gz) for proper CDN serving
+      cdn_asset_exts: jpg,png,gif,svg,ico,mp4,woff,woff2,ttf,otf,eot,css,js,map,html,br,gz
     secrets: inherit
