@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=yes">
+    <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+    <title>Swapper - Sugar Suite Documentation</title>
+    <link rel="stylesheet" href="css/bcit.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Swapper</h1>
+        
+        <div class="note">
+            <h2>Description</h2>
+            <p>Creates sequential content navigation with Previous/Next buttons and automatic height adjustment. Perfect for step-by-step processes, tutorials, or any content that needs to be viewed sequentially. Automatically handles YouTube video pausing and smooth transitions.</p>
+        </div>
+        
+        <div class="note">
+            <h2>Usage</h2>
+            <p>Wrap sequential content sections in a container with class <code>.swapper</code>. Each direct child becomes a "slide" that can be navigated through using the automatically generated Previous/Next buttons.</p>
+            
+            <h3>Available Options</h3>
+            <ul>
+                <li><strong>CSS Classes:</strong>
+                    <ul>
+                        <li><code>.swapper</code> - Main container for sequential content</li>
+                    </ul>
+                </li>
+                <li><strong>Automatic Features:</strong>
+                    <ul>
+                        <li>Previous/Next navigation buttons</li>
+                        <li>Slide counter display (e.g., "2/5")</li>
+                        <li>Automatic height adjustment</li>
+                        <li>Smooth fade transitions</li>
+                        <li>YouTube video pausing</li>
+                        <li>Scroll-to-top on navigation</li>
+                        <li>Circular navigation (Next from last goes to first)</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        
+        <h2>Examples</h2>
+        
+        <h3>Basic Swapper</h3>
+        <div class="swapper">
+            <div>
+                <h2>Step 1: Introduction</h2>
+                <p>This is the first step in a sequential process.</p>
+                <p>Use the Previous/Next buttons to navigate between steps.</p>
+            </div>
+            
+            <div>
+                <h2>Step 2: Main Process</h2>
+                <p>This is the second step.</p>
+                <p>The swapper automatically handles the navigation and maintains consistent height.</p>
+            </div>
+            
+            <div>
+                <h2>Step 3: Conclusion</h2>
+                <p>This is the final step.</p>
+                <p>The Next button will cycle back to the first step.</p>
+            </div>
+        </div>
+        
+        <h3>Swapper with Different Content Heights</h3>
+        <div class="swapper">
+            <div>
+                <h2>Short Content</h2>
+                <p>This slide has minimal content.</p>
+            </div>
+            
+            <div>
+                <h2>Long Content</h2>
+                <p>This slide has much more content to demonstrate how the swapper handles different heights.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+            </div>
+            
+            <div>
+                <h2>Medium Content</h2>
+                <p>This slide has moderate content.</p>
+                <p>The swapper automatically adjusts the container height to accommodate the tallest slide.</p>
+            </div>
+        </div>
+        
+        <h3>Swapper with Interactive Content</h3>
+        <div class="swapper">
+            <div>
+                <h2>Video Content</h2>
+                <figure class="video">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
+                    <figcaption>Video content in swapper</figcaption>
+                </figure>
+            </div>
+            
+            <div>
+                <h2>Interactive Activity</h2>
+                <div class="activity">
+                    <h2>Activity</h2>
+                    <p>Complete this activity after watching the video.</p>
+                    <p>The swapper handles transitions between different types of content.</p>
+                </div>
+            </div>
+            
+            <div>
+                <h2>Knowledge Check</h2>
+                <div class="knowledge-check">
+                    <ol>
+                        <li>
+                            <p>What did you learn from the video?</p>
+                            <p>@ The video covered important concepts.</p>
+                            <ul>
+                                <li>*Concept A</li>
+                                <li>*Concept B</li>
+                                <li>Concept C</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        
+        <h3>Swapper with Mixed Content Types</h3>
+        <div class="swapper">
+            <div>
+                <h2>Introduction</h2>
+                <p>Welcome to this multi-step tutorial.</p>
+                <ul>
+                    <li>Step-by-step instructions</li>
+                    <li>Interactive elements</li>
+                    <li>Progress tracking</li>
+                </ul>
+            </div>
+            
+            <div>
+                <h2>Process Overview</h2>
+                <figure class="image">
+                    <img src="assets/hippy-van.jpg" alt="Process diagram">
+                    <figcaption>Overview of the process</figcaption>
+                </figure>
+            </div>
+            
+            <div>
+                <h2>Detailed Steps</h2>
+                <ol>
+                    <li>First, prepare your materials</li>
+                    <li>Next, follow the procedure</li>
+                    <li>Finally, verify your results</li>
+                </ol>
+            </div>
+            
+            <div>
+                <h2>Summary</h2>
+                <div class="note">
+                    <p>You have completed all the steps in this tutorial.</p>
+                    <p>Use the Previous button to review any step.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="note">
+            <h2>Notes</h2>
+            <ul>
+                <li>Each direct child of <code>.swapper</code> becomes a navigable slide</li>
+                <li>Navigation buttons are automatically generated</li>
+                <li>Slide counter shows current position (e.g., "2/5")</li>
+                <li>Height automatically adjusts to accommodate the tallest slide</li>
+                <li>Smooth fade transitions between slides</li>
+                <li>YouTube videos are automatically paused when navigating away</li>
+                <li>Page scrolls to top of swapper when navigating</li>
+                <li>Navigation is circular (Next from last slide goes to first)</li>
+                <li>Works with any HTML content including interactive elements</li>
+                <li>Perfect for tutorials, step-by-step processes, and sequential content</li>
+                <li>Maintains consistent spacing and visual hierarchy</li>
+                <li>Responsive design works on all screen sizes</li>
+            </ul>
+        </div>
+    </div>
+    <script src="js/lat.js"></script>
+</body>
+</html>

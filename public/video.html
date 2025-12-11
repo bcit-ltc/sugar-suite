@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=yes">
+    <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+    <title>Video - Sugar Suite Documentation</title>
+    <link rel="stylesheet" href="css/bcit.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Video</h1>
+        
+        <div class="note">
+            <h2>Description</h2>
+            <p>Provides responsive video support for both embedded videos (YouTube/Vimeo) and local HTML5 videos. YouTube and Vimeo iframes are automatically enhanced with responsive containers, while local videos receive responsive styling.</p>
+        </div>
+        
+        <div class="note">
+            <h2>Usage</h2>
+            <p>For YouTube/Vimeo: Use iframe elements - they're automatically detected and enhanced. For local videos: Use HTML5 <code>&lt;video&gt;</code> elements with optional <code>&lt;figure class="video"&gt;</code> containers.</p>
+            
+            <h3>Available Options</h3>
+            <ul>
+                <li><strong>Automatic Features (YouTube/Vimeo):</strong>
+                    <ul>
+                        <li>Detects YouTube and Vimeo iframes automatically</li>
+                        <li>Wraps iframes in <code>&lt;figure class="video"&gt;</code> containers</li>
+                        <li>Removes fixed width and height attributes</li>
+                        <li>Creates responsive video wrappers</li>
+                    </ul>
+                </li>
+                <li><strong>Manual Features (Local Videos):</strong>
+                    <ul>
+                        <li>Responsive styling (100% width, auto height)</li>
+                        <li>Optional <code>&lt;figure class="video"&gt;</code> containers</li>
+                        <li>Video icon in captions (FontAwesome)</li>
+                    </ul>
+                </li>
+                <li><strong>CSS Classes:</strong>
+                    <ul>
+                        <li><code>.square</code> - Makes video square aspect ratio</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        
+        <h2>Examples</h2>
+        
+        <h3>Basic YouTube Video</h3>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
+        <p>This YouTube video is automatically wrapped in a responsive container.</p>
+        
+        <h3>YouTube Video with Caption</h3>
+        <figure class="video">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/WeyLEe1T0yo" frameborder="0" allowfullscreen></iframe>
+            <figcaption>
+                <p>This video demonstrates proper seating techniques for ergonomic comfort.</p>
+            </figcaption>
+        </figure>
+        
+        <h3>Square Aspect Ratio Video</h3>
+        <figure class="video square">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/TUmyygCMMGA" frameborder="0" allowfullscreen></iframe>
+            <figcaption>
+                <p>This video is displayed in a square aspect ratio using the <code>.square</code> class.</p>
+            </figcaption>
+        </figure>
+        
+        <h3>Vimeo Video</h3>
+        <iframe src="https://player.vimeo.com/video/148751763" width="640" height="360" frameborder="0" allowfullscreen></iframe>
+        <p>Vimeo videos are also automatically wrapped in responsive containers.</p>
+        
+        <h3>Video in Activity Container</h3>
+        <div class="activity">
+            <h2>Video Learning Activity</h2>
+            <figure class="video">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/lOT0GOyw2pY" frameborder="0" allowfullscreen></iframe>
+                <figcaption>
+                    <h3>Learning Objectives</h3>
+                    <p>After watching this video, you should be able to:</p>
+                    <ul>
+                        <li>Understand the key concepts presented</li>
+                        <li>Apply the techniques shown</li>
+                        <li>Identify common mistakes to avoid</li>
+                    </ul>
+                </figcaption>
+            </figure>
+        </div>
+        
+        <h3>Multiple Videos Side by Side</h3>
+        <div class="side-by-side">
+            <div>
+                <figure class="video">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
+                    <figcaption>Video 1: Introduction</figcaption>
+                </figure>
+            </div>
+            <div>
+                <figure class="video">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/WeyLEe1T0yo" frameborder="0" allowfullscreen></iframe>
+                    <figcaption>Video 2: Advanced Topics</figcaption>
+                </figure>
+            </div>
+        </div>
+        
+        <h3>Video with Custom Embed Code</h3>
+        <figure class="video">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/TUmyygCMMGA" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+            <figcaption>
+                <p>This video includes additional attributes for enhanced security and mobile support.</p>
+            </figcaption>
+        </figure>
+        
+        <h3>Local HTML5 Video</h3>
+        <video controls>
+            <source src="assets/ochs-intro.mp4" type="video/mp4">
+            <source src="assets/ochs-intro.mp4" type="video/webm">
+            Your browser does not support the video element.
+        </video>
+        <p>This local video gets responsive styling but no automatic figure wrapping.</p>
+        
+        <h3>Local Video with Figure Container</h3>
+        <figure class="video">
+            <video controls>
+                <source src="assets/ochs-intro.mp4" type="video/mp4">
+                <source src="assets/ochs-intro.mp4" type="video/webm">
+                Your browser does not support the video element.
+            </video>
+            <figcaption>Local video with manual figure container and video icon</figcaption>
+        </figure>
+        
+        <h3>Local Video with Multiple Sources</h3>
+        <figure class="video">
+            <video controls>
+                <source src="assets/ochs-intro.mp4" type="video/mp4">
+                <source src="assets/ochs-intro.mp4" type="video/webm">
+                <source src="assets/ochs-intro.mp4" type="video/ogg">
+                Your browser does not support the video element.
+            </video>
+            <figcaption>
+                <h4>Safety Training Video</h4>
+                <p>This video covers workplace safety fundamentals with multiple format support.</p>
+                <ul>
+                    <li>Duration: 10 minutes</li>
+                    <li>Formats: MP4, WebM, OGG</li>
+                    <li>Quality: HD</li>
+                </ul>
+            </figcaption>
+        </figure>
+        
+        <div class="note">
+            <h2>Notes</h2>
+            <ul>
+                <li><strong>YouTube/Vimeo Videos:</strong> Automatically detected and enhanced with responsive containers</li>
+                <li><strong>Local Videos:</strong> Get responsive styling but require manual <code>&lt;figure class="video"&gt;</code> containers</li>
+                <li>Iframes are automatically wrapped in <code>&lt;figure class="video"&gt;</code> containers</li>
+                <li>Width and height attributes are removed to enable responsive behavior</li>
+                <li>Videos are wrapped in <code>&lt;div class="video-wrapper"&gt;</code> for styling</li>
+                <li>Use <code>.square</code> class for square aspect ratio videos</li>
+                <li>Local videos support multiple source formats for better browser compatibility</li>
+                <li>Always include fallback text for browsers that don't support video</li>
+                <li>Consider file size and loading times for local video content</li>
+                <li>Use descriptive captions for accessibility</li>
+            </ul>
+        </div>
+    </div>
+    <script src="js/lat.js"></script>
+</body>
+</html>

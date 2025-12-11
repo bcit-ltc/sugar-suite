@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=yes">
+    <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+    <title>Tables - Sugar Suite Documentation</title>
+    <link rel="stylesheet" href="css/bcit.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Tables</h1>
+        
+        <div class="note">
+            <h2>Description</h2>
+            <p>Enhances tables with automatic striping, responsive scrolling, column alignment, and minimal styling options. Automatically applies appropriate styling based on table size and content.</p>
+        </div>
+        
+        <div class="note">
+            <h2>Usage</h2>
+            <p>Create standard HTML tables. The system automatically enhances them with responsive behavior, striping for large tables, column alignment based on header cell classes, and overflow scrolling.</p>
+            
+            <h3>Available Options</h3>
+            <ul>
+                <li><strong>CSS Classes:</strong>
+                    <ul>
+                        <li><code>.striped</code> - Applied automatically to large tables (5+ rows and columns)</li>
+                        <li><code>.unstriped</code> - Prevents automatic striping</li>
+                        <li><code>.unstyled</code> - Removes all automatic styling</li>
+                        <li><code>.overflow-x</code> - Applied automatically for horizontal scrolling</li>
+                        <li><code>.minimal</code> - Applies minimal table styling</li>
+                        <li><code>.borderless</code> - Removes all borders</li>
+                        <li><code>.compact</code> - Reduces font size and padding for dense tables</li>
+                        <li><code>.left</code>, <code>.center</code>, <code>.right</code> - Column alignment classes</li>
+                        <li><code>.top</code>, <code>.middle</code>, <code>.bottom</code> - Vertical alignment classes</li>
+                    </ul>
+                </li>
+                <li><strong>Automatic Features:</strong>
+                    <ul>
+                        <li>Responsive horizontal scrolling wrapper</li>
+                        <li>Automatic striping for large tables</li>
+                        <li>Column alignment based on header classes</li>
+                        <li>Minimal styling enhancements</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        
+        <h2>Examples</h2>
+        
+        <h3>Basic Table</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>City</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>John Doe</td>
+                    <td>25</td>
+                    <td>New York</td>
+                </tr>
+                <tr>
+                    <td>Jane Smith</td>
+                    <td>30</td>
+                    <td>Los Angeles</td>
+                </tr>
+                <tr>
+                    <td>Bob Johnson</td>
+                    <td>35</td>
+                    <td>Chicago</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>Large Table (Auto-striped)</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Rating</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Laptop</td>
+                    <td>Electronics</td>
+                    <td>$999</td>
+                    <td>15</td>
+                    <td>4.5</td>
+                </tr>
+                <tr>
+                    <td>Mouse</td>
+                    <td>Electronics</td>
+                    <td>$25</td>
+                    <td>50</td>
+                    <td>4.2</td>
+                </tr>
+                <tr>
+                    <td>Keyboard</td>
+                    <td>Electronics</td>
+                    <td>$75</td>
+                    <td>30</td>
+                    <td>4.3</td>
+                </tr>
+                <tr>
+                    <td>Monitor</td>
+                    <td>Electronics</td>
+                    <td>$300</td>
+                    <td>20</td>
+                    <td>4.4</td>
+                </tr>
+                <tr>
+                    <td>Headphones</td>
+                    <td>Electronics</td>
+                    <td>$150</td>
+                    <td>25</td>
+                    <td>4.1</td>
+                </tr>
+                <tr>
+                    <td>Webcam</td>
+                    <td>Electronics</td>
+                    <td>$80</td>
+                    <td>40</td>
+                    <td>4.0</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>Table with Column Alignment</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th class="left">Name</th>
+                    <th class="center">Age</th>
+                    <th class="right">Salary</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Alice Johnson</td>
+                    <td>28</td>
+                    <td>$65,000</td>
+                </tr>
+                <tr>
+                    <td>Bob Smith</td>
+                    <td>32</td>
+                    <td>$72,000</td>
+                </tr>
+                <tr>
+                    <td>Carol Davis</td>
+                    <td>29</td>
+                    <td>$68,000</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>Minimal Table</h3>
+        <table class="minimal">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                    <th>Unit Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Notebook</td>
+                    <td>10</td>
+                    <td>$2.50</td>
+                </tr>
+                <tr>
+                    <td>Pen</td>
+                    <td>25</td>
+                    <td>$1.20</td>
+                </tr>
+                <tr>
+                    <td>Pencil</td>
+                    <td>15</td>
+                    <td>$0.80</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>Unstriped Table</h3>
+        <table class="unstriped">
+            <thead>
+                <tr>
+                    <th>Course</th>
+                    <th>Credits</th>
+                    <th>Grade</th>
+                    <th>Semester</th>
+                    <th>Instructor</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Mathematics 101</td>
+                    <td>3</td>
+                    <td>A</td>
+                    <td>Fall 2023</td>
+                    <td>Dr. Smith</td>
+                </tr>
+                <tr>
+                    <td>Physics 201</td>
+                    <td>4</td>
+                    <td>B+</td>
+                    <td>Fall 2023</td>
+                    <td>Dr. Johnson</td>
+                </tr>
+                <tr>
+                    <td>Chemistry 101</td>
+                    <td>3</td>
+                    <td>A-</td>
+                    <td>Spring 2024</td>
+                    <td>Dr. Brown</td>
+                </tr>
+                <tr>
+                    <td>Biology 201</td>
+                    <td>4</td>
+                    <td>B</td>
+                    <td>Spring 2024</td>
+                    <td>Dr. Wilson</td>
+                </tr>
+                <tr>
+                    <td>English 101</td>
+                    <td>3</td>
+                    <td>A</td>
+                    <td>Fall 2023</td>
+                    <td>Prof. Davis</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>Unstyled Table</h3>
+        <table class="unstyled">
+            <thead>
+                <tr>
+                    <th>Task</th>
+                    <th>Status</th>
+                    <th>Due Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Complete report</td>
+                    <td>In Progress</td>
+                    <td>2024-01-15</td>
+                </tr>
+                <tr>
+                    <td>Review documents</td>
+                    <td>Completed</td>
+                    <td>2024-01-10</td>
+                </tr>
+                <tr>
+                    <td>Schedule meeting</td>
+                    <td>Pending</td>
+                    <td>2024-01-20</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>Borderless Table</h3>
+        <table class="borderless">
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Responsive Design</td>
+                    <td>Adapts to different screen sizes</td>
+                    <td>Complete</td>
+                </tr>
+                <tr>
+                    <td>Accessibility</td>
+                    <td>WCAG 2.1 AA compliant</td>
+                    <td>Complete</td>
+                </tr>
+                <tr>
+                    <td>Performance</td>
+                    <td>Optimized for fast loading</td>
+                    <td>In Progress</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>Compact Table</h3>
+        <table class="compact">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Value</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>001</td>
+                    <td>Alpha</td>
+                    <td>Primary</td>
+                    <td>100</td>
+                    <td>Active</td>
+                </tr>
+                <tr>
+                    <td>002</td>
+                    <td>Beta</td>
+                    <td>Secondary</td>
+                    <td>200</td>
+                    <td>Active</td>
+                </tr>
+                <tr>
+                    <td>003</td>
+                    <td>Gamma</td>
+                    <td>Tertiary</td>
+                    <td>300</td>
+                    <td>Inactive</td>
+                </tr>
+                <tr>
+                    <td>004</td>
+                    <td>Delta</td>
+                    <td>Primary</td>
+                    <td>400</td>
+                    <td>Active</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>Wide Table (Responsive Scrolling)</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Employee ID</th>
+                    <th>Full Name</th>
+                    <th>Department</th>
+                    <th>Position</th>
+                    <th>Hire Date</th>
+                    <th>Salary</th>
+                    <th>Benefits</th>
+                    <th>Performance Rating</th>
+                    <th>Last Review</th>
+                    <th>Next Review</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>EMP001</td>
+                    <td>John Smith</td>
+                    <td>Engineering</td>
+                    <td>Senior Developer</td>
+                    <td>2020-03-15</td>
+                    <td>$85,000</td>
+                    <td>Full</td>
+                    <td>4.2</td>
+                    <td>2023-12-01</td>
+                    <td>2024-12-01</td>
+                </tr>
+                <tr>
+                    <td>EMP002</td>
+                    <td>Jane Doe</td>
+                    <td>Marketing</td>
+                    <td>Marketing Manager</td>
+                    <td>2019-07-22</td>
+                    <td>$75,000</td>
+                    <td>Full</td>
+                    <td>4.5</td>
+                    <td>2023-11-15</td>
+                    <td>2024-11-15</td>
+                </tr>
+                <tr>
+                    <td>EMP003</td>
+                    <td>Bob Johnson</td>
+                    <td>Sales</td>
+                    <td>Sales Representative</td>
+                    <td>2021-01-10</td>
+                    <td>$60,000</td>
+                    <td>Full</td>
+                    <td>3.8</td>
+                    <td>2023-10-30</td>
+                    <td>2024-10-30</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="note">
+            <h2>Notes</h2>
+            <ul>
+                <li>Tables with 5+ rows and columns automatically get striped styling</li>
+                <li>All tables are wrapped in responsive scrolling containers</li>
+                <li>Column alignment is applied based on header cell classes</li>
+                <li>Use <code>.left</code>, <code>.center</code>, or <code>.right</code> on header cells to align entire columns</li>
+                <li>Use <code>.top</code>, <code>.middle</code>, or <code>.bottom</code> for vertical alignment</li>
+                <li><code>.unstriped</code> prevents automatic striping</li>
+                <li><code>.unstyled</code> removes all automatic enhancements</li>
+                <li><code>.minimal</code> applies clean, minimal styling</li>
+                <li><code>.borderless</code> removes all borders for a clean look</li>
+                <li><code>.compact</code> reduces font size and padding for dense tables</li>
+                <li>Complex tables with rowspan/colspan are excluded from column alignment</li>
+                <li>Flashcard tables are excluded from responsive wrapping</li>
+                <li>Tables automatically adapt to screen size with horizontal scrolling</li>
+            </ul>
+        </div>
+    </div>
+    <script src="js/lat.js"></script>
+</body>
+</html>

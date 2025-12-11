@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=yes">
+    <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+    <title>Knowledge Check - Sugar Suite Documentation</title>
+    <link rel="stylesheet" href="css/bcit.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Knowledge Check</h1>
+        
+        <div class="note">
+            <h2>Description</h2>
+            <p>Creates interactive quizzes with multiple question types including multiple choice, multiple select, fill-in-the-blank, ordering, and matching. Provides immediate feedback and scoring.</p>
+        </div>
+        
+        <div class="note">
+            <h2>Usage</h2>
+            <p>Wrap questions in a container with class <code>.knowledge-check</code> or <code>.self-test</code>. Use specific HTML structure and special syntax for different question types.</p>
+            
+            <h3>Available Options</h3>
+            <ul>
+                <li><strong>CSS Classes:</strong>
+                    <ul>
+                        <li><code>.knowledge-check</code> or <code>.self-test</code> - Main container</li>
+                        <li><code>.no-score</code> - Hides the score display</li>
+                        <li><code>.development</code> - Removes required validation for testing</li>
+                        <li><code>.no-list-style</code> - Removes list styling from options</li>
+                        <li><code>.multicolumn-2</code> - Displays options in 2 columns</li>
+                        <li><code>.multicolumn-3</code> - Displays options in 3 columns</li>
+                    </ul>
+                </li>
+                <li><strong>Special Syntax:</strong>
+                    <ul>
+                        <li><code>*</code> - Marks correct answers (prefix)</li>
+                        <li><code>@</code> - Indicates feedback text (prefix)</li>
+                        <li><code>ul</code> - Creates unordered list (random order)</li>
+                        <li><code>ol</code> - Creates ordered list (fixed order)</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        
+        <h2>Examples</h2>
+        
+        <h3>Multiple Choice Questions</h3>
+        <div class="knowledge-check">
+            <ol>
+                <li>
+                    <p>What is the capital of Canada?</p>
+                    <p>@ Ottawa is the capital city of Canada.</p>
+                    <ul>
+                        <li>*Ottawa</li>
+                        <li>Toronto</li>
+                        <li>Vancouver</li>
+                        <li>Montreal</li>
+                    </ul>
+                </li>
+                <li>
+                    <p>Which of the following is a programming language?</p>
+                    <p>@ JavaScript is a popular programming language.</p>
+                    <ol class="no-list-style">
+                        <li>*JavaScript</li>
+                        <li>HTML</li>
+                        <li>CSS</li>
+                        <li>XML</li>
+                    </ol>
+                </li>
+            </ol>
+        </div>
+        
+        <h3>Multiple Select Questions</h3>
+        <div class="knowledge-check">
+            <ol>
+                <li>
+                    <p>Which of the following are programming languages? (Select all that apply)</p>
+                    <p>@ JavaScript, Python, and Java are all programming languages.</p>
+                    <ul>
+                        <li>*JavaScript</li>
+                        <li>*Python</li>
+                        <li>HTML</li>
+                        <li>*Java</li>
+                        <li>CSS</li>
+                        <li>*C++</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+        
+        <h3>Fill-in-the-Blank Questions</h3>
+        <div class="knowledge-check">
+            <ol>
+                <li>
+                    <p>Complete the following sentence:</p>
+                    <p>The process of converting source code into machine code is called [compilation].</p>
+                    <p>@ Compilation is the process of converting source code into machine code.</p>
+                </li>
+                <li>
+                    <p>What does HTML stand for?</p>
+                    <p>[HyperText Markup Language] stands for HyperText Markup Language.</p>
+                    <p>@ HTML stands for HyperText Markup Language.</p>
+                </li>
+            </ol>
+        </div>
+        
+        <h3>Ordering Questions</h3>
+        <div class="knowledge-check">
+            <ol>
+                <li>
+                    <p>Put the following steps in the correct order for software development:</p>
+                    <p>@ The correct order is: Planning, Design, Implementation, Testing, Deployment.</p>
+                    <ol>
+                        <li>Planning</li>
+                        <li>Design</li>
+                        <li>Implementation</li>
+                        <li>Testing</li>
+                        <li>Deployment</li>
+                    </ol>
+                </li>
+            </ol>
+        </div>
+        
+        <h3>Matching Questions</h3>
+        <div class="knowledge-check">
+            <ol>
+                <li>
+                    <p>Match the programming languages with their primary use:</p>
+                    <p>@ JavaScript is for web development, Python for data science, Java for enterprise applications.</p>
+                    <ul>
+                        <li>JavaScript = Web Development</li>
+                        <li>Python = Data Science</li>
+                        <li>Java = Enterprise Applications</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+        
+        <h3>Knowledge Check Without Score</h3>
+        <div class="knowledge-check no-score">
+            <ol>
+                <li>
+                    <p>What is your favorite programming language?</p>
+                    <p>@ There's no wrong answer here - it's about personal preference!</p>
+                    <ul>
+                        <li>*JavaScript</li>
+                        <li>*Python</li>
+                        <li>*Java</li>
+                        <li>*C++</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+        
+        <h3>Multi-Column Layout</h3>
+        <div class="knowledge-check multicolumn multicolumn-2">
+            <ol>
+                <li>
+                    <p>Which of the following are web technologies?</p>
+                    <p>@ HTML, CSS, and JavaScript are all web technologies.</p>
+                    <ul>
+                        <li>*HTML</li>
+                        <li>*CSS</li>
+                        <li>*JavaScript</li>
+                        <li>Python</li>
+                        <li>Java</li>
+                        <li>*PHP</li>
+                    </ul>
+                </li>
+                <li>
+                    <p>What is the primary purpose of CSS?</p>
+                    <p>@ CSS is used for styling and layout of web pages.</p>
+                    <ul>
+                        <li>*Styling web pages</li>
+                        <li>Creating databases</li>
+                        <li>Writing server code</li>
+                        <li>Layout design</li>
+                    </ul>
+                </li>
+                <li>
+                    <p>Which programming language is primarily used for web development?</p>
+                    <p>@ JavaScript is the primary language for web development.</p>
+                    <ul>
+                        <li>*JavaScript</li>
+                        <li>C++</li>
+                        <li>Assembly</li>
+                        <li>Fortran</li>
+                    </ul>
+                </li>
+                <li>
+                    <p>What does HTML stand for?</p>
+                    <p>@ HTML stands for HyperText Markup Language.</p>
+                    <ul>
+                        <li>*HyperText Markup Language</li>
+                        <li>High Tech Modern Language</li>
+                        <li>Home Tool Markup Language</li>
+                        <li>Hyperlink Text Markup Language</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+        
+        <h3>Three-Column Layout</h3>
+        <div class="knowledge-check multicolumn multicolumn-3">
+            <ol>
+                <li>
+                    <p>What is JavaScript?</p>
+                    <p>@ JavaScript is a programming language for web development.</p>
+                    <ul>
+                        <li>*Programming language</li>
+                        <li>Database system</li>
+                        <li>Operating system</li>
+                    </ul>
+                </li>
+                <li>
+                    <p>What is CSS?</p>
+                    <p>@ CSS is used for styling web pages.</p>
+                    <ul>
+                        <li>*Style sheet language</li>
+                        <li>Programming language</li>
+                        <li>Database language</li>
+                    </ul>
+                </li>
+                <li>
+                    <p>What is HTML?</p>
+                    <p>@ HTML is a markup language for creating web pages.</p>
+                    <ul>
+                        <li>*Markup language</li>
+                        <li>Programming language</li>
+                        <li>Style language</li>
+                    </ul>
+                </li>
+                <li>
+                    <p>What is PHP?</p>
+                    <p>@ PHP is a server-side scripting language.</p>
+                    <ul>
+                        <li>*Server-side language</li>
+                        <li>Client-side language</li>
+                        <li>Database language</li>
+                    </ul>
+                </li>
+                <li>
+                    <p>What is Python?</p>
+                    <p>@ Python is a general-purpose programming language.</p>
+                    <ul>
+                        <li>*General-purpose language</li>
+                        <li>Web-only language</li>
+                        <li>Database language</li>
+                    </ul>
+                </li>
+                <li>
+                    <p>What is Java?</p>
+                    <p>@ Java is an object-oriented programming language.</p>
+                    <ul>
+                        <li>*Object-oriented language</li>
+                        <li>Functional language</li>
+                        <li>Markup language</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+        
+        <h3>Random Order Questions</h3>
+        <div class="knowledge-check">
+            <ul>
+                <li>
+                    <p>What is the largest planet in our solar system?</p>
+                    <p>@ Jupiter is the largest planet in our solar system.</p>
+                    <ul>
+                        <li>*Jupiter</li>
+                        <li>Earth</li>
+                        <li>Saturn</li>
+                        <li>Mars</li>
+                    </ul>
+                </li>
+                <li>
+                    <p>Which planet is closest to the Sun?</p>
+                    <p>@ Mercury is the closest planet to the Sun.</p>
+                    <ul>
+                        <li>*Mercury</li>
+                        <li>Venus</li>
+                        <li>Earth</li>
+                        <li>Mars</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="note">
+            <h2>Notes</h2>
+            <ul>
+                <li>Use <code>*</code> to mark correct answers</li>
+                <li>Use <code>@</code> to provide feedback text</li>
+                <li><code>ul</code> creates random order, <code>ol</code> creates fixed order</li>
+                <li>Fill-in-the-blank uses [brackets] around the correct answer in the text</li>
+                <li>Ordering questions use a simple list without * prefixes</li>
+                <li>Matching questions use = signs to connect pairs (e.g., "JavaScript = Web Development")</li>
+                <li>Multi-column layouts work with 2 or 3 columns (requires multiple questions to see effect)</li>
+                <li>Development mode removes validation requirements for testing</li>
+                <li>No-score mode hides the score display</li>
+                <li>Questions are automatically numbered unless using custom numbering</li>
+            </ul>
+        </div>
+    </div>
+    <script src="js/lat.js"></script>
+</body>
+</html>

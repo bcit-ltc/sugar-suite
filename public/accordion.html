@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=yes">
+    <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+    <title>Accordion - Sugar Suite Documentation</title>
+    <link rel="stylesheet" href="css/bcit.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Accordion</h1>
+        
+        <div class="note">
+            <h2>Description</h2>
+            <p>Creates collapsible content sections where clicking on headings (h2, h3, etc.) toggles the visibility of content below. Also includes reveal functionality for click-to-show content.</p>
+        </div>
+        
+        <div class="note">
+            <h2>Usage</h2>
+            <p>Wrap content in a container with class <code>.accordion</code>. The first child element type becomes the toggle trigger (typically h2). Content following each trigger is automatically wrapped and hidden.</p>
+            
+            <h3>Available Options</h3>
+            <ul>
+                <li><strong>CSS Classes:</strong>
+                    <ul>
+                        <li><code>.accordion</code> - Main container</li>
+                        <li><code>.accordion-alt</code> - Alternative styling without arrow indicators</li>
+                        <li><code>.no-toggle</code> - Removes the toggle-all button</li>
+                        <li><code>.collapsing</code> - Makes accordion behave like tabs (only one section open at a time)</li>
+                    </ul>
+                </li>
+                <li><strong>Data Attributes:</strong>
+                    <ul>
+                        <li><code>data-button="text"</code> - Custom text for reveal button (default: "Reveal")</li>
+                        <li><code>data-min-text="number"</code> - Minimum characters required before reveal button activates</li>
+                        <li><code>data-placeholder="text"</code> - Placeholder text for textarea (when using min-text)</li>
+                        <li><code>data-rows="number"</code> - Number of rows for textarea (default: 5)</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        
+        <h2>Examples</h2>
+        
+        <h3>Basic Accordion</h3>
+        <div class="accordion">
+            <h2>Section 1</h2>
+            <p>This content is hidden by default and will slide down when the heading is clicked.</p>
+            <p>You can include multiple paragraphs and other elements.</p>
+            
+            <h2>Section 2</h2>
+            <p>Each heading becomes a clickable button that toggles its content section.</p>
+            <ul>
+                <li>Lists work fine</li>
+                <li>As do other HTML elements</li>
+            </ul>
+            
+            <h2>Section 3</h2>
+            <p>Content sections are automatically wrapped and styled.</p>
+        </div>
+        
+        <h3>Accordion with Collapsing Behavior</h3>
+        <div class="accordion collapsing">
+            <h2>Only One Open</h2>
+            <p>With the <code>.collapsing</code> class, only one section can be open at a time.</p>
+            
+            <h2>Previous Section Closes</h2>
+            <p>When you open this section, the previous one will automatically close.</p>
+            
+            <h2>Tab-like Behavior</h2>
+            <p>This creates a tab-like interface using accordion functionality.</p>
+        </div>
+        
+        <h3>Accordion Without Toggle Button</h3>
+        <div class="accordion no-toggle">
+            <h2>No Toggle Button</h2>
+            <p>This accordion doesn't have the toggle-all button in the top-left corner.</p>
+            
+            <h2>Manual Control Only</h2>
+            <p>Users must click individual headings to open/close sections.</p>
+        </div>
+        
+        <h3>Reveal Content</h3>
+        <div class="reveal" data-button="Show Answer">
+            <p>This content is hidden until the reveal button is clicked.</p>
+            <p>Perfect for answers, solutions, or additional information.</p>
+        </div>
+        
+        <h3>Active Reveal with Text Input</h3>
+        <div class="active-reveal" data-min-text="10" data-placeholder="Type at least 10 characters to enable the reveal button" data-button="Show Solution">
+            <p>This content requires the user to type at least 10 characters before the reveal button becomes active.</p>
+            <p>Great for encouraging reflection before showing answers.</p>
+        </div>
+        
+        <div class="note">
+            <h2>Notes</h2>
+            <ul>
+                <li>The first child element type (h2, h3, etc.) becomes the toggle trigger</li>
+                <li>Content following each trigger is automatically wrapped in <code>._bellow</code> containers</li>
+                <li>Accordion supports keyboard navigation (Enter/Space keys)</li>
+                <li>The toggle button (top-left) opens all closed sections or closes all open sections</li>
+                <li>Reveal functionality works independently of accordion structure</li>
+                <li>Use <code>.accordion-alt</code> for a cleaner look without arrow indicators</li>
+            </ul>
+        </div>
+    </div>
+    <script src="js/lat.js"></script>
+</body>
+</html>

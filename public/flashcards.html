@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=yes">
+    <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+    <title>Flashcards - Sugar Suite Documentation</title>
+    <link rel="stylesheet" href="css/bcit.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Flashcards</h1>
+        
+        <div class="note">
+            <h2>Description</h2>
+            <p>Transforms tables into interactive flashcard sets with flipping animations, navigation controls, shuffle functionality, and responsive design. Perfect for studying and memorization activities.</p>
+        </div>
+        
+        <div class="note">
+            <h2>Usage</h2>
+            <p>Create a table with class <code>.flashcards</code> where each row represents a card with two cells (front and back). The table is automatically converted into an interactive flashcard interface.</p>
+            
+            <h3>Available Options</h3>
+            <ul>
+                <li><strong>CSS Classes:</strong>
+                    <ul>
+                        <li><code>.flashcards</code> - Main container (required)</li>
+                        <li><code>.no-number</code> - Hides the card counter</li>
+                        <li><code>.no-nav</code> - Hides navigation controls (enables swipe gestures)</li>
+                        <li><code>.top-left</code>, <code>.top-center</code>, <code>.top-right</code> - Card content alignment</li>
+                        <li><code>.middle-left</code>, <code>.middle-center</code>, <code>.middle-right</code> - Card content alignment</li>
+                        <li><code>.bottom-left</code>, <code>.bottom-center</code>, <code>.bottom-right</code> - Card content alignment</li>
+                    </ul>
+                </li>
+                <li><strong>Data Attributes:</strong>
+                    <ul>
+                        <li><code>data-height="number"</code> - Set custom card height in pixels (default: 500px)</li>
+                        <li><code>data-justify-content="value"</code> - CSS justify-content value for card content</li>
+                        <li><code>data-align-items="value"</code> - CSS align-items value for card content</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        
+        <h2>Examples</h2>
+        
+        <h3>Basic Flashcards</h3>
+        <table class="flashcards">
+            <thead>
+                <tr>
+                    <th>Front</th>
+                    <th>Back</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><img src="assets/woods/Damaged_Log.jpg" alt="Damaged Log"></td>
+                    <td>
+                        <h2>Damaged Log</h2>
+                        <p>Log damaged in the log yard due to poor handling by mobile equipment.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>What is JavaScript?</td>
+                    <td>A programming language used for web development and creating interactive websites.</td>
+                </tr>
+                <tr>
+                    <td>What is CSS?</td>
+                    <td>Cascading Style Sheets - used to style and layout web pages.</td>
+                </tr>
+                <tr>
+                    <td>What is HTML?</td>
+                    <td>HyperText Markup Language - the standard markup language for creating web pages.</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>Flashcards Without Card Counter</h3>
+        <table class="flashcards no-number">
+            <thead>
+                <tr>
+                    <th>Front</th>
+                    <th>Back</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Front 1</td>
+                    <td>Back 1</td>
+                </tr>
+                <tr>
+                    <td>Front 2</td>
+                    <td>Back 2</td>
+                </tr>
+                <tr>
+                    <td>Front 3</td>
+                    <td>Back 3</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>Flashcards Without Navigation Controls</h3>
+        <table class="flashcards no-nav">
+            <thead>
+                <tr>
+                    <th>Front</th>
+                    <th>Back</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Swipe left/right to navigate</td>
+                    <td>Swipe up/down to flip cards</td>
+                </tr>
+                <tr>
+                    <td>Touch gestures work on mobile</td>
+                    <td>No visible navigation buttons</td>
+                </tr>
+                <tr>
+                    <td>Clean interface</td>
+                    <td>Focus on content only</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>Flashcards with Custom Height</h3>
+        <table class="flashcards" data-height="300">
+            <thead>
+                <tr>
+                    <th>Front</th>
+                    <th>Back</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Shorter cards</td>
+                    <td>Custom height of 300px</td>
+                </tr>
+                <tr>
+                    <td>Compact design</td>
+                    <td>Good for simple content</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>Flashcards with Content Alignment</h3>
+        <table class="flashcards">
+            <thead>
+                <tr>
+                    <th>Front</th>
+                    <th>Back</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="top-left">
+                    <td>Top Left</td>
+                    <td>Content aligned to top-left corner</td>
+                </tr>
+                <tr class="middle-center">
+                    <td>Middle Center</td>
+                    <td>Content centered both horizontally and vertically</td>
+                </tr>
+                <tr class="bottom-right">
+                    <td>Bottom Right</td>
+                    <td>Content aligned to bottom-right corner</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>Flashcards with Mixed Content</h3>
+        <table class="flashcards">
+            <thead>
+                <tr>
+                    <th>Front</th>
+                    <th>Back</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <h2>Programming Languages</h2>
+                        <p>What are the main types?</p>
+                    </td>
+                    <td>
+                        <h2>Answer</h2>
+                        <ul>
+                            <li>Compiled languages (C++, Java)</li>
+                            <li>Interpreted languages (Python, JavaScript)</li>
+                            <li>Markup languages (HTML, XML)</li>
+                            <li>Style languages (CSS)</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="assets/woods/mill_machine.jpg" alt="Mill Machine">
+                        <p>What is this machine used for?</p>
+                    </td>
+                    <td>
+                        <h2>Headrig Machine</h2>
+                        <p>This is a headrig machine used in lumber processing to cut logs into boards.</p>
+                        <div class="example">
+                            <h3>Key Features</h3>
+                            <ul>
+                                <li>High-speed cutting</li>
+                                <li>Precision control</li>
+                                <li>Automated operation</li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="note">
+            <h2>Notes</h2>
+            <ul>
+                <li>Each table row becomes a flashcard with two sides</li>
+                <li>First cell is the front, second cell is the back</li>
+                <li>Navigation controls: Previous, Flip, Next, Flip All, Shuffle, Reset, View Table</li>
+                <li>Keyboard navigation: Arrow keys for navigation and flipping</li>
+                <li>Swipe gestures work when <code>.no-nav</code> is used</li>
+                <li>Cards can contain any HTML content (text, images, lists, etc.)</li>
+                <li>Custom height can be set using <code>data-height</code> attribute</li>
+                <li>Content alignment classes control how content is positioned within cards</li>
+                <li>Original table is preserved and can be toggled with "View as Table" button</li>
+                <li>Cards maintain their state during navigation and shuffling</li>
+            </ul>
+        </div>
+    </div>
+    <script src="js/lat.js"></script>
+</body>
+</html>

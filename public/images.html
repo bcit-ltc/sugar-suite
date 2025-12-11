@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=yes">
+    <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+    <title>Images - Sugar Suite Documentation</title>
+    <link rel="stylesheet" href="css/bcit.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Images</h1>
+        
+        <div class="note">
+            <h2>Description</h2>
+            <p>Enhances images with automatic click-to-enlarge functionality. When images are displayed smaller than their natural size, they become clickable and open in a new window at full resolution.</p>
+        </div>
+        
+        <div class="note">
+            <h2>Usage</h2>
+            <p>Place images inside <code>&lt;figure&gt;</code> elements. The system automatically detects when images are displayed smaller than their natural size and makes them clickable.</p>
+            
+            <h3>Available Options</h3>
+            <ul>
+                <li><strong>CSS Classes:</strong>
+                    <ul>
+                        <li><code>.image</code> - Standard image figure (default)</li>
+                        <li><code>.full-width</code> - Image spans full container width</li>
+                        <li><code>.largest</code> - Image width: 2000px</li>
+                        <li><code>.larger</code> - Image width: 1100px</li>
+                        <li><code>.large</code> - Image width: 900px</li>
+                        <li><code>.small</code> - Image width: 600px</li>
+                        <li><code>.smaller</code> - Image width: 400px</li>
+                        <li><code>.smallest</code> - Image width: 200px</li>
+                        <li><code>.left</code> - Float image to the left</li>
+                        <li><code>.right</code> - Float image to the right</li>
+                    </ul>
+                </li>
+                <li><strong>Automatic Features:</strong>
+                    <ul>
+                        <li>Click-to-enlarge for images displayed smaller than natural size</li>
+                        <li>Cursor changes to pointer when image is clickable</li>
+                        <li>Tooltip shows percentage larger the full image is</li>
+                        <li>Keyboard accessible (Enter/Space keys)</li>
+                    </ul>
+                </li>
+                <li><strong>Threshold:</strong>
+                    <ul>
+                        <li>Images become clickable when displayed at less than 75% of natural size</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        
+        <h2>Examples</h2>
+        
+        <h3>Basic Images</h3>
+        <figure class="image">
+            <img src="assets/woods/Damaged_Log.jpg" alt="Damaged Log">
+            <figcaption>This image will be clickable if displayed smaller than its natural size.</figcaption>
+        </figure>
+        
+        <h3>Small Images (Clickable)</h3>
+        <figure class="image">
+            <img src="assets/woods/mill_machine.jpg" alt="Mill Machine" style="width: 200px;">
+            <figcaption>This image is displayed at 200px width, so it will be clickable to view full size.</figcaption>
+        </figure>
+        
+        <h3>Large Images (Not Clickable)</h3>
+        <figure class="image">
+            <img src="assets/woods/signpost.jpg" alt="Signpost" style="width: 800px;">
+            <figcaption>This image is displayed at full or near-full size, so it won't be clickable.</figcaption>
+        </figure>
+        
+        <h3>Images in Different Contexts</h3>
+        <div class="side-by-side">
+            <div>
+                <figure class="image">
+                    <img src="assets/woods/lumber_yard.jpg" alt="Lumber Yard" style="width: 300px;">
+                    <figcaption>Left side image</figcaption>
+                </figure>
+            </div>
+            <div>
+                <figure class="image">
+                    <img src="assets/woods/yard-wide.jpg" alt="Wide Yard View" style="width: 300px;">
+                    <figcaption>Right side image</figcaption>
+                </figure>
+            </div>
+        </div>
+        
+        <h3>Images with Mixed Content</h3>
+        <figure class="image">
+            <img src="assets/woods/Cut_Mark.jpg" alt="Cut Mark on Log" style="width: 250px;">
+            <figcaption>
+                <h3>Quality Control</h3>
+                <p>This image shows a cut mark on a log, which is important for quality control in lumber processing.</p>
+                <ul>
+                    <li>Check for proper cutting angles</li>
+                    <li>Ensure clean cuts</li>
+                    <li>Document any irregularities</li>
+                </ul>
+            </figcaption>
+        </figure>
+        
+        <h3>Images with Size Classes</h3>
+        <figure class="image large">
+            <img src="assets/woods/cutter.jpg" alt="Cutter Machine">
+            <figcaption>Large image (900px width)</figcaption>
+        </figure>
+        
+        <figure class="image small">
+            <img src="assets/woods/Cut_Mark.jpg" alt="Cut Mark">
+            <figcaption>Small image (600px width)</figcaption>
+        </figure>
+        
+        <figure class="image smallest">
+            <img src="assets/woods/signpost.jpg" alt="Signpost">
+            <figcaption>Smallest image (200px width)</figcaption>
+        </figure>
+        
+        <h3>Floating Images</h3>
+        <figure class="image left small">
+            <img src="assets/woods/Damaged_Log.jpg" alt="Damaged Log">
+            <figcaption>Left-floated image</figcaption>
+        </figure>
+        <p>This text wraps around the left-floated image. The image is positioned to the left side of the container, and text flows around it on the right side. This is useful for creating more dynamic layouts where images and text interact naturally.</p>
+        
+        <figure class="image right small">
+            <img src="assets/woods/mill_machine.jpg" alt="Mill Machine">
+            <figcaption>Right-floated image</figcaption>
+        </figure>
+        <p>This text wraps around the right-floated image. The image is positioned to the right side of the container, and text flows around it on the left side. Floating images can be combined with size classes to create various layout effects.</p>
+        
+        <h3>Images in Activity Containers</h3>
+        <div class="activity">
+            <h2>Image Analysis Activity</h2>
+            <figure class="image">
+                <img src="assets/woods/cutter.jpg" alt="Cutter Machine" style="width: 400px;">
+                <figcaption>Analyze this cutter machine and identify its key components.</figcaption>
+            </figure>
+            <p>Click on the image above to view it in full size for detailed analysis.</p>
+        </div>
+        
+        <div class="note">
+            <h2>Notes</h2>
+            <ul>
+                <li>Images must be inside <code>&lt;figure&gt;</code> elements to work</li>
+                <li>Size classes (largest, larger, large, small, smaller, smallest) control image width</li>
+                <li>Floating classes (left, right) position images and allow text to wrap around them</li>
+                <li>Size and floating classes can be combined (e.g., <code>class="image left small"</code>)</li>
+                <li>Images in sliders are excluded from click-to-enlarge functionality</li>
+                <li>The system automatically calculates if an image is displayed smaller than 75% of its natural size</li>
+                <li>Clickable images show a tooltip indicating how much larger the full image is</li>
+                <li>Images open in a new window/tab when clicked</li>
+                <li>Supports keyboard navigation (Enter/Space keys)</li>
+                <li>The feature works automatically - no additional classes or attributes needed</li>
+                <li>Responsive design ensures images work well on all screen sizes</li>
+            </ul>
+        </div>
+    </div>
+    <script src="js/lat.js"></script>
+</body>
+</html>

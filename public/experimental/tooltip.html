@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="x-ua-compatible" content="ie=edge" />
+        <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=yes" />
+        <meta name="robots" content="noindex,nofollow,noarchive,nosnippet" />
+        <title>Tooltip - Sugar Suite Documentation</title>
+        <link rel="stylesheet" href="../css/bcit.css" />
+    </head>
+    <body class="experimental">
+        <div class="container">
+            <h1>Tooltip</h1>
+
+            <div class="note">
+                <h2>Description</h2>
+                <p>Creates interactive tooltips using Tippy.js library. Tooltips can contain rich HTML content and are triggered by click events. Perfect for providing additional information, definitions, or context without cluttering the main content.</p>
+            </div>
+
+            <div class="note">
+                <h2>Usage</h2>
+                <p>Add the <code>.tooltip</code> class to elements that should trigger tooltips. Tooltip content can be provided in several ways: adjacent elements, data attributes, or content IDs.</p>
+
+                <h3>Available Options</h3>
+                <ul>
+                    <li>
+                        <strong>CSS Classes:</strong>
+                        <ul>
+                            <li><code>.tooltip</code> - Main trigger element</li>
+                            <li><code>.tooltip-content</code> - Content container</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Data Attributes:</strong>
+                        <ul>
+                            <li><code>data-tooltip-content</code> - Direct content</li>
+                            <li><code>data-content-id</code> - ID of content element</li>
+                            <li><code>data-tooltip-props</code> - JSON configuration</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <h2>Examples</h2>
+
+            <h3>Basic Tooltip</h3>
+            <p>This is a <span class="tooltip">basic tooltip</span> that provides additional information.</p>
+            <div class="tooltip-content">
+                <p>This is the content that appears in the tooltip when you click on the trigger element.</p>
+            </div>
+
+            <h3>Tooltip with Rich Content</h3>
+            <p>The <span class="tooltip">lumber processing</span> industry has specific requirements.</p>
+            <div class="tooltip-content">
+                <h4>Lumber Processing</h4>
+                <p>Lumber processing involves several key stages:</p>
+                <ul>
+                    <li>Log yard storage</li>
+                    <li>Debarking and sawing</li>
+                    <li>Drying and finishing</li>
+                    <li>Quality control</li>
+                </ul>
+            </div>
+
+            <h3>Tooltip with Data Attribute</h3>
+            <p>This <span class="tooltip" data-tooltip-content="This is content provided via data attribute">tooltip</span> uses a data attribute for its content.</p>
+
+            <h3>Tooltip with Content ID</h3>
+            <p>This <span class="tooltip" data-content-id="tooltip-content-1">tooltip</span> references content by ID.</p>
+            <div id="tooltip-content-1" class="tooltip-content">
+                <h4>Content by ID</h4>
+                <p>This tooltip content is referenced by its ID attribute.</p>
+                <p>This approach is useful when you need to reuse the same content in multiple tooltips.</p>
+            </div>
+
+            <h3>Tooltip in Different Contexts</h3>
+            <div class="activity">
+                <h2>Learning Activity</h2>
+                <p>Complete the following steps:</p>
+                <ol>
+                    <li>Review the <span class="tooltip">quality control process</span></li>
+                    <li>Identify key <span class="tooltip">measurement points</span></li>
+                    <li>Document your <span class="tooltip">findings</span></li>
+                </ol>
+
+                <div class="tooltip-content">
+                    <h4>Quality Control Process</h4>
+                    <p>The quality control process ensures that all lumber meets specified standards:</p>
+                    <ul>
+                        <li>Visual inspection for defects</li>
+                        <li>Measurement verification</li>
+                        <li>Documentation of results</li>
+                        <li>Corrective action when needed</li>
+                    </ul>
+                </div>
+
+                <div class="tooltip-content">
+                    <h4>Measurement Points</h4>
+                    <p>Key measurement points include:</p>
+                    <ul>
+                        <li>Length and width dimensions</li>
+                        <li>Thickness specifications</li>
+                        <li>Moisture content levels</li>
+                        <li>Surface quality assessment</li>
+                    </ul>
+                </div>
+
+                <div class="tooltip-content">
+                    <h4>Documentation Requirements</h4>
+                    <p>Your findings should include:</p>
+                    <ul>
+                        <li>Detailed observations</li>
+                        <li>Measurement data</li>
+                        <li>Photographic evidence</li>
+                        <li>Recommendations for improvement</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Tooltip with Custom Properties</h3>
+            <p>This <span class="tooltip" data-tooltip-props='{"placement": "top", "trigger": "mouseenter"}'>tooltip</span> has custom properties for placement and trigger.</p>
+            <div class="tooltip-content">
+                <p>This tooltip appears on mouse hover and is positioned at the top.</p>
+            </div>
+
+            <h3>Tooltip in Tables</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Term</th>
+                        <th>Definition</th>
+                        <th>More Info</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Debarking</td>
+                        <td>Removal of bark from logs</td>
+                        <td>
+                            <span class="tooltip" data-content-id="tooltip-content-2">Details</span>
+                            <div class="tooltip-content" id="tooltip-content-2">
+                                <h4>Debarking Process</h4>
+                                <p>Debarking removes the outer bark layer from logs using specialized equipment. This process:</p>
+                                <ul>
+                                    <li>Improves log quality</li>
+                                    <li>Reduces contamination</li>
+                                    <li>Prepares logs for sawing</li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Sawing</td>
+                        <td>Cutting logs into boards</td>
+                        <td>
+                            <span class="tooltip" data-content-id="tooltip-content-3">Details</span>
+                            <div class="tooltip-content" id="tooltip-content-3">
+                                <h4>Sawing Process</h4>
+                                <p>Sawing converts logs into lumber using various saw types:</p>
+                                <ul>
+                                    <li>Headrig saws for initial cutting</li>
+                                    <li>Edger saws for width adjustment</li>
+                                    <li>Trimmer saws for length cutting</li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Drying</td>
+                        <td>Reducing moisture content</td>
+                        <td>
+                            <span class="tooltip" data-content-id="tooltip-content-4">Details</span>
+                            <div class="tooltip-content" id="tooltip-content-4">
+                                <h4>Drying Process</h4>
+                                <p>Drying reduces moisture content to appropriate levels:</p>
+                                <ul>
+                                    <li>Air drying for initial moisture reduction</li>
+                                    <li>Kiln drying for final moisture control</li>
+                                    <li>Quality monitoring throughout process</li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Tooltip with Images</h3>
+            <p>This <span class="tooltip">image tooltip</span> contains both text and images.</p>
+            <div class="tooltip-content">
+                <h4>Equipment Overview</h4>
+                <p>Here's an example of the equipment used:</p>
+                <img src="../assets/woods/mill_machine.jpg" alt="Mill Machine" style="width: 200px" />
+                <p>This mill machine is used for primary log processing.</p>
+            </div>
+
+            <div class="note">
+                <h2>Notes</h2>
+                <ul>
+                    <li>Tooltips are triggered by click events by default</li>
+                    <li>Content can be provided via adjacent elements, data attributes, or content IDs</li>
+                    <li>Tooltips support rich HTML content including images, lists, and formatting</li>
+                    <li>Custom properties can be set via <code>data-tooltip-props</code> attribute</li>
+                    <li>Tooltips are interactive and can contain clickable elements</li>
+                    <li>Placement is automatic but can be customized</li>
+                    <li>Tooltips work well in all content contexts including tables and lists</li>
+                    <li>Content is hidden by default and shown when tooltip is triggered</li>
+                    <li>Tooltips are accessible and keyboard navigable</li>
+                </ul>
+            </div>
+        </div>
+        <script src="../js/lat.js"></script>
+    </body>
+</html>

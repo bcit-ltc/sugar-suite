@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=yes">
+    <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+    <title>Printing - Sugar Suite Documentation</title>
+    <link rel="stylesheet" href="css/bcit.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Printing</h1>
+        
+        <div class="note">
+            <h2>Description</h2>
+            <p>Automatically enhances print functionality by showing all hidden content when printing. This includes accordion sections, reveal content, and other interactive elements that are normally hidden.</p>
+        </div>
+        
+        <div class="note">
+            <h2>Usage</h2>
+            <p>This feature works automatically - no additional HTML or classes needed. When users print the page, all hidden content becomes visible for a complete printout.</p>
+            
+            <h3>Automatic Features</h3>
+            <ul>
+                <li><strong>Accordion Content:</strong> All accordion sections become visible when printing</li>
+                <li><strong>Reveal Content:</strong> All reveal buttons and hidden content become visible</li>
+                <li><strong>Interactive Elements:</strong> Hidden interactive content is shown in print</li>
+                <li><strong>Print Detection:</strong> Uses multiple methods to detect print requests</li>
+            </ul>
+        </div>
+        
+        <h2>Examples</h2>
+        
+        <h3>Accordion Content in Print</h3>
+        <div class="accordion">
+            <h2>Section 1</h2>
+            <p>This content is hidden by default but will be visible when printing.</p>
+            <p>Perfect for including additional information that users might want to print.</p>
+            
+            <h2>Section 2</h2>
+            <p>All accordion sections will be expanded in the print version.</p>
+            <ul>
+                <li>Lists work fine in print</li>
+                <li>As do other HTML elements</li>
+            </ul>
+            
+            <h2>Section 3</h2>
+            <p>This ensures users get complete information when printing.</p>
+        </div>
+        
+        <h3>Reveal Content in Print</h3>
+        <div class="reveal" data-button="Show Answer">
+            <p>This content is hidden until the reveal button is clicked.</p>
+            <p>However, when printing, this content will be visible automatically.</p>
+            <p>This is perfect for answers, solutions, or additional information.</p>
+        </div>
+        
+        <h3>Active Reveal in Print</h3>
+        <div class="active-reveal" data-min-text="10" data-placeholder="Type at least 10 characters to enable the reveal button" data-button="Show Solution">
+            <p>This content requires user input normally, but will be visible when printing.</p>
+            <p>Great for encouraging reflection while still allowing complete printouts.</p>
+        </div>
+        
+        <h3>Mixed Content Example</h3>
+        <div class="accordion">
+            <h2>Print-Friendly Content</h2>
+            <p>This section demonstrates how different interactive elements work together in print.</p>
+            
+            <div class="reveal" data-button="Show Details">
+                <p>Even nested reveal content will be visible when printing.</p>
+                <p>This ensures comprehensive printouts for users.</p>
+            </div>
+            
+            <h2>Additional Information</h2>
+            <p>All sections will be expanded in the print version.</p>
+        </div>
+        
+        <div class="note">
+            <h2>Notes</h2>
+            <ul>
+                <li>Print functionality works automatically - no configuration needed</li>
+                <li>All accordion sections (<code>._bellow</code>) become visible when printing</li>
+                <li>All reveal content becomes visible when printing</li>
+                <li>Uses multiple detection methods for reliable print detection</li>
+                <li>Works with both browser print dialog and Ctrl+P</li>
+                <li>Content returns to hidden state after printing</li>
+                <li>Perfect for educational content where users need complete information</li>
+                <li>Consider print stylesheets for additional print-specific styling</li>
+                <li>Test print functionality across different browsers</li>
+            </ul>
+        </div>
+    </div>
+    <script src="js/lat.js"></script>
+</body>
+</html>

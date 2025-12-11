@@ -326,7 +326,7 @@ $unit-intervals: (
     
     @else {
       @if meta.type-of($index) != 'number' {
-        $result: if($minus, $result * -1, $result);
+        $result: if(sass($minus): $result * -1; else: $result);
         @return _length($result, string.slice($string, $i));
       }
 
@@ -346,7 +346,7 @@ $unit-intervals: (
     }
   }
   
-  @return if($minus, $result * -1, $result);
+  @return if(sass($minus): $result * -1; else: $result);
 }
 
 @function _length($number, $unit) {

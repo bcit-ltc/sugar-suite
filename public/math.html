@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=yes">
+    <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+    <title>Math - Sugar Suite Documentation</title>
+    <link rel="stylesheet" href="css/bcit.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Math</h1>
+        
+        <div class="note">
+            <h2>Description</h2>
+            <p>Provides enhanced styling for mathematical content with MathJax integration, custom fonts, and figure containers. Supports both MathJax-rendered math and custom-styled mathematical expressions.</p>
+        </div>
+        
+        <div class="note">
+            <h2>Usage</h2>
+            <p>Wrap mathematical content in <code>&lt;figure class="math"&gt;</code> containers. Use <code>&lt;math&gt;</code> tags for MathJax rendering or <code>&lt;p&gt;</code> elements for custom-styled math.</p>
+            
+            <h3>Available Options</h3>
+            <ul>
+                <li><strong>CSS Classes:</strong>
+                    <ul>
+                        <li><code>figure.math</code> - Container for mathematical content with calculator icon</li>
+                        <li><code>.left</code> - Left-aligns mathematical content</li>
+                        <li><code>.fake-mathjax-numbers</code> - Custom font for numbers and symbols</li>
+                    </ul>
+                </li>
+                <li><strong>Automatic Features:</strong>
+                    <ul>
+                        <li>MathJax integration for <code>&lt;math&gt;</code> tags</li>
+                        <li>Custom MathJax fonts (Fake-MathJax, Fake-MathJax-Numbers)</li>
+                        <li>Calculator icon in captions (FontAwesome)</li>
+                        <li>Centered alignment by default</li>
+                        <li>Overflow handling for long expressions</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        
+        <h2>Examples</h2>
+        
+        <h3>Basic Math Figure</h3>
+        <figure class="math">
+            <p>E = mc²</p>
+            <figcaption>Einstein's mass-energy equivalence formula</figcaption>
+        </figure>
+        
+        <h3>MathJax Integration</h3>
+        <figure class="math">
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <mrow>
+                    <mi>a</mi>
+                    <mo>+</mo>
+                    <mi>b</mi>
+                    <mo>=</mo>
+                    <mi>c</mi>
+                </mrow>
+            </math>
+            <figcaption>Simple algebraic equation using MathML</figcaption>
+        </figure>
+        
+        <h3>Complex Mathematical Expression</h3>
+        <figure class="math">
+            <p>The quadratic formula: x = (-b ± √(b² - 4ac)) / 2a</p>
+            <figcaption>Standard quadratic formula for solving ax² + bx + c = 0</figcaption>
+        </figure>
+        
+        <h3>Left-Aligned Math</h3>
+        <figure class="math left">
+            <p>∫₀^∞ e^(-x²) dx = √π/2</p>
+            <figcaption>Gaussian integral - left-aligned for inline text</figcaption>
+        </figure>
+        
+        <h3>Math with Custom Number Styling</h3>
+        <figure class="math">
+            <p>The derivative of f(x) = <span class="fake-mathjax-numbers">3x² + 2x + 1</span> is f'(x) = <span class="fake-mathjax-numbers">6x + 2</span></p>
+            <figcaption>Polynomial differentiation with custom number styling</figcaption>
+        </figure>
+        
+        <h3>Mathematical Proof</h3>
+        <figure class="math">
+            <p>Proof: If a = b and b = c, then a = c (Transitive Property)</p>
+            <figcaption>
+                <h4>Transitive Property of Equality</h4>
+                <p>This fundamental property states that if two quantities are equal to the same third quantity, then they are equal to each other.</p>
+            </figcaption>
+        </figure>
+        
+        <h3>Mathematical Notation</h3>
+        <figure class="math">
+            <p>Set notation: A = {x ∈ ℝ | x > 0}</p>
+            <figcaption>Set of all positive real numbers</figcaption>
+        </figure>
+        
+        <div class="note">
+            <h2>Notes</h2>
+            <ul>
+                <li>MathJax automatically loads when <code>&lt;math&gt;</code> tags are present</li>
+                <li>Use <code>figure.math</code> for proper styling and calculator icon</li>
+                <li><code>.left</code> class aligns math to the left instead of center</li>
+                <li><code>.fake-mathjax-numbers</code> provides custom font styling for numbers</li>
+                <li>Math figures support overflow scrolling for long expressions</li>
+                <li>Captions can contain any HTML content including headings and lists</li>
+                <li>MathJax supports LaTeX, MathML, and AsciiMath notation</li>
+                <li>Consider accessibility when using mathematical notation</li>
+                <li>Use descriptive captions to explain mathematical concepts</li>
+            </ul>
+        </div>
+    </div>
+    <script src="js/lat.js"></script>
+</body>
+</html>
