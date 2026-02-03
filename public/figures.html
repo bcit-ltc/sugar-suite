@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=yes">
+    <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+    <title>Figures - Sugar Suite Documentation</title>
+    <link rel="stylesheet" href="css/bcit.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Figures</h1>
+        
+        <div class="note">
+            <h2>Description</h2>
+            <p>Provides consistent styling for figures with captions, including images, videos, audio, and mathematical content. Figures automatically include appropriate icons and responsive behavior.</p>
+        </div>
+        
+        <div class="note">
+            <h2>Usage</h2>
+            <p>Wrap media content in <code>&lt;figure&gt;</code> elements with appropriate classes. Captions are provided using <code>&lt;figcaption&gt;</code> elements.</p>
+            
+            <h3>Available Figure Types</h3>
+            <ul>
+                <li><strong>Images:</strong> <code>.image</code> - Standard image figures</li>
+                <li><strong>Videos:</strong> <code>.video</code> - Video content with play icon</li>
+                <li><strong>Audio:</strong> <code>.audio</code> - Audio content with sound icon</li>
+                <li><strong>Math:</strong> <code>.math</code> - Mathematical content with formula icon</li>
+            </ul>
+        </div>
+        
+        <h2>Examples</h2>
+        
+        <h3>Image Figure</h3>
+        <figure class="image">
+            <img src="assets/woods/signpost.jpg" alt="Warning Signpost" style="width: 100%; max-width: 500px;">
+            <figcaption>
+                <h3>Safety Warning</h3>
+                <p>This signpost indicates important safety information for workers in the lumber processing area.</p>
+                <ul>
+                    <li>Wear protective equipment</li>
+                    <li>Follow safety protocols</li>
+                    <li>Report any hazards</li>
+                </ul>
+            </figcaption>
+        </figure>
+        
+        <h3>Video Figure</h3>
+        <figure class="video">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
+            <figcaption>
+                <h4>Safety Training Video</h4>
+                <p>This video covers workplace safety fundamentals.</p>
+                <ul>
+                    <li>Duration: 10 minutes</li>
+                    <li>Topics: Equipment safety, procedures</li>
+                    <li>Format: HD quality</li>
+                </ul>
+            </figcaption>
+        </figure>
+        
+        <h3>Audio Figure</h3>
+        <figure class="audio">
+            <audio controls>
+                <source src="assets/audio-example.mp3" type="audio/mpeg">
+                <source src="assets/audio-example.ogg" type="audio/ogg">
+                Your browser does not support the audio element.
+            </audio>
+            <figcaption>
+                <h4>Equipment Sound Guide</h4>
+                <p>Listen to the different sounds made by various lumber processing equipment.</p>
+                <ul>
+                    <li>Duration: 3 minutes</li>
+                    <li>Formats: MP3, OGG</li>
+                    <li>Quality: High</li>
+                </ul>
+            </figcaption>
+        </figure>
+        
+        <h3>Math Figure</h3>
+        <figure class="math">
+            <p>The quadratic formula is:</p>
+            <p>$$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$</p>
+            <figcaption>
+                <h4>Quadratic Formula</h4>
+                <p>This formula solves quadratic equations of the form ax² + bx + c = 0.</p>
+                <p>Where a, b, and c are coefficients and a ≠ 0.</p>
+            </figcaption>
+        </figure>
+        
+        <h3>Simple Image Figure</h3>
+        <figure class="image">
+            <img src="assets/woods/mill_machine.jpg" alt="Mill Machine" style="width: 100%;">
+            <figcaption>Modern lumber mill machine in operation</figcaption>
+        </figure>
+        
+        <h3>Complex Figure with Multiple Elements</h3>
+        <figure class="image">
+            <img src="assets/woods/yard-wide.jpg" alt="Wide Yard View" style="width: 100%;">
+            <figcaption>
+                <h3>Lumber Processing Facility Overview</h3>
+                <p>This aerial view shows the complete lumber processing facility layout.</p>
+                <div class="side-by-side">
+                    <div>
+                        <h4>Key Areas</h4>
+                        <ul>
+                            <li>Raw material storage</li>
+                            <li>Processing equipment</li>
+                            <li>Quality control station</li>
+                            <li>Finished product storage</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>Process Flow</h4>
+                        <ol>
+                            <li>Logs arrive at storage area</li>
+                            <li>Processing begins at equipment</li>
+                            <li>Quality control checks</li>
+                            <li>Finished products stored</li>
+                        </ol>
+                    </div>
+                </div>
+            </figcaption>
+        </figure>
+        
+        <h3>Figure with Detailed Caption</h3>
+        <figure class="image">
+            <img src="assets/woods/cutter.jpg" alt="Cutter Machine" style="width: 100%;">
+            <figcaption>
+                <h3>Precision Cutter Machine</h3>
+                <p>This state-of-the-art cutter machine demonstrates modern lumber processing technology.</p>
+                <p><strong>Specifications:</strong></p>
+                <ul>
+                    <li>Cutting capacity: 2,000 board feet per hour</li>
+                    <li>Precision: ±0.1 inch accuracy</li>
+                    <li>Safety features: Automatic shutoff, emergency stops</li>
+                    <li>Maintenance: Daily cleaning, weekly calibration</li>
+                </ul>
+                <p><em>Note: Always follow safety protocols when operating this equipment.</em></p>
+            </figcaption>
+        </figure>
+        
+        <div class="note">
+            <h2>Notes</h2>
+            <ul>
+                <li>Figures automatically include appropriate icons (image, video, audio, math)</li>
+                <li>Captions can contain any HTML content including headings, lists, and other elements</li>
+                <li>Images are automatically responsive and click-to-enlarge</li>
+                <li>Videos are automatically wrapped in responsive containers</li>
+                <li>Audio elements get responsive styling</li>
+                <li>Math content integrates with MathJax for proper rendering</li>
+                <li>Figures work well within side-by-side layouts</li>
+                <li>Use descriptive alt text for accessibility</li>
+                <li>Captions should provide context and additional information</li>
+                <li>Complex captions can include multiple paragraphs and formatting</li>
+            </ul>
+        </div>
+    </div>
+    <script src="js/lat.js"></script>
+</body>
+</html>

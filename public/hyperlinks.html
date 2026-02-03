@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="x-ua-compatible" content="ie=edge" />
+        <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=yes" />
+        <meta name="robots" content="noindex,nofollow,noarchive,nosnippet" />
+        <title>Hyperlinks - Sugar Suite Documentation</title>
+        <link rel="stylesheet" href="css/bcit.css" />
+    </head>
+    <body>
+        <div class="container">
+            <h1>Hyperlinks</h1>
+
+            <div class="note">
+                <h2>Description</h2>
+                <p>Enhances hyperlinks with automatic target="_blank" behavior, external link detection, file type handling, and proper accessibility attributes. Automatically opens links in new tabs for better user experience.</p>
+            </div>
+
+            <div class="note">
+                <h2>Usage</h2>
+                <p>Create standard HTML anchor tags. The system automatically enhances them with appropriate target attributes, external link detection, and file type handling.</p>
+
+                <h3>Automatic Features</h3>
+                <ul>
+                    <li><strong>New Tab Opening:</strong> All links open in new tabs by default</li>
+                    <li><strong>External Link Detection:</strong> Automatically detects external links</li>
+                    <li><strong>File Type Handling:</strong> Special handling for common file types</li>
+                    <li><strong>Download Links:</strong> Automatic title attributes for download links</li>
+                    <li><strong>Email Links:</strong> Fixes for malformed email addresses</li>
+                </ul>
+            </div>
+
+            <h2>Examples</h2>
+
+            <h3>Basic Links</h3>
+            <p>Here are some basic links:</p>
+            <ul>
+                <li><a href="https://www.bcit.ca">BCIT Website</a></li>
+                <li><a href="https://www.google.com">Google Search</a></li>
+                <li><a href="https://github.com">GitHub</a></li>
+            </ul>
+
+            <h3>External Links</h3>
+            <p>External links are automatically detected and enhanced:</p>
+            <ul>
+                <li><a href="https://www.wikipedia.org">Wikipedia</a> - External link</li>
+                <li><a href="https://www.stackoverflow.com">Stack Overflow</a> - External link</li>
+                <li><a href="https://www.w3schools.com">W3Schools</a> - External link</li>
+            </ul>
+
+            <h3>File Downloads</h3>
+            <p>Links to common file types are automatically handled:</p>
+            <ul>
+                <li><a href="assets/woods/Damaged_Log.jpg" download>Download Image (JPG)</a></li>
+                <li><a href="sample.pdf" download>Download PDF</a></li>
+                <li><a href="presentation.pptx" download>Download PowerPoint</a></li>
+                <li><a href="spreadsheet.xlsx" download>Download Excel</a></li>
+            </ul>
+
+            <h3>Email Links</h3>
+            <p>Email links are properly formatted:</p>
+            <ul>
+                <li><a href="mailto:courseproduction@bcit.ca">Contact Course Production</a></li>
+                <li><a href="mailto:support@example.com">Support Email</a></li>
+            </ul>
+
+            <h3>Links with Custom Targets</h3>
+            <p>You can override the default behavior:</p>
+            <ul>
+                <li><a href="#top" target="_self">Same Window Link</a></li>
+                <li><a href="https://www.example.com" target="_self">Same Window External Link</a></li>
+            </ul>
+
+            <h3>Links in Different Contexts</h3>
+            <div class="activity">
+                <h2>Resource Links</h2>
+                <p>Here are some helpful resources:</p>
+                <ul>
+                    <li><a href="https://developer.mozilla.org">MDN Web Docs</a> - Comprehensive web development documentation</li>
+                    <li><a href="https://www.w3.org">W3C</a> - World Wide Web Consortium</li>
+                    <li><a href="https://www.canvaslms.com">Canvas LMS</a> - Learning management system</li>
+                </ul>
+            </div>
+
+            <div class="note">
+                <h2>Important Note</h2>
+                <p>This <a href="https://www.example.com">external link</a> will open in a new tab automatically.</p>
+            </div>
+
+            <h3>Links with Images</h3>
+            <p>Links can contain images:</p>
+            <p>
+                <a href="https://www.bcit.ca">
+                    <img src="assets/bcit_logo.svg" alt="BCIT Logo" style="width: 100px" />
+                </a>
+            </p>
+            <h3>Complex Link Examples</h3>
+            <div class="side-by-side">
+                <div>
+                    <h4>Documentation Links</h4>
+                    <ul>
+                        <li><a href="https://docs.python.org">Python Documentation</a></li>
+                        <li><a href="https://reactjs.org/docs">React Documentation</a></li>
+                        <li><a href="https://nodejs.org/docs">Node.js Documentation</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Learning Resources</h4>
+                    <ul>
+                        <li><a href="https://www.coursera.org">Coursera</a></li>
+                        <li><a href="https://www.edx.org">edX</a></li>
+                        <li><a href="https://www.khanacademy.org">Khan Academy</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Links in Tables</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Resource</th>
+                        <th>Type</th>
+                        <th>Link</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>BCIT Website</td>
+                        <td>Institution</td>
+                        <td><a href="https://www.bcit.ca">Visit BCIT</a></td>
+                    </tr>
+                    <tr>
+                        <td>GitHub</td>
+                        <td>Development</td>
+                        <td><a href="https://github.com">Visit GitHub</a></td>
+                    </tr>
+                    <tr>
+                        <td>Stack Overflow</td>
+                        <td>Community</td>
+                        <td><a href="https://stackoverflow.com">Visit Stack Overflow</a></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="note">
+                <h2>Notes</h2>
+                <ul>
+                    <li>All links automatically open in new tabs unless <code>target="_self"</code> is specified</li>
+                    <li>External links are automatically detected and enhanced</li>
+                    <li>File types (PDF, images, Office documents) are handled specially</li>
+                    <li>Download links get automatic "Download" title attributes</li>
+                    <li>Email links are properly formatted and accessible</li>
+                    <li>Malformed email addresses are automatically corrected</li>
+                    <li>Links maintain proper accessibility attributes</li>
+                    <li>External links get "Opens in a new tab" title attributes</li>
+                    <li>All links are keyboard accessible</li>
+                </ul>
+            </div>
+        </div>
+        <script src="js/lat.js"></script>
+    </body>
+</html>

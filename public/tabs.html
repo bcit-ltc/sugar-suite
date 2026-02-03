@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=yes">
+    <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+    <title>Tabs - Sugar Suite Documentation</title>
+    <link rel="stylesheet" href="css/bcit.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Tabs</h1>
+        
+        <div class="note">
+            <h2>Description</h2>
+            <p>Creates a tabbed interface where content is organized into clickable tabs. Each tab contains related content that can be accessed by clicking the tab headers.</p>
+        </div>
+        
+        <div class="note">
+            <h2>Usage</h2>
+            <p>Wrap content in a container with class <code>.tabs</code>. Use headings (h2, h3) as tab titles. Content following each heading becomes tab content.</p>
+            
+            <h3>Available Options</h3>
+            <ul>
+                <li><strong>CSS Classes:</strong>
+                    <ul>
+                        <li><code>.tabs</code> - Main container for tabbed interface</li>
+                        <li><code>.nav-left</code> - Places navigation on the left side (default)</li>
+                        <li><code>.nav-top</code> - Places navigation at the top</li>
+                        <li><code>.nav-bottom</code> - Places navigation at the bottom</li>
+                        <li><code>.mono-color</code> - Uses single color scheme instead of pastel colors</li>
+                        <li><code>.no-title</code> - Hides the heading text in tab content (heading still used for tab button)</li>
+                    </ul>
+                </li>
+                <li><strong>Data Attributes:</strong>
+                    <ul>
+                        <li><code>data-color="color"</code> - Custom background color for individual tabs</li>
+                        <li><code>data-font-color="color"</code> - Custom text color for individual tabs</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        
+        <h2>Examples</h2>
+        
+        <h3>Basic Tabs</h3>
+        <div class="tabs">
+            <h2>Tab 1</h2>
+            <p>This is the content for the first tab.</p>
+            <p>You can include multiple paragraphs and other elements.</p>
+            
+            <h2>Tab 2</h2>
+            <p>This is the content for the second tab.</p>
+            <ul>
+                <li>Lists work fine in tabs</li>
+                <li>As do other HTML elements</li>
+            </ul>
+            
+            <h2>Tab 3</h2>
+            <p>This is the content for the third tab.</p>
+            <div class="example">
+                <h3>Example Box</h3>
+                <p>Even containers work within tabs.</p>
+            </div>
+        </div>
+        
+        <h3>Tabs with Custom Colors</h3>
+        <div class="tabs">
+            <h2 data-color="#ff6b6b" data-font-color="#ffffff">Red Tab</h2>
+            <p>This tab has a custom red background color.</p>
+            
+            <h2 data-color="#4ecdc4" data-font-color="#ffffff">Teal Tab</h2>
+            <p>This tab has a custom teal background color.</p>
+            
+            <h2 data-color="#45b7d1" data-font-color="#ffffff">Blue Tab</h2>
+            <p>This tab has a custom blue background color.</p>
+        </div>
+        
+        <h3>Tabs with Custom Tab Text</h3>
+        <div class="tabs">
+            <h2>Introduction</h2>
+            <p>Tabs text: Welcome to our course</p>
+            <p>This uses the text after "Tabs text:" as the tab label instead of the heading text.</p>
+            
+            <h2>Main Content</h2>
+            <p>Tabs text: Core Learning Material</p>
+            <p>The heading says "Main Content" but the tab shows "Core Learning Material".</p>
+            
+            <h2>Conclusion</h2>
+            <p>Tabs text: Summary and Next Steps</p>
+            <p>This allows for shorter tab labels while keeping descriptive headings.</p>
+        </div>
+        
+        <h3>Tabs with Mono Color</h3>
+        <div class="tabs mono-color">
+            <h2>Single Color Tab 1</h2>
+            <p>This tab set uses a single color scheme instead of the default pastel colors.</p>
+            
+            <h2>Single Color Tab 2</h2>
+            <p>The mono-color class creates a more uniform appearance.</p>
+            
+            <h2>Single Color Tab 3</h2>
+            <p>All tabs use the same background color with white borders for the selected tab.</p>
+        </div>
+        
+        <h3>Tabs with Hidden Titles</h3>
+        <div class="tabs">
+            <h2 class="no-title">Tab 1</h2>
+            <p>This tab has a hidden title. The heading "Tab 1" won't be visible in the content area, but the tab button will still show "Tab 1".</p>
+            <p>This is useful when you want clean content without visible headings.</p>
+            
+            <h2>Tab 2</h2>
+            <p>This tab has a visible title. The heading "Tab 2" will be shown in the content area.</p>
+            
+            <h2 class="no-title">Tab 3</h2>
+            <p>Another tab with hidden title. Notice how the content flows without the heading being visible.</p>
+        </div>
+        
+        <h3>Tabs with Mixed Title Visibility</h3>
+        <div class="tabs">
+            <h2>Visible Title</h2>
+            <p>This tab shows the heading "Visible Title" in the content area.</p>
+            
+            <h2 class="no-title">Hidden Title</h2>
+            <p>This tab hides the heading "Hidden Title" but still creates a tab button with that text.</p>
+            
+            <h2>Another Visible Title</h2>
+            <p>This tab shows the heading "Another Visible Title" in the content area.</p>
+        </div>
+        
+        <div class="note">
+            <h2>Notes</h2>
+            <ul>
+                <li>Tab navigation is automatically generated from headings</li>
+                <li>Use "Tabs text: [custom text]" after headings to override tab labels</li>
+                <li>Tab colors can be customized per tab using data attributes</li>
+                <li>Tabs work well with other interactive elements</li>
+                <li>Use <code>.nav-top</code> or <code>.nav-bottom</code> to control tab placement</li>
+                <li>Add <code>class="no-title"</code> to headings to hide them in content while keeping tab buttons</li>
+            </ul>
+        </div>
+    </div>
+    <script src="js/lat.js"></script>
+</body>
+</html>

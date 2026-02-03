@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=yes">
+    <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+    <title>Slider - Sugar Suite Documentation</title>
+    <link rel="stylesheet" href="css/bcit.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Slider</h1>
+        
+        <div class="note">
+            <h2>Description</h2>
+            <p>Creates an image/content carousel with navigation controls, fullscreen mode, and caption toggling. Perfect for showcasing multiple images or content sections in a slideshow format.</p>
+        </div>
+        
+        <div class="note">
+            <h2>Usage</h2>
+            <p>Wrap content in a container with class <code>.slider</code>. Each slide should be a <code>figure.img</code> element containing an image, optional heading (h2), and optional figcaption.</p>
+            
+            <h3>Available Options</h3>
+            <ul>
+                <li><strong>CSS Classes:</strong>
+                    <ul>
+                        <li><code>.slider</code> - Main container</li>
+                        <li><code>.img</code> - Required class for each slide figure</li>
+                    </ul>
+                </li>
+                <li><strong>Features:</strong>
+                    <ul>
+                        <li>Previous/Next navigation buttons</li>
+                        <li>Slide counter (e.g., "1 of 5")</li>
+                        <li>Caption show/hide toggle</li>
+                        <li>Fullscreen mode</li>
+                        <li>Responsive height adjustment</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        
+        <h2>Examples</h2>
+        
+        <h3>Basic Image Slider</h3>
+        <div class="slider">
+            <figure class="img">
+                <h2>Damaged Log</h2>
+                <img src="assets/woods/Damaged_Log.jpg" alt="Damaged Log">
+                <figcaption>Log damaged in the log yard due to poor handling by mobile equipment.</figcaption>
+            </figure>
+            <figure class="img">
+                <h2>Lumber Yard</h2>
+                <img src="assets/woods/lumber_yard.jpg" alt="Wide angle photograph of the lumber mill yard">
+                <figcaption>
+                    <p>The purpose of a log yard is to store logs delivered to a Sawmill until they are processed.</p>
+                    <p>The cost of logs represents 60-70% of the lumber production.</p>
+                </figcaption>
+            </figure>
+            <figure class="img">
+                <h2>Mill Machine</h2>
+                <img src="assets/woods/mill_machine.jpg" alt="A headrig machine">
+                <figcaption>
+                    <h3>Equipment Calibration</h3>
+                    <p>Equipment calibration is part of regular maintenance.</p>
+                    <ul>
+                        <li>Perform periodic maintenance and calibration of scanners</li>
+                        <li>Perform regular computer hardware maintenance</li>
+                        <li>Ensure optimization software is working as expected</li>
+                    </ul>
+                </figcaption>
+            </figure>
+        </div>
+        
+        <h3>Slider with Images Only (No Captions)</h3>
+        <div class="slider">
+            <figure class="img">
+                <img src="assets/woods/bucking.jpg" alt="Bucking operation">
+            </figure>
+            <figure class="img">
+                <img src="assets/woods/Cut_Mark.jpg" alt="Cut mark on log">
+            </figure>
+            <figure class="img">
+                <img src="assets/woods/cutter.jpg" alt="Cutter machine">
+            </figure>
+            <figure class="img">
+                <img src="assets/woods/log_ends.jpg" alt="Log ends">
+            </figure>
+        </div>
+        
+        <h3>Slider with Mixed Content</h3>
+        <div class="slider">
+            <figure class="img">
+                <h2>Introduction</h2>
+                <img src="assets/woods/signpost.jpg" alt="Signpost">
+                <figcaption>Welcome to our lumber processing course.</figcaption>
+            </figure>
+            <figure class="img">
+                <h2>Process Overview</h2>
+                <img src="assets/woods/yard-wide.jpg" alt="Wide yard view">
+                <figcaption>
+                    <p>This slide shows the complete process overview.</p>
+                    <p>Notice how captions can contain multiple paragraphs and lists.</p>
+                </figcaption>
+            </figure>
+            <figure class="img">
+                <h2>Quality Control</h2>
+                <img src="assets/woods/Tooth_Marks.jpg" alt="Tooth marks">
+                <figcaption>
+                    <h3>Key Points</h3>
+                    <ul>
+                        <li>Regular inspection required</li>
+                        <li>Document all findings</li>
+                        <li>Maintain quality standards</li>
+                    </ul>
+                </figcaption>
+            </figure>
+        </div>
+        
+        <div class="note">
+            <h2>Notes</h2>
+            <ul>
+                <li>Each slide must be wrapped in <code>&lt;figure class="img"&gt;</code></li>
+                <li>Images are automatically positioned and sized</li>
+                <li>Headings (h2) appear as overlays on images</li>
+                <li>Captions can contain any HTML content (paragraphs, lists, etc.)</li>
+                <li>The slider automatically adjusts height based on content</li>
+                <li>Fullscreen mode provides a larger viewing experience</li>
+                <li>Navigation buttons are disabled during transitions to prevent rapid clicking</li>
+                <li>The slider is responsive and adjusts to window size changes</li>
+                <li>If no captions are present, the caption toggle button is hidden</li>
+            </ul>
+        </div>
+    </div>
+    <script src="js/lat.js"></script>
+</body>
+</html>

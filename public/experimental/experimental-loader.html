@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=yes">
+    <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+    <title>Experimental Loader - Sugar Suite Documentation</title>
+    <link rel="stylesheet" href="../css/bcit.css">
+</head>
+<body class="experimental">
+    <div class="container">
+        <h1>Experimental Loader</h1>
+        
+        <div class="note">
+            <h2>Description</h2>
+            <p>Automatically loads experimental CSS and JavaScript files when the body element has the "experimental" class. This allows for easy activation of experimental features across an entire page.</p>
+        </div>
+        
+        <div class="note">
+            <h2>Usage</h2>
+            <p>Add the <code>experimental</code> class to the <code>&lt;body&gt;</code> element to automatically load experimental features.</p>
+            
+            <h3>Available Options</h3>
+            <ul>
+                <li><strong>CSS Classes:</strong>
+                    <ul>
+                        <li><code>body.experimental</code> - Triggers automatic loading of experimental files</li>
+                    </ul>
+                </li>
+                <li><strong>Automatic Features:</strong>
+                    <ul>
+                        <li>Loads <code>../css/experimental.css</code> stylesheet</li>
+                        <li>Loads <code>../js/experimental.js</code> JavaScript file</li>
+                        <li>Provides console feedback on successful/failed loading</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        
+        <h2>Examples</h2>
+        
+        <h3>Basic Experimental Page</h3>
+        <p>To enable experimental features on a page, add the experimental class to the body:</p>
+        <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en" class="no-js"&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;title&gt;My Experimental Page&lt;/title&gt;
+    &lt;link rel="stylesheet" href="../css/bcit.css"&gt;
+&lt;/head&gt;
+&lt;body class="experimental"&gt;
+    &lt;div class="container"&gt;
+        &lt;h1&gt;Experimental Features Enabled&lt;/h1&gt;
+        &lt;p&gt;This page will automatically load experimental CSS and JavaScript.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;script src="../js/lat.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        
+        <h3>Conditional Loading</h3>
+        <p>The experimental loader only activates when the body has the experimental class:</p>
+        <pre><code>&lt;!-- This page will NOT load experimental files --&gt;
+&lt;body&gt;
+    &lt;!-- Standard features only --&gt;
+&lt;/body&gt;
+
+&lt;!-- This page WILL load experimental files --&gt;
+&lt;body class="experimental"&gt;
+    &lt;!-- Experimental features available --&gt;
+&lt;/body&gt;</code></pre>
+        
+        <h3>File Loading Process</h3>
+        <p>When experimental mode is enabled, the loader:</p>
+        <ol>
+            <li>Detects the <code>body.experimental</code> class</li>
+            <li>Dynamically creates and loads the experimental CSS file</li>
+            <li>Dynamically creates and loads the experimental JavaScript file</li>
+            <li>Provides console feedback on loading success/failure</li>
+        </ol>
+        
+        <div class="note">
+            <h2>Notes</h2>
+            <ul>
+                <li>Experimental features are loaded dynamically and asynchronously</li>
+                <li>Files are loaded from relative paths: <code>../css/experimental.css</code> and <code>../js/experimental.js</code></li>
+                <li>Loading success/failure is logged to the browser console</li>
+                <li>Experimental features are separate from core features</li>
+                <li>Use this for testing new features before they become core</li>
+                <li>Experimental files should be included in the build process</li>
+                <li>Consider performance implications of loading additional files</li>
+                <li>Test experimental features across different browsers</li>
+                <li>Document experimental features separately from core features</li>
+            </ul>
+        </div>
+    </div>
+    <script src="../js/lat.js"></script>
+</body>
+</html>
