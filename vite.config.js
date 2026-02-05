@@ -245,7 +245,7 @@ export default defineConfig({
       deleteOriginFile: false, // keep original files
       // optimize compression for css files
       filter: (fileName) => { // filter which files to compress
-        return fileName.endsWith('.css') || fileName.endsWith('.js') || fileName.endsWith('.html'); // only css, js, html files
+        return fileName.endsWith('.css') || fileName.endsWith('.js'); // only css, js files
       },
       // Only compress in production builds, not in watch mode or preview
       disable: process.env.NODE_ENV === 'development' || process.argv.includes('--watch')
@@ -259,7 +259,7 @@ export default defineConfig({
       deleteOriginFile: false, // keep original files
       // optimize compression for css files
       filter: (fileName) => { // filter which files to compress
-        return fileName.endsWith('.css') || fileName.endsWith('.js') || fileName.endsWith('.html'); // only css, js, html files
+        return fileName.endsWith('.css') || fileName.endsWith('.js'); // only css, js files
       },
       // Only compress in production builds, not in watch mode or preview
       disable: process.env.NODE_ENV === 'development' || process.argv.includes('--watch')

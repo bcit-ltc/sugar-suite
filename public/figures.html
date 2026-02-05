@@ -11,6 +11,9 @@
 <body>
     <div class="container">
         <h1>Figures</h1>
+        <div class="back-to-home-wrapper">
+            <button class="btn alt back-to-home" type="button" onclick="location.href='index.html'">Back to Home</button>
+        </div>
         
         <div class="note">
             <h2>Description</h2>
@@ -63,8 +66,8 @@
         <h3>Audio Figure</h3>
         <figure class="audio">
             <audio controls>
-                <source src="assets/audio-example.mp3" type="audio/mpeg">
-                <source src="assets/audio-example.ogg" type="audio/ogg">
+                <source src="assets/ochs-intro.mp4" type="audio/mpeg">
+                <source src="assets/ochs-intro.mp4" type="audio/ogg">
                 Your browser does not support the audio element.
             </audio>
             <figcaption>
@@ -81,7 +84,37 @@
         <h3>Math Figure</h3>
         <figure class="math">
             <p>The quadratic formula is:</p>
-            <p>$$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$</p>
+            <p>
+                <math xmlns="http://www.w3.org/1998/Math/MathML">
+                    <mrow>
+                        <mi>x</mi>
+                        <mo>=</mo>
+                        <mfrac>
+                            <mrow>
+                                <mo>-</mo>
+                                <mi>b</mi>
+                                <mo>&PlusMinus;</mo>
+                                <msqrt>
+                                    <mrow>
+                                        <msup>
+                                            <mi>b</mi>
+                                            <mn>2</mn>
+                                        </msup>
+                                        <mo>-</mo>
+                                        <mn>4</mn>
+                                        <mi>a</mi>
+                                        <mi>c</mi>
+                                    </mrow>
+                                </msqrt>
+                            </mrow>
+                            <mrow>
+                                <mn>2</mn>
+                                <mi>a</mi>
+                            </mrow>
+                        </mfrac>
+                    </mrow>
+                </math>
+            </p>
             <figcaption>
                 <h4>Quadratic Formula</h4>
                 <p>This formula solves quadratic equations of the form ax² + bx + c = 0.</p>
