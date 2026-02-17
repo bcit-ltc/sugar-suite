@@ -5,7 +5,16 @@
 	if (!window.plausible.o) window.plausible.o = { captureOnLocalhost: false, autoCapturePageviews: true };
 	if (!window.ltcDomain) window.ltcDomain = { eventDomain: 'sugar-suite.latest.ltc.bcit.ca' };
 
-	plausible('lat.js loaded', { props: { page: location.href } });
+	// Prefer top window URL when inside an LMS iframe (so we get the D2L view URL, not the enforced content path)
+	var pageUrl;
+	try {
+		pageUrl = window.top !== window
+			? window.top.location.origin + window.top.location.pathname
+			: location.origin + location.pathname;
+	} catch (e) {
+		pageUrl = location.origin + location.pathname;
+	}
+	plausible('lat.js loaded', { props: { page: pageUrl } });
 
 	var s = document.createElement('script');
 	s.defer = true;
