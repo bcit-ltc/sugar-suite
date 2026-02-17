@@ -3,16 +3,14 @@
 	// Uses common.ltc.bcit.ca/js/utils.js so adblockers don't block it.
 	window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments); };
 	if (!window.plausible.o) window.plausible.o = { captureOnLocalhost: false, autoCapturePageviews: true };
-	if (!window.ltcDomain) window.ltcDomain = { eventDomain: 'sugar-suite.latest.ltc.bcit.ca' };
+	if (!window.ltcDomain) window.ltcDomain = { eventDomain: 'sugar-suite.ltc.bcit.ca' };
 
 	// Prefer top window URL when inside an LMS iframe (so we get the D2L view URL, not the enforced content path)
 	var pageUrl;
 	try {
-		pageUrl = window.top !== window
-			? window.top.location.origin + window.top.location.pathname
-			: location.origin + location.pathname;
+		pageUrl = window.top !== window ? window.top.location.href : location.href;
 	} catch (e) {
-		pageUrl = location.origin + location.pathname;
+		pageUrl = location.href;
 	}
 	plausible('lat.js loaded', { props: { page: pageUrl } });
 
