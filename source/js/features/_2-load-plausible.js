@@ -36,6 +36,7 @@
 			}
 		}
 	}
+	
 	var computedLatScriptUrl = '';
 	try {
 		computedLatScriptUrl = new URL('js/lat.js', document.baseURI || window.location.href).href;
