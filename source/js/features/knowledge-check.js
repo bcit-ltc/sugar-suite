@@ -173,7 +173,7 @@
     }
 
     function buildSubmitButton() {
-        var srWarning = "<p class='sr-only'>By using the following submit button, your answers will be evaluated with feedback provided directly on the answers above.</p><p class='sr-only'>As a convenience, focus will move to the beginning of the test so that you can review the results in order.</p>";
+        // var srWarning = "<p class='sr-only'>By using the following submit button, your answers will be evaluated with feedback provided directly on the answers above.</p><p class='sr-only'>As a convenience, focus will move to the beginning of the test so that you can review the results in order.</p>";
         var submitButtonText = "Check";
         var $div = $("<div>");
         var $submitButton = $("<input>");
@@ -181,7 +181,7 @@
         $submitButton.attr("type", "submit");
         $submitButton.val(submitButtonText);
 
-        $div.append(srWarning, $submitButton);
+        $div.append($submitButton);
         return $div;
     }
 
