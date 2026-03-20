@@ -2,6 +2,7 @@
 (function ($) {
     var $knowledgeCheck = $(".knowledge-check, .self-test");
     var identifier = new Identifier();
+
     var markers = {
         correct: "<i class='correct'>✔</i>",
         incorrect: "<i class='incorrect'>❌</i>",
@@ -59,11 +60,11 @@
         });
 
         createKnowledgeCheckForm($questionList, questions, random, isInit);
-
     }
 
     function createKnowledgeCheckForm($replaceable, questions, random, isInit) {
         var $form = $("<form>");
+        var knowledgeCheckId = identifier.getID();
         var $resetButton = $("<button class='reset'>Try Again</button>");
         var $submitButton = buildSubmitButton();
         var questionCount = 0;
@@ -92,13 +93,22 @@
         });
         var $first = $form.children().first();
 
-
         $form.append($submitButton);
         $form.append($resetButton);
         $replaceable.replaceWith($form);
         $form.submit(checkResults);
         $resetButton.on("click", function (e) {
             e.preventDefault();
+
+            if (window.SugarAnalytics) {
+                window.SugarAnalytics.trackFeature("Knowledge Check", "knowledgeCheckReset", {
+                    total_questions: questions.length
+                }, {
+                    dedupe: false,
+                    dedupeKey: "kc_reset_" + knowledgeCheckId + "_" + Date.now()
+                });
+            }
+
             scrollTo($form.parent());
             // Answer is not required on reset
             isInit = false;
@@ -111,16 +121,31 @@
             $form.find("input, select").not("[type='checkbox']").prop("required", true);
         }
 
-
         function checkResults(e) {
             e.preventDefault();
             var $form = $(this);
-
 
             assessInputs();
             reassessment();
             addResetButton();
             scrollTo($form.parent());
+
+            var numCorrect = $form.find(".correct").length;
+            var numIncorrect = $form.find(".incorrect").length;
+            var totalQuestions = numCorrect + numIncorrect;
+            var score = totalQuestions > 0 ? Math.round((numCorrect / totalQuestions) * 100) : 0;
+
+            if (window.SugarAnalytics) {
+                window.SugarAnalytics.trackFeature("Knowledge Check", "knowledgeCheckSubmitted", {
+                    score: score,
+                    total_questions: totalQuestions,
+                    total_questions_available: questions.length
+                }, {
+                    dedupe: false,
+                    dedupeKey: "kc_submit_" + knowledgeCheckId + "_" + Date.now()
+                });
+            }
+
             if (!$(this).closest(".no-score").length) {
                 showScore();
             }
@@ -131,11 +156,10 @@
             }
 
             function showScore() {
-                var numCorrect = $form.find(".correct").length;
-                var numIncorrect = $form.find(".incorrect").length;
                 var $score = $("<div class='score'><p>Score: " + numCorrect + "/" + (numCorrect + numIncorrect) + "</p></div>");
                 $score.hide();
                 $form.prepend($score);
+
                 $score.slideDown();
                 $score.focus();
             }

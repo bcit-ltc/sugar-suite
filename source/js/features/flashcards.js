@@ -23,8 +23,11 @@
  * Last updated: 2025-09-18
  */
 (() => {
+    let flashcardInstanceIndex = 0;
     // Transform tables with class "flashcards" into interactive flashcard sets
     $("table.flashcards").each(function () {
+        const flashcardInstanceId = flashcardInstanceIndex++;
+
         /**
          * Build a card DOM element from a table row's cells.
          * @param {jQuery} $cells - jQuery collection of <td> elements (front/back)
@@ -216,7 +219,8 @@
 
             // Track current card index
             let currentCardIndex = 0;
-
+            let seenCardIndexes = { 0: true };
+            let hasTrackedDeckCompleted = false;
 
             /**
              * Update the card counter display and currentCardIndex.
@@ -239,6 +243,16 @@
                 
                 currentCardIndex = topIndex;
                 $counter.text(`${currentCardIndex + 1} of ${total}`);
+
+                seenCardIndexes[currentCardIndex] = true;
+                if (!hasTrackedDeckCompleted && total > 0 && Object.keys(seenCardIndexes).length === total && window.SugarAnalytics) {
+                    hasTrackedDeckCompleted = true;
+                    window.SugarAnalytics.trackFeature("Flashcard", "flashcardCompleted", {
+                        total_cards: total
+                    }, {
+                        dedupeKey: "flashcard_completed_" + flashcardInstanceId
+                    });
+                }
             };
 
             // Helper to update ARIA attributes for card faces
@@ -264,8 +278,11 @@
              */
             const initializeCards = () => {
                 currentCardIndex = 0;
+                seenCardIndexes = { 0: true };
+                hasTrackedDeckCompleted = false;
                 updateCounter();
                 $cards = $cardStack.children();
+                
                 $cards.removeClass('flipped top-card bottom-card');
                 $cards.find('.front').attr('aria-hidden', 'false');
                 $cards.find('.back').attr('aria-hidden', 'true');
@@ -289,7 +306,6 @@
                 });
             };
 
-
             $buttons.reset.on("click", () => {
                 $cardStack.empty();
                 $originalCards.each((_, el) => {
@@ -297,8 +313,16 @@
                 });
                 initializeCards();
                 setCardStackHeight();
-            });
 
+                if (window.SugarAnalytics) {
+                    window.SugarAnalytics.trackFeature("Flashcard", "flashcardReset", {
+                        value: 1
+                    }, {
+                        dedupe: false,
+                        dedupeKey: "flashcard_reset_" + flashcardInstanceId + "_" + Date.now()
+                    });
+                }
+            });
 
             $buttons.flipall.on("click", () => {
                 // No change to currentCardIndex
@@ -313,113 +337,20 @@
                         setCardAria($card, true);
                     }
                 });
+
+                if (window.SugarAnalytics) {
+                    window.SugarAnalytics.trackFeature("Flashcard", "flashcardFlipAll", {
+                        value: 1
+                    }, {
+                        dedupe: false,
+                        dedupeKey: "flashcard_flip_all_" + flashcardInstanceId + "_" + Date.now()
+                    });
+                }
             });
 
-            // Create Controls
-
-            $container.append($controls);
-            
-            // Add the original table at the end, after navigation controls
-            $container.append($table);
-
-            // Init Cards
-            initializeCards();
-
-            // --- Swipe gesture support for mobile/tablet when .no-nav is present ---
-            if ($container.hasClass('no-nav')) {
-                let touchStartX = 0, touchStartY = 0, touchEndX = 0, touchEndY = 0;
-                const minSwipeDist = 40; // px
-                $cardStack.on('touchstart', function(e) {
-                    if (e.originalEvent.touches && e.originalEvent.touches.length === 1) {
-                        touchStartX = e.originalEvent.touches[0].clientX;
-                        touchStartY = e.originalEvent.touches[0].clientY;
-                    }
-                });
-                $cardStack.on('touchend', function(e) {
-                    if (e.originalEvent.changedTouches && e.originalEvent.changedTouches.length === 1) {
-                        touchEndX = e.originalEvent.changedTouches[0].clientX;
-                        touchEndY = e.originalEvent.changedTouches[0].clientY;
-                        const dx = touchEndX - touchStartX;
-                        const dy = touchEndY - touchStartY;
-                            if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > minSwipeDist) {
-                                e.preventDefault();
-                                if (dx < 0) {
-                                    $cardStack.trigger('prev'); // swipe left triggers prev
-                                } else {
-                                    $cardStack.trigger('next'); // swipe right triggers next
-                                }
-                        } else if (Math.abs(dy) > minSwipeDist) {
-                            // Vertical swipe
-                            $cardStack.trigger('flip');
-                        }
-                    }
-                });
-            }
-
-
-            // Modularized height/image logic
-
-            /**
-             * Set the height of the card stack using fixed height.
-             * Uses data-height attribute or defaults to 500px.
-             */
-            const setCardStackHeight = () => {
-                const $cards = $cardStack.children('.card');
-                
-                // Check if a fixed height is specified, default to 500px if not
-                const fixedHeight = $table.data('height') || 500;
-                
-                // Set fixed height for cards and card sides
-                $cards.css({
-                    'min-height': `${fixedHeight}px`,
-                    'height': `${fixedHeight}px`
-                });
-                $cards.find('.front, .back').css({
-                    'min-height': `${fixedHeight}px`,
-                    'height': `${fixedHeight}px`
-                });
-                
-                // Constrain images to fit within the card height, leaving room for color stripes
-                const imageHeight = fixedHeight - 15;
-                $cards.find('img').each(function() {
-                    const $img = $(this);
-                    const $card = $img.closest('.card');
-                    
-                    // Don't override styles if the card has alignment classes
-                    const hasAlignmentClass = $card.hasClass('top-left') || 
-                                            $card.hasClass('top-center') || 
-                                            $card.hasClass('top-right') ||
-                                            $card.hasClass('middle-left') || 
-                                            $card.hasClass('middle-center') || 
-                                            $card.hasClass('middle-right') ||
-                                            $card.hasClass('bottom-left') || 
-                                            $card.hasClass('bottom-center') || 
-                                            $card.hasClass('bottom-right');
-                });
-                
-                // Set cardStack height for navigation positioning
-                $cardStack.css('height', `${fixedHeight}px`);
-            };
-
-            setCardStackHeight();
-
-            /*****
-            Events
-            ******/
-
-            // Grouped event handlers for clarity
-            $buttons.viewtable.on("click", function () {
-                const $table = $container.data("flashcard-table");
-                if ($table && $table.length) {
-                    $table.stop().fadeToggle();
-                    $(this).toggleClass("toggled");
-                }
-            }); // 'this' is needed here for the button
-            $buttons.next.on("click", () => $cardStack.trigger("next"));
             $buttons.prev.on("click", () => $cardStack.trigger("prev"));
             $buttons.flip.on("click", () => $cardStack.trigger("flip"));
             $buttons.shuffle.on("click", () => $cardStack.trigger("shuffle"));
-
 
             $cardStack.on("shuffle", function () {
                 $controls.find("button").prop("disabled", true);
@@ -438,8 +369,16 @@
                 $cardStack.empty();
                 $($cardsArr).each((_, el) => { $cardStack.append(el); });
                 initializeCards();
-            });
 
+                if (window.SugarAnalytics) {
+                    window.SugarAnalytics.trackFeature("Flashcard", "flashcardShuffled", {
+                        value: 1
+                    }, {
+                        dedupe: false,
+                        dedupeKey: "flashcard_shuffle_" + flashcardInstanceId + "_" + Date.now()
+                    });
+                }
+            });
 
             // Calculate animation durations once
             swapNextDuration = getAnimationDuration("flashcard-swap-next");
@@ -559,6 +498,15 @@
                         const allowD2LResize = $(this).data('allowD2LResize');
                         if (allowD2LResize) allowD2LResize();
                     }, 500); // CSS transition duration
+
+                    if (window.SugarAnalytics) {
+                        window.SugarAnalytics.trackFeature("Flashcard", "flashcardFlip", {
+                            value: 1
+                        }, {
+                            dedupe: false,
+                            dedupeKey: "flashcard_flip_" + flashcardInstanceId + "_" + Date.now()
+                        });
+                    }
                 }
             });
 

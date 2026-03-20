@@ -8,6 +8,7 @@
 
     function initChecklist() {
         var $checklist = $(this);
+        var checklistAnalyticsId = checklistNumber;
         var $form = $("<form>");
         var $label = $("<label>");
         var $input = '<input type="checkbox">';
@@ -178,6 +179,29 @@
                 }
             } else {
                 alert("Sorry, your browser does not support Web Storage.");
+            }
+
+            trackChecklistCompletion();
+        }
+
+        function trackChecklistCompletion() {
+            if (!window.SugarAnalytics || $checklist.attr("data-checklist-completed")) {
+                return;
+            }
+
+            var $items = $checklist.find("input[type=checkbox]");
+            if (!$items.length) {
+                return;
+            }
+
+            var checkedCount = $items.filter(":checked").length;
+            if (checkedCount === $items.length) {
+                $checklist.attr("data-checklist-completed", "true");
+                window.SugarAnalytics.trackFeature("Checklist", "checklistCompleted", {
+                    total_items: $items.length
+                }, {
+                    dedupeKey: "checklist_completed_" + checklistAnalyticsId
+                });
             }
         }
 

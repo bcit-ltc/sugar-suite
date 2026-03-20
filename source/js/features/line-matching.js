@@ -1,5 +1,7 @@
 (function ($) {
 
+    var lineMatchingInstanceIndex = 0;
+
     // "globals"
     var isClicked = false; // check if the question matching-item is clicked/active
     var answerSequence = []; // Sequence of the clicked matching-item
@@ -101,6 +103,7 @@
     function initLineMatching() {
         var $matching = $(this); // this paticular line matching interaction in the dom
         var matchingObj = new MatchingObject($matching); // read the table and create the "matching object"
+        var lineMatchingId = lineMatchingInstanceIndex++;
 
         // create some arrays to temporarily contain our questions and answers
         let questionsArray = [];
@@ -117,6 +120,10 @@
                 answersArray.push(answerElement);
             });
         });
+
+        $matching.attr("data-line-matching-id", lineMatchingId);
+        $matching.attr("data-line-matching-pairs", answersArray.length);
+        $matching.attr("data-line-matching-completed", "false");
 
         matchingObj.$table.hide(); // hide original table
 
@@ -206,6 +213,7 @@
         $resetButton.insertAfter($matchingContainer);
 
         $resetButton.click(function () {
+
             $matching.find(".matching-item").each(function () {
                 if ($(this).hasClass("overText")) {
                     $(this).attr('class', 'matching-item overText');
@@ -223,7 +231,18 @@
                     $(this).data("remainingAnswers", $(this).data("remainingAnswersDefault"));
                 }
             });
+
+            if (window.SugarAnalytics) {
+                window.SugarAnalytics.trackFeature("Line-Matching", "lineMatchingReset", {
+                    value: 1
+                }, {
+                    dedupe: false,
+                    dedupeKey: "line_matching_reset_" + lineMatchingId + "_" + Date.now()
+                });
+            }
+            $matching.attr("data-line-matching-completed", "false");
         });
+
     }
 
     function selectMatchingItem(event) {
@@ -312,12 +331,12 @@
                     if (newFontSize >= 3) {
                         $(this).css("font-size", newFontSize + "px");
                     }
-    
+
                     childsHeight = 0;
                     $matchingItem.children().not(".connector-line").each(function () {
                         childsHeight += $(this).height();
                     });
-    
+
                     if (childsHeight > 132) {
                         isOverflow = true;
                     } else {
@@ -576,6 +595,21 @@
 
                         } else { // simply use the current clicked item class
                             clickObject.addClass("clicked-item-" + classNum);
+                        }
+
+                        var $matchingRoot = $matchingDiv.closest(".line-matching");
+                        if ($matchingRoot.attr("data-line-matching-completed") !== "true") {
+                            var remainingAnswers = $matchingDiv.children("div").eq(1).find(".matching-item:not([class*='clicked-item-'])").length;
+                            if (remainingAnswers === 0 && window.SugarAnalytics) {
+                                var analyticsId = $matchingRoot.attr("data-line-matching-id") || "0";
+                                var totalPairs = parseInt($matchingRoot.attr("data-line-matching-pairs"), 10) || 0;
+                                $matchingRoot.attr("data-line-matching-completed", "true");
+                                window.SugarAnalytics.trackFeature("Line-Matching", "lineMatchingCompleted", {
+                                    total_pairs: totalPairs
+                                }, {
+                                    dedupeKey: "line_matching_completed_" + analyticsId
+                                });
+                            }
                         }
 
                     }
