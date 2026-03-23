@@ -138,7 +138,7 @@
             if (window.SugarAnalytics) {
                 window.SugarAnalytics.trackFeature("Knowledge Check", "knowledgeCheckSubmitted", {
                     score: score,
-                    total_questions: totalQuestions,
+                    answered_questions: totalQuestions,
                     total_questions_available: questions.length
                 }, {
                     dedupe: false,
