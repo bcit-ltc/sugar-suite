@@ -1,10 +1,15 @@
 // SHOW/HIDE CONTENT (#REVEAL)
 
 $(document).ready(function () {
+    var revealInstanceIndex = 0;
     $(".reveal, .active-reveal").each(function () {
+        var revealId = revealInstanceIndex++;
         // Reveal button text
         var buttonText = $(this).data("button") || "Reveal";
         var $button = $("<button class='reveal-button'>" + buttonText + "</button>");
+        var revealType = $(this).hasClass("active-reveal") ? "active" : "regular";
+        $button.attr("data-reveal-id", revealId);
+        $button.attr("data-reveal-type", revealType);
 
         // Minimum length needed in order to enable reveal button
         var inputLength = $(this).data("min-text");
@@ -50,6 +55,16 @@ $(document).ready(function () {
 
 
     $(".reveal-button").click(function () {
+        var $target = $(this).next();
+        var isOpening = !$target.is(":visible");
+        if (isOpening && window.SugarAnalytics) {
+            window.SugarAnalytics.trackFeature("Reveal", "revealActivated", {
+                type: $(this).attr("data-reveal-type") || "regular"
+            }, {
+                dedupeKey: "reveal_activated_" + ($(this).attr("data-reveal-id") || "0")
+            });
+        }
+
         $(this).next().slideToggle("fast").promise().done(function () {
             if ($(this).find(".line-matching")) {
                 $(window).trigger('resize');

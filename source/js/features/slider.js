@@ -1,10 +1,14 @@
 (function ($) {
+    var sliderInstanceIndex = 0;
     $(".slider").each(initSlider);
 
     function initSlider() {
         var $slider = $(this);
         var $figureImage = $slider.find(">figure.img");
         var index = new Index($figureImage.length);
+        var sliderInstanceId = sliderInstanceIndex++;
+        var seenSlides = {};
+        var hasTrackedCompletion = false;
 
         $slider.css({"height": "600px", "max-height": "550px", "background-color": "black", "overflow": "hidden"});
 
@@ -47,6 +51,8 @@
             }
         );
         
+        markViewedAndTrack(index.getIndex());
+        
         $figureImage.children("h2").css({"position": "absolute", "background-color": "rgba(51,51,51,.7)", "color": "white"});
         $figureImage.children("img").css({"position": "absolute"});
         $figureImage.children("figcaption").css({"position": "absolute", "background-color": "rgba(51,51,51,.7)", "color": "white"});
@@ -60,12 +66,13 @@
         // Add function to buttons
         $prevButton.on("click", changeImage);
         $nextButton.on("click", changeImage);
-        $fsPrevButton.on("click", changeFullScreenImage);
-        $fsNextButton.on("click", changeFullScreenImage);
+        $fsPrevButton.on("click", {sliderInstanceId: sliderInstanceId}, changeFullScreenImage);
+        $fsNextButton.on("click", {sliderInstanceId: sliderInstanceId}, changeFullScreenImage);
         $modalImages.hide(); // Hide modal/fullscreen mode
         
         // Close fullscreen mode
-        $(".close-fs").click(function () {
+        $slider.find(".close-fs").on("click", {sliderInstanceId: sliderInstanceId}, function (event) {
+
             $("body").css("overflow", "unset");
             $(".full-screen").remove();
             $sliderModal.hide();
@@ -77,7 +84,8 @@
         });
         
         // Show and hide slider caption
-        $(".show-caption").click(function () {
+        $nav.children(".show-caption").on("click", {sliderInstanceId: sliderInstanceId}, function (event) {
+
             $figureImage.children("figcaption").toggle();
             var $toggleButton = $(this).children("button");
             var isOpened = $toggleButton.text().trim() === "Hide caption ▼";
@@ -91,7 +99,8 @@
         });
 
         // Show slider in fullscreen mode
-        $(".show-fullscreen").click(function () {
+        $nav.children(".show-fullscreen").on("click", {sliderInstanceId: sliderInstanceId}, function (event) {
+
             toggleFullScreen();
             var $overlay = $("<div>").addClass("full-screen");
             $slider.append($overlay);
@@ -99,6 +108,14 @@
             $modalImages.eq(index.getIndex()).show().css("opacity", "1");
             $sliderModal.children("button").show();
             $("body").css("overflow", "hidden");
+
+            if (window.SugarAnalytics) {
+                window.SugarAnalytics.trackFeature("Slider", "sliderFullscreen", {
+                    value: 1
+                }, {
+                    dedupeKey: window.SugarAnalytics.makeInstanceKey("slider_fullscreen", sliderInstanceId)
+                });
+            }
         });
 
         // Change the current image to the prev/next image + animation
@@ -139,6 +156,7 @@
                 $nav.children(".show-caption").css({visibility: "visible"});
             }
             
+            markViewedAndTrack(index.getIndex());
         }
 
         // Change image on fullscreen mode
@@ -188,7 +206,28 @@
                 
 
             });
+
+            markViewedAndTrack(index.getIndex());
             
+        }
+
+        function markViewedAndTrack(currentIndex) {
+            seenSlides[currentIndex] = true;
+
+            if (hasTrackedCompletion) {
+                return;
+            }
+
+            if (Object.keys(seenSlides).length === $figureImage.length && $figureImage.length > 0) {
+                hasTrackedCompletion = true;
+                if (window.SugarAnalytics) {
+                    window.SugarAnalytics.trackFeature("Slider", "sliderCompleted", {
+                        total_images: $figureImage.length
+                    }, {
+                        dedupeKey: window.SugarAnalytics.makeInstanceKey("slider_completed", sliderInstanceId)
+                    });
+                }
+            }
         }
 
         function Index(_length) {
