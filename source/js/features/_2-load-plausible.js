@@ -2,7 +2,7 @@
 	// When any page loads lat.js, send a custom event via LTC Plausible (utils.js).
 	// Uses common.ltc.bcit.ca/js/utils.js so adblockers don't block it.
 	window.plausible = window.plausible || function () { (window.plausible.q = window.plausible.q || []).push(arguments); };
-	if (!window.plausible.o) window.plausible.o = { captureOnLocalhost: true, autoCapturePageviews: true };
+	if (!window.plausible.o) window.plausible.o = { captureOnLocalhost: false, autoCapturePageviews: true };
 	if (!window.ltcDomain) window.ltcDomain = { eventDomain: 'sugar-suite.ltc.bcit.ca' };
 	function nonEmpty(value) {
 		if (value === null || value === undefined) return '';
