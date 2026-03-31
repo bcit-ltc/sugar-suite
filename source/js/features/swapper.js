@@ -1,8 +1,11 @@
 (function ($) {
+	var swapperInstanceIndex = 0;
 	$(".swapper").each(initSwapper);
 
 	function initSwapper() {
 		var $swapper = $(this); // used in handleButtonPress
+		var swapperId = swapperInstanceIndex++;
+		var hasTrackedActivation = false;
 		var $slides = $(this).children(); // used in handleButtonPress
 		var index = new Index($slides.length); // used in handleButtonPress
 		var $youtube = $swapper.find("iframe[src*='youtube']"); // used in handleButtonPress
@@ -25,6 +28,15 @@
 		enableYoutubeJSAPI($youtube);
 
 		function handleButtonPress() {
+			if (!hasTrackedActivation && window.SugarAnalytics) {
+				hasTrackedActivation = true;
+				window.SugarAnalytics.trackFeature("Swapper", "swapperActivated", {
+					value: 1
+				}, {
+					dedupeKey: "swapper_activated_" + swapperId
+				});
+			}
+
 			var isNext = $(this).is(".next");
 			var $showing = $slides.filter(":visible");
 			var buttonBoxHeight = $buttonBox.outerHeight(true);

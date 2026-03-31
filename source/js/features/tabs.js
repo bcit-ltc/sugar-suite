@@ -1,6 +1,10 @@
 (function () {
+    var tabsInstanceIndex = 0;
     $(".tabs").each(function (index) {
         let $tab = $(this);
+        var tabsInstanceId = tabsInstanceIndex++;
+        var viewedTabs = { 0: true };
+        var hasTrackedCompletion = false;
         var tabHeading = $tab.children().first().prop("tagName");
         var tabTexts = [];
         var $tabNav = $("<ul class='tab-nav'>");
@@ -69,6 +73,18 @@
             var selectedTabColor = $tabNav.children("li").eq(selectedTabIndex).css("border-bottom-color");
             $tabNav.css("border-bottom-color", selectedTabColor);
             $tabBody.css("border-color", selectedTabColor);
+
+            viewedTabs[idx] = true;
+            if (!hasTrackedCompletion && Object.keys(viewedTabs).length === $tabContents.length && $tabContents.length > 0) {
+                hasTrackedCompletion = true;
+                if (window.SugarAnalytics) {
+                    window.SugarAnalytics.trackFeature("Tabs", "tabsCompleted", {
+                        total_tabs: $tabContents.length
+                    }, {
+                        dedupeKey: window.SugarAnalytics.makeInstanceKey("tabs_completed", tabsInstanceId)
+                    });
+                }
+            }
         });
         $tabBody.css("border-color", $tabNav.children("li.selected").css("border-color"));
     });
