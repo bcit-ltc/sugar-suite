@@ -133,7 +133,7 @@
         var legacySelfTestCount = $(".self-test").length;
         if (legacySelfTestCount > 0) {
             window.SugarAnalytics.trackFeature("Legacy Class Used", "legacySelfTestClass", {
-                page: window.location.pathname,
+                page: window.location.href,
                 count: legacySelfTestCount
             });
         }
@@ -141,7 +141,7 @@
         var legacyImageClassCount = $("figure.image").length;
         if (legacyImageClassCount > 0) {
             window.SugarAnalytics.trackFeature("Legacy Class Used", "legacyImageClass", {
-                page: window.location.pathname,
+                page: window.location.href,
                 count: legacyImageClassCount
             });
         }
@@ -149,7 +149,7 @@
         var legacyRevealMinTextCount = $(".reveal[data-min-text]").length;
         if (legacyRevealMinTextCount > 0) {
             window.SugarAnalytics.trackFeature("Legacy Class Used", "legacyRevealMinTextPattern", {
-                page: window.location.pathname,
+                page: window.location.href,
                 count: legacyRevealMinTextCount
             });
         }
