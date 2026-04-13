@@ -14,7 +14,6 @@
 @use "../libraries/reset";
 @use "../libraries/width_height_";
 
-
 @use "../partials/general/misc";
 @use "../partials/general/page-layout";
 @use "../partials/general/figure";
@@ -26,7 +25,10 @@
 @use "../partials/text/headings";
 @use "../partials/text/text";
 
-@use "../partials/media/media-icon";
+$fonts-root: "../vendor" !default;
+$icons-root: "../assets/icons" !default;
+
+@use "../partials/media/media-icon" with ($fonts-root: $fonts-root);
 @use "../partials/media/media";
 @use "../partials/media/side-by-side";
 
@@ -34,9 +36,9 @@
 
 @use "../partials/containers/base-container";
 @use "../partials/containers/custom-max-width";
-@use "../partials/containers/activity";
-@use "../partials/containers/assessment";
-@use "../partials/containers/note";
+@use "../partials/containers/activity" with ($icons-root: $icons-root);
+@use "../partials/containers/assessment" with ($icons-root: $icons-root);
+@use "../partials/containers/note" with ($icons-root: $icons-root);
 
 @use "../partials/actions/button";
 @use "../partials/actions/accordion";
@@ -51,11 +53,11 @@
 
 @use "../partials/util/night-mode";
 @use "../partials/util/swatches";
-@use "../partials/util/print";
+@use "../partials/util/print" with ($icons-root: $icons-root);
 
 .video-activity {
 	@extend .activity;
 	&:before {
-		background-image: url("/assets/icons/temp/play-video.svg");
+		background-image: url("#{$icons-root}/temp/play-video.svg");
 	}
 }

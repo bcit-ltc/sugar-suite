@@ -2,16 +2,17 @@
 @use "../../mixins/love-hate" as love-hate;
 @use "../../partials/containers/base-container" as base-container;
 @use "../../partials/containers/custom-max-width";
+$icons-root: "../assets/icons" !default;
 
-$activity-activity-icon: url(/assets/icons/newest/activity.svg) !default;
-$activity-case-icon: url(/assets/icons/newest/case.svg) !default;
-$activity-discussion-icon: url(/assets/icons/newest/discussion.svg) !default;
-$activity-group-icon-activity: url(/assets/icons/newest/group-activity.svg) !default;
-$activity-outcome-icon: url(/assets/icons/newest/outcome.svg) !default;
-$activity-reading-icon: url(/assets/icons/newest/reading.svg) !default;
-$activity-reflection-icon: url(/assets/icons/newest/reflection.svg) !default;
-$activity-review-icon: url(/assets/icons/newest/review.svg) !default;
-$activity-doing-icon: url(/assets/icons/newest/doing.svg) !default;
+$activity-activity-icon: url("#{$icons-root}/newest/activity.svg") !default;
+$activity-case-icon: url("#{$icons-root}/newest/case.svg") !default;
+$activity-discussion-icon: url("#{$icons-root}/newest/discussion.svg") !default;
+$activity-group-icon-activity: url("#{$icons-root}/newest/group-activity.svg") !default;
+$activity-outcome-icon: url("#{$icons-root}/newest/outcome.svg") !default;
+$activity-reading-icon: url("#{$icons-root}/newest/reading.svg") !default;
+$activity-reflection-icon: url("#{$icons-root}/newest/reflection.svg") !default;
+$activity-review-icon: url("#{$icons-root}/newest/review.svg") !default;
+$activity-doing-icon: url("#{$icons-root}/newest/doing.svg") !default;
 
 $activity-background-color: $secondary-color-light !default;
 $activity-foreground-color: $white !default;

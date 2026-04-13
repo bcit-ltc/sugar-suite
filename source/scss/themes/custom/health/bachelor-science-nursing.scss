@@ -1,9 +1,12 @@
 // Vanilla Theme - All defaults apply
-@use "../../bcit";
+$fonts-root: "../../vendor" !default;
+$icons-root: "../../../assets/icons" !default;
+@use "../../bcit" with ($fonts-root: $fonts-root, $icons-root: $icons-root);
+@use "../../../partials/util/custom-theme-icons" with ($icons-root: $icons-root);
 
 .admit-ticket {
 	@extend .note;
 	&:before {
-		background-image: url("/assets/icons/temp/ticket.svg");
+		background-image: url("#{$icons-root}/temp/ticket.svg");
 	}
 }

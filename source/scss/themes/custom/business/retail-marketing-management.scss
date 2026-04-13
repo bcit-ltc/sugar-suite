@@ -1,16 +1,19 @@
-@use "../../bcit";
+$fonts-root: "../../vendor" !default;
+$icons-root: "../../../assets/icons" !default;
+@use "../../bcit" with ($fonts-root: $fonts-root, $icons-root: $icons-root);
+@use "../../../partials/util/custom-theme-icons" with ($icons-root: $icons-root);
 
 .brain {
 	@extend .activity;
 	&:before {
-		background-image: url("/assets/icons/temp/retail-marketing-management-brain.png");
+		background-image: url("#{$icons-root}/temp/retail-marketing-management-brain.png");
 	}
 }
 
 .exclaim {
 	@extend .activity;
 	&:before {
-		background-image: url("/assets/icons/temp/retail-marketing-management-exclaimation.png");
+		background-image: url("#{$icons-root}/temp/retail-marketing-management-exclaimation.png");
 	}
 }
 

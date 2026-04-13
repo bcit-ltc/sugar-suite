@@ -11,4 +11,7 @@
     $complement-color-dark: color.mix(black, #5A067F, 29%)
 );
 
-@use "../../bcit";
+$fonts-root: "../../vendor" !default;
+$icons-root: "../../../assets/icons" !default;
+@use "../../bcit" with ($fonts-root: $fonts-root, $icons-root: $icons-root);
+@use "../../../partials/util/custom-theme-icons" with ($icons-root: $icons-root);

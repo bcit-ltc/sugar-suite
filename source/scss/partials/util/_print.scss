@@ -1,5 +1,5 @@
 @use "sass:color";
-
+$icons-root: "../assets/icons" !default;
 @page {
 	margin: 10mm 5mm;
 }
@@ -49,75 +49,75 @@
 	}
 
 	.note:before {
-		background-image: url(/assets/icons/newest/note.svg) !important;
+		background-image: url(#{$icons-root}/newest/note.svg) !important;
 	}
 
 	.example:before {
-		background-image: url(/assets/icons/newest/example.svg) !important;
+		background-image: url(#{$icons-root}/newest/example.svg) !important;
 	}
 
 	.definition:before {
-		background-image: url(/assets/icons/newest/definition.svg) !important;
+		background-image: url(#{$icons-root}/newest/definition.svg) !important;
 	}
 
 	.key-point:before {
-		background-image: url(/assets/icons/newest/key-point.svg) !important;
+		background-image: url(#{$icons-root}/newest/key-point.svg) !important;
 	}
 
 	.link:before {
-		background-image: url(/assets/icons/newest/link.svg) !important;
+		background-image: url(#{$icons-root}/newest/link.svg) !important;
 	}
 
 	.warning:before {
-		background-image: url(/assets/icons/newest/warning.svg) !important;
+		background-image: url(#{$icons-root}/newest/warning.svg) !important;
 	}
 
 	.knowing:before {
-		background-image: url(/assets/icons/newest/knowing.svg) !important;
+		background-image: url(#{$icons-root}/newest/knowing.svg) !important;
 	}
 
 	.activity:before {
-		background-image: url(/assets/icons/newest/activity.svg) !important;
+		background-image: url(#{$icons-root}/newest/activity.svg) !important;
 	}
 
 	.case:before {
-		background-image: url(/assets/icons/newest/case.svg) !important;
+		background-image: url(#{$icons-root}/newest/case.svg) !important;
 	}
 
 	.discussion:before {
-		background-image: url(/assets/icons/newest/discussion.svg) !important;
+		background-image: url(#{$icons-root}/newest/discussion.svg) !important;
 	}
 
 	.group-activity:before {
-		background-image: url(/assets/icons/newest/group-activity.svg) !important;
+		background-image: url(#{$icons-root}/newest/group-activity.svg) !important;
 	}
 
 	.outcome:before {
-		background-image: url(/assets/icons/newest/outcome.svg) !important;
+		background-image: url(#{$icons-root}/newest/outcome.svg) !important;
 	}
 
 	.reading:before {
-		background-image: url(/assets/icons/newest/reading.svg) !important;
+		background-image: url(#{$icons-root}/newest/reading.svg) !important;
 	}
 
 	.reflection:before {
-		background-image: url(/assets/icons/newest/reflection.svg) !important;
+		background-image: url(#{$icons-root}/newest/reflection.svg) !important;
 	}
 
 	.review:before {
-		background-image: url(/assets/icons/newest/review.svg) !important;
+		background-image: url(#{$icons-root}/newest/review.svg) !important;
 	}
 
 	.doing:before {
-		background-image: url(/assets/icons/newest/doing.svg) !important;
+		background-image: url(#{$icons-root}/newest/doing.svg) !important;
 	}
 
 	.assignment:before {
-		background-image: url(/assets/icons/newest/assignment.svg) !important;
+		background-image: url(#{$icons-root}/newest/assignment.svg) !important;
 	}
 
 	.quiz:before {
-		background-image: url(/assets/icons/newest/quiz.svg) !important;
+		background-image: url(#{$icons-root}/newest/quiz.svg) !important;
 	}
 
 

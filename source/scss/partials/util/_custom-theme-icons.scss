@@ -1,0 +1,53 @@
+// Custom theme icon path overrides
+// Import this in custom themes that sit deeper than top-level themes
+// and set $icons-root before importing
+
+$icons-root: "../../../assets/icons" !default;
+
+// Screen overrides
+.note:before         { background-image: url("#{$icons-root}/newest/note.svg"); }
+.example:before      { background-image: url("#{$icons-root}/newest/example.svg"); }
+.definition:before   { background-image: url("#{$icons-root}/newest/definition.svg"); }
+.key-point:before    { background-image: url("#{$icons-root}/newest/key-point.svg"); }
+.link:before         { background-image: url("#{$icons-root}/newest/link.svg"); }
+.warning:before      { background-image: url("#{$icons-root}/newest/warning.svg"); }
+.knowing:before      { background-image: url("#{$icons-root}/newest/knowing.svg"); }
+
+.activity:before       { background-image: url("#{$icons-root}/newest/activity.svg"); }
+.case:before           { background-image: url("#{$icons-root}/newest/case.svg"); }
+.discussion:before     { background-image: url("#{$icons-root}/newest/discussion.svg"); }
+.group-activity:before { background-image: url("#{$icons-root}/newest/group-activity.svg"); }
+.outcome:before        { background-image: url("#{$icons-root}/newest/outcome.svg"); }
+.reading:before        { background-image: url("#{$icons-root}/newest/reading.svg"); }
+.reflection:before     { background-image: url("#{$icons-root}/newest/reflection.svg"); }
+.review:before         { background-image: url("#{$icons-root}/newest/review.svg"); }
+.doing:before          { background-image: url("#{$icons-root}/newest/doing.svg"); }
+
+.assignment:before     { background-image: url("#{$icons-root}/newest/assignment.svg"); }
+.quiz:before           { background-image: url("#{$icons-root}/newest/quiz.svg"); }
+
+.video-activity:before { background-image: url("#{$icons-root}/temp/play-video.svg"); }
+
+// Print overrides
+@media print {
+	.note:before         { background-image: url("#{$icons-root}/newest/note.svg") !important; }
+	.example:before      { background-image: url("#{$icons-root}/newest/example.svg") !important; }
+	.definition:before   { background-image: url("#{$icons-root}/newest/definition.svg") !important; }
+	.key-point:before    { background-image: url("#{$icons-root}/newest/key-point.svg") !important; }
+	.link:before         { background-image: url("#{$icons-root}/newest/link.svg") !important; }
+	.warning:before      { background-image: url("#{$icons-root}/newest/warning.svg") !important; }
+	.knowing:before      { background-image: url("#{$icons-root}/newest/knowing.svg") !important; }
+
+	.activity:before       { background-image: url("#{$icons-root}/newest/activity.svg") !important; }
+	.case:before           { background-image: url("#{$icons-root}/newest/case.svg") !important; }
+	.discussion:before     { background-image: url("#{$icons-root}/newest/discussion.svg") !important; }
+	.group-activity:before { background-image: url("#{$icons-root}/newest/group-activity.svg") !important; }
+	.outcome:before        { background-image: url("#{$icons-root}/newest/outcome.svg") !important; }
+	.reading:before        { background-image: url("#{$icons-root}/newest/reading.svg") !important; }
+	.reflection:before     { background-image: url("#{$icons-root}/newest/reflection.svg") !important; }
+	.review:before         { background-image: url("#{$icons-root}/newest/review.svg") !important; }
+	.doing:before          { background-image: url("#{$icons-root}/newest/doing.svg") !important; }
+
+	.assignment:before     { background-image: url("#{$icons-root}/newest/assignment.svg") !important; }
+	.quiz:before           { background-image: url("#{$icons-root}/newest/quiz.svg") !important; }
+}
