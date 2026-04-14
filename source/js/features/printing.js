@@ -13,7 +13,6 @@ Printing
 		$(".reveal-button").next().hide();
 	}
 	
-	
     // @see http://tjvantoll.com/2012/06/15/detecting-print-requests-with-javascript/
     document.addEventListener("beforePrinting", beforePrinting, false);
 
