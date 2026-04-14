@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="x-ua-compatible" content="ie=edge" />
+        <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=yes" />
+        <meta name="robots" content="noindex,nofollow,noarchive,nosnippet" />
+        <title>Computing - Custom Theme Example</title>
+        <link rel="stylesheet" href="css/custom/computing/computing.css" />
+    </head>
+    <body>
+        <div class="container">
+            <h1>Computing - Custom Theme</h1>
+            <div class="back-to-home-wrapper">
+                <button class="btn alt back-to-home" type="button" onclick="location.href='index.html'">Back to Home</button>
+            </div>
+
+            <div class="note">
+                <h2>Theme Overview</h2>
+                <p>This custom theme is designed for Computing programs. It features a modern color scheme optimized for technical content and code examples.</p>
+            </div>
+
+            <h2>Standard Learning Blocks</h2>
+
+            <h3>Note</h3>
+            <div class="note">
+                <h2>Object-Oriented Programming Principles</h2>
+                <p>The four pillars of OOP—Encapsulation, Abstraction, Inheritance, and Polymorphism—provide a framework for writing modular, reusable, and maintainable code. Understanding these principles is essential for modern software development.</p>
+            </div>
+
+            <h3>Activity</h3>
+            <div class="activity">
+                <h2>Algorithm Design Challenge</h2>
+                <p>Design an algorithm to find the shortest path between two nodes in a weighted graph. Consider the following:</p>
+                <ul>
+                    <li>What data structures will you use to represent the graph?</li>
+                    <li>Which algorithm is most appropriate (Dijkstra's, A*, Bellman-Ford)?</li>
+                    <li>What is the time complexity of your solution?</li>
+                    <li>How will you handle edge cases (disconnected nodes, negative weights)?</li>
+                </ul>
+                <p>Implement your solution in Python and test with sample data.</p>
+            </div>
+
+            <h3>Reflection</h3>
+            <div class="reflection">
+                <h2>Code Review Reflection</h2>
+                <p>Think about a recent code review you participated in. What feedback did you receive or provide? How did the review process improve code quality? What best practices can you apply to future projects?</p>
+            </div>
+
+            <h3>Key Point</h3>
+            <div class="key-point">
+                <h2>DRY Principle</h2>
+                <p><strong>Don't Repeat Yourself:</strong> Every piece of knowledge should have a single, unambiguous representation in your codebase. Avoid code duplication by extracting common functionality into reusable functions, classes, or modules.</p>
+            </div>
+
+            <h3>Definition</h3>
+            <div class="definition">
+                <h2>Big O Notation</h2>
+                <p><strong>Definition:</strong> A mathematical notation that describes the limiting behavior of a function when the argument tends toward infinity. In computer science, it's used to classify algorithms by how their runtime or space requirements grow as input size increases.</p>
+                <p><strong>Common complexities:</strong> O(1), O(log n), O(n), O(n log n), O(n²), O(2ⁿ)</p>
+            </div>
+
+            <h3>Warning</h3>
+            <div class="warning">
+                <h2>Security Best Practices</h2>
+                <p>Never store passwords in plain text or commit API keys to version control. Always use environment variables for sensitive data, implement proper authentication and authorization, and validate all user input to prevent SQL injection and XSS attacks.</p>
+            </div>
+
+            <h3>Example</h3>
+            <div class="example">
+                <h2>Factory Pattern Implementation</h2>
+                <p>The Factory pattern provides an interface for creating objects without specifying their exact classes:</p>
+                <pre><code>class ShapeFactory:
+    @staticmethod
+    def create_shape(shape_type):
+        if shape_type == "circle":
+            return Circle()
+        elif shape_type == "square":
+            return Square()
+        elif shape_type == "triangle":
+            return Triangle()
+        else:
+            raise ValueError(f"Unknown shape: {shape_type}")
+
+# Usage
+shape = ShapeFactory.create_shape("circle")
+shape.draw()</code></pre>
+            </div>
+
+            <h3>Assignment</h3>
+            <div class="assignment">
+                <h2>Full-Stack Web Application Project</h2>
+                <p>Build a complete web application with the following requirements:</p>
+                <ul>
+                    <li><strong>Frontend:</strong> React with TypeScript, responsive design, state management</li>
+                    <li><strong>Backend:</strong> RESTful API using Node.js/Express or Python/Flask</li>
+                    <li><strong>Database:</strong> PostgreSQL or MongoDB with proper schema design</li>
+                    <li><strong>Authentication:</strong> JWT-based user authentication</li>
+                    <li><strong>Testing:</strong> Unit tests (80%+ coverage) and integration tests</li>
+                    <li><strong>Deployment:</strong> Deploy to cloud platform (AWS, Azure, or GCP)</li>
+                    <li><strong>Documentation:</strong> API documentation, README, and architecture diagram</li>
+                </ul>
+                <p><strong>Due:</strong> Final submission in Week 14 with live demo presentation.</p>
+            </div>
+
+            <h3>Quiz</h3>
+            <div class="quiz">
+                <h2>Data Structures Quiz</h2>
+                <p>Test your understanding of fundamental data structures. This quiz covers arrays, linked lists, stacks, queues, trees, and hash tables.</p>
+                <button class="btn">Start Quiz</button>
+            </div>
+        </div>
+        <script src="js/lat.js"></script>
+    </body>
+</html>
