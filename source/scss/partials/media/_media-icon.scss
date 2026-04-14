@@ -4,8 +4,6 @@
 @use "../../variables/sizing" as *;
 @use "../../variables/fonts" as *;
 
-$fonts-root: "../vendor" !default;
-
 .media {
 	padding-left: 25px;
 	padding-right: 25px;
@@ -53,24 +51,9 @@ figure.math figcaption:before {
 	content: "\f1ec";
 }
 
-@font-face {
-  font-family: 'Fake-MathJax';
-  src: url('#{$fonts-root}/MathJax_Math-Italic.woff') format('woff');
-}
-@font-face {
-  font-family: 'Fake-MathJax-Numbers';
-  src: url('#{$fonts-root}/MathJax_Main-Regular.woff') format('woff');
-}
-
 figure.math {
-	> p {
-		font-family: "Fake-MathJax", $font-stack-open-sans;
-		font-size: 1.3em;
-	}
-	.fake-mathjax-numbers {
-		font-family: "Fake-MathJax-Numbers", $font-stack-open-sans;
-	}
 	> p,
+	> math,
 	> .MathJax {
 		margin-bottom: .25em;
 		display: block;
@@ -79,8 +62,13 @@ figure.math {
 		padding-top: 10px;
 		text-align: center;
 	}
+	> math,
+	> p > math {
+		font-size: 1.3em;
+	}
 	&.left {
 		> p,
+		> math,
 		> .MathJax {
 			text-align: left;
 			padding-left: 10%;

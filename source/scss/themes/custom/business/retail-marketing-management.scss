@@ -1,6 +1,5 @@
-$fonts-root: "../../vendor" !default;
 $icons-root: "../../../assets/icons" !default;
-@use "../../bcit" with ($fonts-root: $fonts-root, $icons-root: $icons-root);
+@use "../../bcit" with ($icons-root: $icons-root);
 @use "../../../partials/util/custom-theme-icons" with ($icons-root: $icons-root);
 
 .brain {

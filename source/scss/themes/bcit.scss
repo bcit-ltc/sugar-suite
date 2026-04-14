@@ -25,10 +25,9 @@
 @use "../partials/text/headings";
 @use "../partials/text/text";
 
-$fonts-root: "../vendor" !default;
 $icons-root: "../assets/icons" !default;
 
-@use "../partials/media/media-icon" with ($fonts-root: $fonts-root);
+@use "../partials/media/media-icon";
 @use "../partials/media/media";
 @use "../partials/media/side-by-side";
 

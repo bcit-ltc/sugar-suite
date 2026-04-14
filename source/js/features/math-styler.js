@@ -1,34 +1,10 @@
 (function ($) {
+	// Wrap plain text in figure.math > p with <math> tags for MathJax rendering
+	// Only wrap if the p tag doesn't already contain a math tag
 	$("figure.math > p").each(function () {
-		scanContents($(this));
+		if ($(this).find('math').length === 0) {
+			var text = $(this).text();
+			$(this).html('<math xmlns="http://www.w3.org/1998/Math/MathML"><mtext>' + text + '</mtext></math>');
+		}
 	});
-
-	function scanContents($parent) {
-		var $children = $parent.children();
-		var $textNodes = $parent.contents().filter(function () {
-			return this.nodeType === 3;
-		});
-
-		$textNodes.each(function () {
-			wrapNumbersAndSymbols($(this));
-		});
-
-		$children.each(function () {
-			scanContents($(this));
-		});
-	}
-
-	function wrapNumbersAndSymbols($textNode) {
-		var html = $textNode.text();
-		/* var matches = html.match(/(\d|\+|\-|\(|\)|\=)+/g);
-		console.log(matches);
-		for (var i in matches) {
-			if (matches.hasOwnProperty(i)) {
-				var string = matches[i];
-				var re = new RegExp(string, "g");
-				html = html.replace(re, "<span class='fake-mathjax-numbers'>" + string + "</span>");
-			}
-		} */
-		$textNode.replaceWith(html);
-	}
 }(jQuery));

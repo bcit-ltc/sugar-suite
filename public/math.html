@@ -24,6 +24,14 @@
             <h2>Usage</h2>
             <p>Wrap mathematical content in <code>&lt;figure class="math"&gt;</code> containers. Use <code>&lt;math&gt;</code> tags for MathJax rendering or <code>&lt;p&gt;</code> elements for custom-styled math.</p>
             
+            <h3>Wrapping Math Tags in Paragraphs</h3>
+            <p>You can wrap <code>&lt;math&gt;</code> tags inside a <code>&lt;p&gt;</code> tag or use them directly:</p>
+            <ul>
+                <li><strong>With <code>&lt;p&gt;</code> wrapper:</strong> Applies the CSS font sizing (1.3em) and spacing defined for <code>figure.math > p</code></li>
+                <li><strong>Without <code>&lt;p&gt;</code> wrapper:</strong> MathJax renders with its default styling, which may differ in size and spacing</li>
+            </ul>
+            <p>Using a <code>&lt;p&gt;</code> wrapper maintains consistent appearance with text-based math content.</p>
+            
             <h3>Available Options</h3>
             <ul>
                 <li><strong>CSS Classes:</strong>
