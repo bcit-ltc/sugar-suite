@@ -1,6 +1,7 @@
 
 (function () {
 	// Accordion 
+	var accordionInstanceIndex = 0;
 
 	var keycodes = {
 		space: 32,
@@ -17,6 +18,7 @@
 	
 	// Transform Accordion
     $(".accordion").each(function (index) {
+        $(this).attr("data-accordion-instance", accordionInstanceIndex++);
         var toggleTag = $(this).children().first().prop("tagName");
 
         $(this).children(toggleTag).each(function () {
@@ -39,6 +41,9 @@
 	$(".accordion-button").on("click keyup", function(e, isToggle) {
 		if (isActivationEvent(e)) {
 			e.preventDefault();
+			var $accordion = $(this).closest(".accordion");
+			var accordionId = $accordion.attr("data-accordion-instance") || "0";
+			var totalPanels = $accordion.find(".accordion-button").length;
 			var $bellow = $(this).next("._bellow");
 			var $siblings = $(this).siblings(".accordion-button.open");
 			var isCollapsing = $(this).closest(".accordion").hasClass("collapsing");
@@ -57,7 +62,20 @@
                 }
                 
 				$(this).addClass("open").attr("aria-pressed", "true");
+				$(this).attr("data-accordion-opened", "true");
 				$bellow.trigger("open");
+
+				if (window.SugarAnalytics) {
+					var openedCount = $accordion.find('.accordion-button[data-accordion-opened="true"]').length;
+					if (openedCount === totalPanels && !$accordion.attr("data-accordion-completed")) {
+						$accordion.attr("data-accordion-completed", "true");
+						window.SugarAnalytics.trackFeature("Accordion", "accordionCompleted", {
+							total_panels: totalPanels
+						}, {
+							dedupeKey: "accordion_completed_" + accordionId
+						});
+					}
+				}
 			}
 		}
 	});
@@ -66,7 +84,20 @@
 	$(".accordion-toggle").on("click keydown", function(e) {
 		if(isActivationEvent(e)) {
 			e.preventDefault();
+			var $accordion = $(this).closest(".accordion");
+			var accordionId = $accordion.attr("data-accordion-instance") || "0";
 			var $closed = $(this).siblings(".accordion-button:not(.open)");
+			var action = $closed.length ? "expand_all" : "collapse_all";
+
+			if (window.SugarAnalytics) {
+				window.SugarAnalytics.trackFeature("Accordion", "accordionToggleAll", {
+					action: action
+				}, {
+					dedupe: false,
+					dedupeKey: "accordion_toggle_" + accordionId + "_" + Date.now()
+				});
+			}
+
 			if($closed.length) {
 				$closed.trigger("click",true);
 			} else {

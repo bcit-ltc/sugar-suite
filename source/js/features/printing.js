@@ -11,6 +11,14 @@ Printing
 	function afterPrinting() {
 		$("_bellow").hide();
 		$(".reveal-button").next().hide();
+		if (window.SugarAnalytics) {
+			window.SugarAnalytics.trackFeature("Printing", "printingCompleted", {
+				value: 1
+			}, {
+				dedupe: false,
+				dedupeKey: "printing_completed_" + Date.now()
+			});
+		}
 	}
 	
     
