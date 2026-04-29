@@ -315,6 +315,16 @@
             }
 
             flex: 0 0 12%;
+
+            .fa-expand {
+                font-style: normal;
+
+                &:before {
+                    font-family: FontAwesome;
+                    font-weight: normal;
+                    content: "\f065";
+                }
+            }
         }
 
         .show-border {
