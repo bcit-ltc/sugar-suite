@@ -47,7 +47,7 @@
             }
         );
         
-        $figureImage.children("h2").css({"position": "absolute", "background-color": "rgba(51,51,51,.7)", "color": "white"});
+        $figureImage.children("h2").css({"position": "absolute", "background-color": "rgba(51,51,51,.7)", "color": "white", "text-wrap": "wrap"});
         $figureImage.children("img").css({"position": "absolute"});
         $figureImage.children("figcaption").css({"position": "absolute", "background-color": "rgba(51,51,51,.7)", "color": "white"});
         /* $figureImage.children("figcaption").children("*").css({"color": "white"}); */
