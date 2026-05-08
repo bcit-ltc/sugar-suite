@@ -1,4 +1,9 @@
 <!-- SPDX-License-Identifier: MPL-2.0 -->
+# 🧊 This project has been migrated to [bcit-tlu/sugar-suite](https://github.com/bcit-tlu/sugar-suite). 🧊
+
+The code remains available for historic purposes.
+
+---
 
 # Sugar Suite
 
